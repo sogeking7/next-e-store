@@ -1,0 +1,37 @@
+{
+  "name": "mantine-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
+    "@mantine/carousel": "^5.10.0",
+    "@mantine/core": "^5.10.0",
+    "@mantine/hooks": "^5.10.0",
+    "@mantine/next": "^5.10.0",
+    "@mantine/nprogress": "^5.10.0",
+    "@next/font": "13.1.1",
+    "@tabler/icons": "^1.118.0",
+    "axios": "^1.2.2",
+    "embla-carousel-react": "^7.0.5",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.1.1",
+    "next": "12.1.7-canary.31",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.2"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.26",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4"
+  }
+}
