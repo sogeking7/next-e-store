@@ -1,11 +1,11 @@
 import { Container, Text, Rating, Box } from "@mantine/core";
 
-import Header from "../../components/main/Header";
-import Footer from "../../components/main/Footer";
-import MobileNavBar from "../../components/main/MobileNavBar";
+import Header from "../../components/layouts/Header";
+import Footer from "../../components/layouts/Footer";
+import MobileNavBar from "../../components/layouts/MobileNavBar";
 
-import ProductCarousel from "../../components/pages/productId/product/carousel/ProductCarousel";
-import AddToCart from "../../components/pages/productId/product/buttons/AddToCart";
+import ProductCarousel from "../../components/pages/productId/ProductCarousel";
+import AddToCart from "../../components/pages/productId/AddToCart";
 
 function ProductId({ product }) {
   const { title, imageUrl, price, salePrice, rating, _id } = product;

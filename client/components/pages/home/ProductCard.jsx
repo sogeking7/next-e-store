@@ -2,8 +2,8 @@ import { Stack, Image, Text, Button, Rating, Group, Box } from "@mantine/core";
 
 import Link from "next/link";
 
-import { AddToCart } from "./buttons/AddToCart";
-import { AddToFavorite } from "./buttons/AddToFavorite";
+import { AddToCart } from "./AddToCart";
+import { AddToFavorite } from "./AddToFavorite";
 
 function ProductCard(props) {
   const { product } = props;

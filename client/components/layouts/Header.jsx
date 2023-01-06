@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { IconHeart, IconShoppingCart } from "@tabler/icons";
 
-import SearchInput from "./search/SearchInput";
+import SearchInput from "../pages/home/SearchInput";
 import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({

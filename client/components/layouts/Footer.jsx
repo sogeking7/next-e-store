@@ -12,7 +12,7 @@ import {
   IconBrandGithub,
 } from "@tabler/icons";
 
-import DarkModeButton from "./buttons/DarkModeButton";
+import DarkModeButton from "./DarkModeButton";
 
 const useStyles = createStyles((theme) => ({
   footer: {
