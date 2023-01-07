@@ -1,10 +1,10 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 import Head from "next/head";
-import NextApp, { AppProps, AppContext } from "next/app";
-import { getCookie, setCookie } from "cookies-next";
+import { AppProps } from "next/app";
+// import { getCookie, setCookie } from "cookies-next";
 
-import { MantineProvider, ColorSchemeProvider, ColorScheme } from "@mantine/core";
+import { MantineProvider, ColorScheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 
 import { RouterTransition } from "../components/layouts/RouterTransition";
@@ -13,7 +13,7 @@ import "../styles/embla/embla.css";
 
 export default function App(props: AppProps & {colorScheme: ColorScheme}) {
   const {Component, pageProps } = props
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
+  // const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
   
   // const toggleColorScheme = (value?: ColorScheme) => {
   //   const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
@@ -34,7 +34,7 @@ export default function App(props: AppProps & {colorScheme: ColorScheme}) {
         toggleColorScheme={toggleColorScheme}
       > */}
         <MantineProvider
-          theme={{ colorScheme }}
+          // theme={{ colorScheme }}
           withNormalizeCSS
           withGlobalStyles
           withCSSVariables
@@ -49,10 +49,10 @@ export default function App(props: AppProps & {colorScheme: ColorScheme}) {
   );
 }
 
-App.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await NextApp.getInitialProps(appContext);
-  return {
-    ...appProps,
-    colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
-  };
-};
+// App.getInitialProps = async (appContext: AppContext) => {
+//   const appProps = await NextApp.getInitialProps(appContext);
+//   return {
+//     ...appProps,
+//     colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+//   };
+// };
