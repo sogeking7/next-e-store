@@ -3,18 +3,14 @@ import {
   Box,
   ActionIcon,
   createStyles,
-  useMantineColorScheme,
-  Flex,
   MediaQuery,
 } from "@mantine/core";
 import { IconHeart, IconShoppingCart, IconUser } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   border: {
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
-    backgroundColor: theme.colorScheme === "dark" ? "#1A1B1E" : "#fff",
+    borderTop: `1px solid ${theme.colors.gray[4]}`,
+    backgroundColor: 'white',
     position: "fixed",
     zIndex: 50,
     bottom: 0,
@@ -26,9 +22,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function MobileNavBar() {
+export default function MobileNavBar() {
   const { classes } = useStyles();
-
   return (
     <MediaQuery largerThan="sm" styles={{ display: "none" }}>
       <Box className={classes.border}>
@@ -46,4 +41,3 @@ function MobileNavBar() {
   );
 }
 
-export default MobileNavBar;

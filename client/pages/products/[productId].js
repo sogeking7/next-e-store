@@ -1,57 +1,50 @@
 
-import { Container, createStyles, Flex, Modal, Stack } from "@mantine/core";
+import { Container, createStyles, Flex, Modal, Stack, Divider } from "@mantine/core";
 
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
 import MobileNavBar from "../../components/layouts/MobileNavBar";
 
-import ProductCarousel from "../../components/pages/productId/ProductCarousel";
-
 //embla
-import EmblaCarousel from '../../components/layouts/embla-carousel/EmblaCarousel'
+import EmblaCarousel from '../../components/pages/productId/product/embla-carousel/EmblaCarousel'
 import { useState } from "react";
-import ProductDetail from "../../components/pages/productId/ProductDetail";
-const OPTIONS = {}
-const SLIDE_COUNT = 4
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+import ProductDetail from '../../components/pages/productId/product/ProductDetail'
 
 const useStyles = createStyles((theme) => ({
+  wrapper: {
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]
+  },
   Card: {
-    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
+    backgroundColor: 'white',
+    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
     borderRadius: '4px'
   },
-  Modal: {
-    backgroundColor: 'white',
-  }
 }));
 
 function ProductId({ product }) {
   const { title, images, price, rating, _id } = product;
   const { classes } = useStyles();
   const [opened, setOpened] = useState(false);
+
+  const [curImage, setCurImage] = useState(0);
+
   return (
-    <Stack  spacing='sm'>
+    <Stack spacing='sm' className={classes.wrapper}>
       <Header />
       <MobileNavBar />
-      <Modal
-        centered
-        className={classes.Modal}
-        opened={opened}
-        onClose={() => setOpened(false)}
-        size="xl"
-      >
-        <ProductCarousel images={images} />
-      </Modal>
+      
       <Container size="lg">
         <div className={classes.Card}>
           <Flex className="md:flex-row flex-col md:gap-4 gap-4">
-            <EmblaCarousel setOpened={setOpened} slides={images} options={OPTIONS} />
+            <EmblaCarousel setOpened={setOpened} slides={images} />
+            <Divider orientation="vertical" />
             <ProductDetail title={title} price={price} rating={rating}/>
           </Flex>
         </div>
       </Container>
       <Footer />
+      
     </Stack>
   );
 }

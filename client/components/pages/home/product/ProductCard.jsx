@@ -1,8 +1,7 @@
-import { Stack, Image, Text, Button, Rating, Group, Box } from "@mantine/core";
+import { Text, Button, Rating, Group, Box } from "@mantine/core";
 
 import Link from "next/link";
 
-import { AddToCart } from "./AddToCart";
 import { AddToFavorite } from "./AddToFavorite";
 
 const grid = {
@@ -40,19 +39,21 @@ function ProductCard(props) {
             </Text>
           </Link>
           <Link href="/">
-          <Box>
-          <Rating defaultValue={rating} size="xs" fractions={2} readOnly className=""/>
-            <Text color="blue" size="sm" className="cursor-pointer">
-              ({12} Reviews)
-            </Text>
-          </Box>
+            <Box>
+              <Rating defaultValue={rating} size="xs" fractions={2} readOnly className="" />
+              <Text color="blue" size="sm" className="cursor-pointer">
+                ({12} Reviews)
+              </Text>
+            </Box>
           </Link>
         </Box>
         <Text weight="bold" size="md">
           {price}$
         </Text>
         <Group>
-          <AddToCart />
+          <Button color="green" variant="filled" size="xs">
+            + Add to cart
+          </Button>
         </Group>
       </Box>
     </Box>

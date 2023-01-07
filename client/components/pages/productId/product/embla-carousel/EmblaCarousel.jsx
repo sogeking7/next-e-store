@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Thumb } from "./EmblaCarouselThumbsButton";
-import { Text } from "@mantine/core";
-// import imageByIndex from "./ImageByIndex";
+import { ActionIcon, Group, Text } from "@mantine/core";
+import { IconArrowsDiagonal, IconZoomIn } from "@tabler/icons";
 
 const EmblaCarousel = (props) => {
   const { slides, options, setOpened } = props;
+
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options);
+  const [emblaMainRef, emblaMainApi] = useEmblaCarousel();
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
     containScroll: "keepSnaps",
     dragFree: true,
@@ -35,31 +36,32 @@ const EmblaCarousel = (props) => {
   }, [emblaMainApi, onSelect]);
 
   return (
-    <div className="embla md:w-2/3 w-full rounded pb-4">
+    <div className="embla md:w-2/3 rounded">
       <div
-        className="embla__viewport md:pt-4 md:px-16 md:pb-28"
+        className="embla__viewport"
         ref={emblaMainRef}
       >
-        <div className="embla__container mb-4 ">
+        <div className="embla__container py-8 ">
           {slides.map((image, index) => (
-            <div className="embla__slide" key={index}>
+            <div className="embla__slide max-h-[300px]" key={index}>
               <img
-                onClick={() => setOpened(true)}
-                className="embla__slide__img w-full h-full object-contain hover:cursor-zoom-in"
+                className="w-full h-full object-contain"
                 src={image}
                 alt="Your alt text"
               />
             </div>
           ))}
         </div>
-        <Text className="text-center cursor-default" size="sm" color="dimmed">
-          To enlarge, click on the picture
-        </Text>
+        <Group position="right" className="p-4">
+          <ActionIcon onClick={() => setOpened(true)}>
+            <IconZoomIn />
+          </ActionIcon>
+        </Group>
       </div>
 
-      <div className="embla-thumbs">
+      <div className="embla-thumbs m-4">
         <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
-          <div className="embla-thumbs__container px-5">
+          <div className="embla-thumbs__container">
             {slides.map((image, index) => (
               <Thumb
                 onClick={() => onThumbClick(index)}

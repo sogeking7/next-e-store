@@ -13,7 +13,7 @@ function FilterDrawer(props) {
       position="right"
       padding="xl"
       className="md:hidden"
-      size="xl"
+      size="lg"
     >
       <Filter />
     </Drawer>

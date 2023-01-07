@@ -3,7 +3,6 @@ import {
   Container,
   Group,
   ActionIcon,
-  Title,
 } from "@mantine/core";
 
 import {
@@ -12,7 +11,7 @@ import {
   IconBrandGithub,
 } from "@tabler/icons";
 
-import DarkModeButton from "./DarkModeButton";
+import Logo from "../ui/Logo";
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -48,7 +47,7 @@ export default function Footer() {
   return (
     <div className={classes.footer}>
       <Container className={classes.inner} size="lg">
-        <Title order={1}>e-store</Title>
+        <Logo />
         <Group spacing={0} className={classes.links} position="right" noWrap>
           <ActionIcon size="lg">
             <IconBrandTelegram size={18} stroke={1.5} />
@@ -59,7 +58,6 @@ export default function Footer() {
           <ActionIcon size="lg">
             <IconBrandInstagram size={18} stroke={1.5} />
           </ActionIcon>
-          <DarkModeButton />
         </Group>
       </Container>
     </div>

@@ -8,6 +8,7 @@ const layout = 0;
 const useStyle = createStyles((theme) => ({
   wrapper: {
     padding: "1rem",
+    backgroundColor: 'white',
     border: `1px solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[3]
     }`,

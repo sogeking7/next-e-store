@@ -6,15 +6,15 @@ import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
 import MobileNavBar from "../components/layouts/MobileNavBar";
 
-import ProductGrid from "../components/pages/home/ProductGrid";
-import FilterDrawer from "../components/pages/home/FilterDrawer";
-import FilterSideBar from "../components/pages/home/FilterSideBar";
+import ProductGrid from "../components/pages/home/product/ProductGrid";
+import FilterDrawer from "../components/pages/home/filter/FilterDrawer";
+import FilterSideBar from "../components/pages/home/filter/FilterSideBar";
 
 const useStyle = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
     overflow: 'hidden',
-    // backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[2]
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]
   }
 }));
 
