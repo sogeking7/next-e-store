@@ -15,11 +15,11 @@ export default function App(props: AppProps & {colorScheme: ColorScheme}) {
   const {Component, pageProps } = props
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
   
-  const toggleColorScheme = (value?: ColorScheme) => {
-    const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
-    setColorScheme(nextColorScheme);
-    setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
-  };
+  // const toggleColorScheme = (value?: ColorScheme) => {
+  //   const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
+  //   setColorScheme(nextColorScheme);
+  //   setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+  // };
   return (
     <>
       <Head>
@@ -29,10 +29,10 @@ export default function App(props: AppProps & {colorScheme: ColorScheme}) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <ColorSchemeProvider
+      {/* <ColorSchemeProvider
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
-      >
+      > */}
         <MantineProvider
           theme={{ colorScheme }}
           withNormalizeCSS
@@ -44,7 +44,7 @@ export default function App(props: AppProps & {colorScheme: ColorScheme}) {
             <Component {...pageProps} />
           </NotificationsProvider>
         </MantineProvider>
-      </ColorSchemeProvider>
+      {/* </ColorSchemeProvider> */}
     </>
   );
 }

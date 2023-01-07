@@ -42,25 +42,26 @@ const useStyles = createStyles((theme) => ({
 
 export default function DarkModeButton() {
   const { classes } = useStyles();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const Icon = colorScheme === "dark" ? IconSun : IconMoon;
+  // const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  // const Icon = colorScheme === "dark" ? IconSun : IconMoon;
 
   return (
-    <div className="basic:hidden md:inline">
-      <UnstyledButton
-        aria-label="Toggle theme"
-        className={classes.control}
-        onClick={() => toggleColorScheme()}
-        title="Ctrl + J"
-      >
-        <Text size="sm" className={classes.value}>
-          {upperFirst(colorScheme === "light" ? "dark" : "light")} theme
-        </Text>
+    // <div className="basic:hidden md:inline">
+    //   <UnstyledButton
+    //     aria-label="Toggle theme"
+    //     className={classes.control}
+    //     onClick={() => toggleColorScheme()}
+    //     title="Ctrl + J"
+    //   >
+    //     <Text size="sm" className={classes.value}>
+    //       {upperFirst(colorScheme === "light" ? "dark" : "light")} theme
+    //     </Text>
 
-        <Center className={classes.iconWrapper}>
-          <Icon size={18} stroke={1.5} />
-        </Center>
-      </UnstyledButton>
-    </div>
-  );
+    //     <Center className={classes.iconWrapper}>
+    //       <Icon size={18} stroke={1.5} />
+    //     </Center>
+    //   </UnstyledButton>
+    // </div>
+    <></>
+    );
 }

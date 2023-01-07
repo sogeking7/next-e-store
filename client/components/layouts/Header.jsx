@@ -32,8 +32,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Header({ setOpened }) {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const dark = colorScheme === "dark";
+  // const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  // const dark = colorScheme === "dark";
   const { classes } = useStyles();
 
   return (
