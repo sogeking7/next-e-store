@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Button,
   Flex,
@@ -9,11 +8,21 @@ import {
   RangeSlider,
   Stack,
   Text,
-  Box,
   Rating,
 } from "@mantine/core";
+import { useState } from "react";
+import { useEffect } from "react";
+import { categories } from '../../../../data/categories'
 
 function Filter() {
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [curCategory, setCurCategory] = useState(categories[0]);
+  const [curRating, setCurRating] = useState()
+  useEffect(() => {
+    console.log(priceRange[0], priceRange[1]);
+
+  }, [priceRange])
+
   return (
     <Stack>
       <Stack spacing="xs">
@@ -22,8 +31,11 @@ function Filter() {
         </Text>
         <Group spacing="xs">
           <NumberInput
-            hideControls
             label="Min"
+            max={priceRange[1]}
+            min={0}
+            value={priceRange[0]}
+            onChange={(val) => setPriceRange([val, priceRange[1]])}
             className="w-[100px]"
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             formatter={(value) =>
@@ -33,9 +45,12 @@ function Filter() {
             }
           />
           <NumberInput
-            hideControls
-            className="w-[100px]"
             label="Max"
+            max={1000}
+            min={priceRange[0]}
+            value={priceRange[1]}
+            onChange={(val) => setPriceRange([priceRange[0], val])}
+            className="w-[100px]"
             size="sm"
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             formatter={(value) =>
@@ -46,11 +61,22 @@ function Filter() {
           />
         </Group>
         <RangeSlider
-          min={1}
+          min={0}
           max={1000}
           label={null}
+          value={priceRange}
+          onChange={setPriceRange}
           className="w-full"
-          defaultValue={[300, 700]}
+          defaultValue={[priceRange[0], priceRange[1]]}
+          styles={(theme) => ({
+            thumb: {
+              height: 16,
+              width: 16,
+              backgroundColor: theme.white,
+              borderWidth: 1,
+              boxShadow: theme.shadows.sm,
+            },
+          })}
         />
       </Stack>
       <Divider my="sm" />
@@ -59,27 +85,19 @@ function Filter() {
           Category
         </Text>
         <Flex wrap="wrap" gap="xs">
-          <Button variant="filled" color="blue" size="xs">
-            All
-          </Button>
-          <Button variant="outline" size="xs">
-            Computers
-          </Button>
-          <Button variant="outline" size="xs">
-            Smartphones
-          </Button>
-          <Button variant="outline" size="xs">
-            Headphones
-          </Button>
-          <Button variant="outline" size="xs">
-            Books
-          </Button>
-          <Button variant="outline" size="xs">
-            Laptops
-          </Button>
-          <Button variant="outline" size="xs">
-            Smart Watches
-          </Button>
+          {categories.map((category, index) => {
+            return (
+              <Button
+                size="xs"
+                variant={category.title === curCategory.title ? 'filled' : 'outline'}
+                onClick={() => {
+                  setCurCategory(category)
+                }}
+              >
+                {category.title}
+              </Button>
+            )
+          })}
         </Flex>
       </Stack>
       <Divider my="sm" />
@@ -88,30 +106,22 @@ function Filter() {
           Rating
         </Text>
 
-        <div className="flex items-center gap-1">
-          <Rating readOnly defaultValue={4} size="xs" />{" "}
-          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
-            and above
-          </Text>
-        </div>
-        <div className="flex items-center gap-1">
-          <Rating readOnly defaultValue={3} size="xs" />{" "}
-          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
-            and above
-          </Text>
-        </div>
-        <div className="flex items-center gap-1">
-          <Rating readOnly defaultValue={2} size="xs" />{" "}
-          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
-            and above
-          </Text>
-        </div>
-        <div className="flex items-center gap-1">
-          <Rating readOnly defaultValue={1} size="xs" />{" "}
-          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
-            and above
-          </Text>
-        </div>
+        {
+          Array(4).fill(0).map((val, ind) => {
+            const rating = 4 - ind;
+            return (
+              <Flex className="gap-1" align='center' onClick={() => { setCurRating(rating) }} >
+                <Rating readOnly defaultValue={rating} size="xs" />{" "}
+                <Text size="sm" color={curRating === rating ? 'dark' : 'blue'} className="cursor-pointer hover:underline">
+                  and above
+                </Text>
+
+              </Flex>
+            )
+          })
+        }
+
+
       </Stack>
       <Button className="fixed w-full bottom-0 right-0 md:hidden" size="lg">
         Show {20} items
