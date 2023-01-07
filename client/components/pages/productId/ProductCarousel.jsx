@@ -1,5 +1,6 @@
-import { Image, createStyles, Box } from "@mantine/core";
+import { Image, createStyles, Box, Flex } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
+import { IconArrowRight, IconArrowLeft } from "@tabler/icons";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   price: {
@@ -21,9 +22,9 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 
   carouselIndicator: {
-    width: 6,
-    height: 6,
-    transition: "width 250ms ease",
+    width: 7,
+    height: 7,
+    // transition: "width 250ms ease",
     backgroundColor: `${
       theme.colorScheme === "dark" ? theme.colors.gray[5] : theme.colors.gray[6]
     }`,
@@ -40,16 +41,20 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 function ProductCarousel({ images }) {
   const { classes } = useStyles();
   const slides = images.map((image) => (
-    <Carousel.Slide key={image} className="flex mb-10 items-center">
-      <Image src={image} alt={image} radius="md" />
+    <Carousel.Slide key={image} className="max-h-[600px]">
+      <Box className="w-full h-full">
+        <img src={image} alt={image} className="object-contain w-full h-full" />
+      </Box>
     </Carousel.Slide>
   ));
   return (
-    <Box className="md:max-w-[500px] w-full rounded-md">
+    <div className="w-full">
       <Carousel
-        withIndicators
-        loop
-        slideGap="md"
+        draggable={false}
+        controlSize={50}
+        controlsOffset="xs"
+        nextControlIcon={<IconArrowRight size={32} />}
+        previousControlIcon={<IconArrowLeft size={32} />}
         classNames={{
           root: classes.carousel,
           controls: classes.carouselControls,
@@ -58,7 +63,7 @@ function ProductCarousel({ images }) {
       >
         {slides}
       </Carousel>
-    </Box>
+    </div>
   );
 }
 

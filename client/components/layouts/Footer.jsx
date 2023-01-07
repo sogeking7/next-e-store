@@ -47,7 +47,7 @@ export default function Footer() {
 
   return (
     <div className={classes.footer}>
-      <Container className={classes.inner} size="xl">
+      <Container className={classes.inner} size="lg">
         <Title order={1}>e-store</Title>
         <Group spacing={0} className={classes.links} position="right" noWrap>
           <ActionIcon size="lg">

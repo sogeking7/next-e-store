@@ -1,46 +1,66 @@
-import { Container, Text, Rating, Box } from "@mantine/core";
+
+import { Container, createStyles, Flex, Modal, Stack } from "@mantine/core";
 
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
 import MobileNavBar from "../../components/layouts/MobileNavBar";
 
 import ProductCarousel from "../../components/pages/productId/ProductCarousel";
-import AddToCart from "../../components/pages/productId/AddToCart";
+
+//embla
+import EmblaCarousel from '../../components/layouts/embla-carousel/EmblaCarousel'
+import { useState } from "react";
+import ProductDetail from "../../components/pages/productId/ProductDetail";
+const OPTIONS = {}
+const SLIDE_COUNT = 4
+const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+
+const useStyles = createStyles((theme) => ({
+  Card: {
+    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
+      }`,
+    borderRadius: '4px'
+  },
+  Modal: {
+    backgroundColor: 'white',
+  }
+}));
 
 function ProductId({ product }) {
-  const { title, imageUrl, price, salePrice, rating, _id } = product;
-  const images = new Array(5).fill(`${imageUrl}`);
+  const { title, images, price, rating, _id } = product;
+  const { classes } = useStyles();
+  const [opened, setOpened] = useState(false);
   return (
-    <div className="relative overflow-hidden">
+    <Stack  spacing='sm'>
       <Header />
       <MobileNavBar />
-      <Container size="md">
-        <div className="flex md:flex-row flex-col md:gap-8 gap-5 my-8">
-          <ProductCarousel images={images} />
-          <Box className="flex gap-6 flex-col w-full">
-            <Box>
-              <Text className="md:block md:text-3xl text-xl mb-2" lineClamp={2}>
-                {title}
-              </Text>
-              <Rating defaultValue={3.5} fractions={2} />
-            </Box>
-            <Text className="w-full md:text-3xl text-2xl" weight="bold">
-              {price}$
-            </Text>
-            <AddToCart />
-          </Box>
+      <Modal
+        centered
+        className={classes.Modal}
+        opened={opened}
+        onClose={() => setOpened(false)}
+        size="xl"
+      >
+        <ProductCarousel images={images} />
+      </Modal>
+      <Container size="lg">
+        <div className={classes.Card}>
+          <Flex className="md:flex-row flex-col md:gap-4 gap-4">
+            <EmblaCarousel setOpened={setOpened} slides={images} options={OPTIONS} />
+            <ProductDetail title={title} price={price} rating={rating}/>
+          </Flex>
         </div>
       </Container>
       <Footer />
-    </div>
+    </Stack>
   );
 }
 
-const prod_link = "https://next-e-store-api-sogeking7.vercel.app";
-const dev_link = "http:localhost:9000";
+const prod = "https://next-e-store-api-sogeking7.vercel.app";
+const dev = "http:localhost:9000";
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`${prod_link}/api/products`);
+  const res = await fetch(`${prod}/api/products`);
   const data = await res.json();
 
   const paths = data.map((product) => {
@@ -57,7 +77,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const productId = context.params.productId;
-  const res = await fetch(`${prod_link}/api/products/${productId}`);
+  const res = await fetch(`${prod}/api/products/${productId}`);
   const data = await res.json();
 
   return {

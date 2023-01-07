@@ -9,6 +9,7 @@ import { NotificationsProvider } from "@mantine/notifications";
 
 import { RouterTransition } from "../components/layouts/RouterTransition";
 import "../styles/index.css";
+import "../styles/embla/embla.css";
 
 export default function App(props: AppProps & {colorScheme: ColorScheme}) {
   const {Component, pageProps } = props

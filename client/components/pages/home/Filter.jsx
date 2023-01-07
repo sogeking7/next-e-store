@@ -5,23 +5,26 @@ import {
   Flex,
   Group,
   NumberInput,
+  Divider,
   RangeSlider,
   Stack,
   Text,
+  Box,
+  Rating,
 } from "@mantine/core";
 
 function Filter() {
   return (
     <Stack>
-      <Group spacing="xs">
-        <Text weight="bold" size="lg">
+      <Stack spacing="xs">
+        <Text weight="bold" size="sm">
           Price
         </Text>
-        <Flex gap="lg">
+        <Group spacing="xs">
           <NumberInput
             hideControls
-            radius="md"
-            description="Min"
+            label="Min"
+            className="w-[100px]"
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             formatter={(value) =>
               !Number.isNaN(parseFloat(value))
@@ -31,8 +34,9 @@ function Filter() {
           />
           <NumberInput
             hideControls
-            description="Max"
-            radius="md"
+            className="w-[100px]"
+            label="Max"
+            size="sm"
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             formatter={(value) =>
               !Number.isNaN(parseFloat(value))
@@ -40,7 +44,7 @@ function Filter() {
                 : "$ "
             }
           />
-        </Flex>
+        </Group>
         <RangeSlider
           min={1}
           max={1000}
@@ -48,40 +52,68 @@ function Filter() {
           className="w-full"
           defaultValue={[300, 700]}
         />
-      </Group>
-      <Group spacing="xs">
-        <Text weight="bold" size="lg">
+      </Stack>
+      <Divider my="sm" />
+      <Stack spacing="xs">
+        <Text weight="bold" size="sm">
           Category
         </Text>
-        <Flex className="flex-wrap gap-x-1 gap-y-2">
-          <Button radius="md" variant="filled" color="blue" size="xs">
+        <Flex wrap="wrap" gap="xs">
+          <Button variant="filled" color="blue" size="xs">
             All
           </Button>
-          <Button radius="md" variant="outline" color="gray" size="xs">
+          <Button variant="outline" size="xs">
             Computers
           </Button>
-          <Button radius="md" variant="outline" color="gray" size="xs">
+          <Button variant="outline" size="xs">
             Smartphones
           </Button>
-          <Button radius="md" variant="outline" color="gray" size="xs">
+          <Button variant="outline" size="xs">
             Headphones
           </Button>
-          <Button radius="md" variant="outline" color="gray" size="xs">
+          <Button variant="outline" size="xs">
             Books
           </Button>
-          <Button radius="md" variant="outline" color="gray" size="xs">
+          <Button variant="outline" size="xs">
             Laptops
           </Button>
-          <Button radius="md" variant="outline" color="gray" size="xs">
+          <Button variant="outline" size="xs">
             Smart Watches
           </Button>
         </Flex>
-      </Group>
-      <Button
-        className="fixed w-full bottom-0 right-0 md:hidden"
-        radius="0"
-        size="lg"
-      >
+      </Stack>
+      <Divider my="sm" />
+      <Stack spacing="xs">
+        <Text weight="bold" size="sm">
+          Rating
+        </Text>
+
+        <div className="flex items-center gap-1">
+          <Rating readOnly defaultValue={4} size="xs" />{" "}
+          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
+            and above
+          </Text>
+        </div>
+        <div className="flex items-center gap-1">
+          <Rating readOnly defaultValue={3} size="xs" />{" "}
+          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
+            and above
+          </Text>
+        </div>
+        <div className="flex items-center gap-1">
+          <Rating readOnly defaultValue={2} size="xs" />{" "}
+          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
+            and above
+          </Text>
+        </div>
+        <div className="flex items-center gap-1">
+          <Rating readOnly defaultValue={1} size="xs" />{" "}
+          <Text size="sm" color="blue" className="cursor-pointer hover:underline">
+            and above
+          </Text>
+        </div>
+      </Stack>
+      <Button className="fixed w-full bottom-0 right-0 md:hidden" size="lg">
         Show {20} items
       </Button>
     </Stack>

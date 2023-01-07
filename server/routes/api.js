@@ -20,18 +20,9 @@ router.get("/products/:id", (req, res, next) => {
 
 // add a new product to the db
 router.post("/products", (req, res, next) => {
-  // var product = new Product(req.body);
-  // product
-  //   .save()
-  //   .then((item) => {
-  //     res.send("item saved to database");
-  //   })
-  //   .catch((err) => {
-  //     res.status(400).send("unable to save to database");
-  //   });
+ 
   Product.create(req.body)
     .then((product) => {
-      console.log(req.body.imageUrl);
       res.send(product);
     })
     .catch(next);

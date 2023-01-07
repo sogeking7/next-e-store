@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Box, Container, Flex } from "@mantine/core";
+import { Box, Container, Flex, createStyles } from "@mantine/core";
 
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
@@ -10,27 +10,35 @@ import ProductGrid from "../components/pages/home/ProductGrid";
 import FilterDrawer from "../components/pages/home/FilterDrawer";
 import FilterSideBar from "../components/pages/home/FilterSideBar";
 
-function Home({ products }) {
-  const [opened, setOpened] = useState(false); //FilterDrawer hook
+const useStyle = createStyles((theme) => ({
+  wrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    // backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[2]
+  }
+}));
 
+function Home({ products }) {
+  const {classes} = useStyle()
+  const [opened, setOpened] = useState(false); //FilterDrawer hook
   return (
-    <Box className="relative overflow-hidden">
+    <Box className={classes.wrapper}>
       <Header setOpened={setOpened} />
       <MobileNavBar />
       <FilterDrawer opened={opened} setOpened={setOpened} />
-      <Container size="xl" className="py-4">
+      <Container size="lg" className="py-4">
         <Flex gap="lg">
           <FilterSideBar />
           <ProductGrid products={products} />
         </Flex>
       </Container>
-      <Footer/>
+      <Footer />
     </Box>
   );
 }
 
 const prod = "https://next-e-store-api-sogeking7.vercel.app",
-      dev = "http://localhost:9000";
+  dev = "http://localhost:9000";
 
 export const getStaticProps = async () => {
   const res = await fetch(`${prod}/api/products`);
