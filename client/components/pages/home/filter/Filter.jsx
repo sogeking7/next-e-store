@@ -12,7 +12,37 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { useEffect } from "react";
-import { categories } from '../../../../data/categories'
+
+const categories = [
+	{
+		title: 'All'
+	},
+	{
+		title: 'Computers',
+	},
+	{
+		title: 'Smartphones',
+	},
+	{
+		title: 'Headphones',
+	},
+	{
+		title: 'Laptops',
+	},
+	{
+		title: 'Tablets',
+	},
+	{
+		title: 'Fitness bracelets',
+	},
+	{
+		title: 'Smart watches',
+	},
+	{
+		title: 'Electronic books',
+	},
+];
+
 
 function Filter() {
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -88,6 +118,7 @@ function Filter() {
           {categories.map((category, index) => {
             return (
               <Button
+                key={index}
                 size="xs"
                 variant={category.title === curCategory.title ? 'filled' : 'outline'}
                 onClick={() => {
@@ -110,7 +141,7 @@ function Filter() {
           Array(4).fill(0).map((val, ind) => {
             const rating = 4 - ind;
             return (
-              <Flex className="gap-1" align='center' onClick={() => { setCurRating(rating) }} >
+              <Flex key={ind} className="gap-1" align='center' onClick={() => { setCurRating(rating) }} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
                 <Text size="sm" color={curRating === rating ? 'dark' : 'blue'} className="cursor-pointer hover:underline">
                   and above
