@@ -42,13 +42,14 @@ const prod = "https://next-e-store-api-sogeking7.vercel.app",
 
 export const getStaticProps = async () => {
   const res = await fetch(`${prod}/api/products`);
-  const products = await res.json();
+  console.log('(Re-)Generating...');
+  const products = await (res).json();
 
   return {
     props: {
       products,
     },
-    revalidate: 10
+    revalidate: 5,
   };
 };
 
