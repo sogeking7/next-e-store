@@ -44,9 +44,9 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
         // theme={{ colorScheme }}
         withNormalizeCSS
         withGlobalStyles
-        emotionCache={
-          myCache
-        }
+        // emotionCache={
+        //   myCache
+        // }
       >
         <RouterTransition />
         <NotificationsProvider>
