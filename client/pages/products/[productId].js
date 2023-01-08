@@ -1,5 +1,6 @@
-
+import { useState } from "react";
 import { Container, createStyles, Flex, Modal, Stack, Divider } from "@mantine/core";
+import { Carousel } from '@mantine/carousel'
 
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
@@ -38,7 +39,8 @@ function ProductId({ product }) {
   const { title, images, price, rating, _id } = product;
   const { classes } = useStyles();
   const [index, setIndex] = useState(0);
-  const grid = `hidden md:grid grid-cols-${images.length} pl-4 pb-4`
+  const cols = images.length;
+  const grid = `hidden md:grid grid-cols-${cols} pl-4 pb-4`
 
   return (
     <Stack spacing='sm' className={classes.wrapper}>
