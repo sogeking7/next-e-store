@@ -4,7 +4,7 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 // import { getCookie, setCookie } from "cookies-next";
 
-import { MantineProvider, ColorScheme, createEmotionCache } from "@mantine/core";
+import { MantineProvider, ColorScheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 
 import { RouterTransition } from "../components/layouts/RouterTransition";
@@ -21,10 +21,10 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   // };
 
 
-  const myCache = createEmotionCache({
-    key: 'mantine',
-    prepend: false
-  });
+  // const myCache = createEmotionCache({
+  //   key: 'mantine',
+  //   prepend: false
+  // });
 
   return (
 
