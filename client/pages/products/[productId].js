@@ -6,7 +6,7 @@ import Footer from "../../components/layouts/Footer";
 import MobileNavBar from "../../components/layouts/MobileNavBar";
 
 import ProductDetail from '../../components/pages/productId/product/ProductDetail'
-import CustomCarousel from "../../components/pages/productId/product/CustomCarousel/CustomCarousel";
+import CustomCarousel from "../../components/pages/productId/product/CustomCarousel";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
