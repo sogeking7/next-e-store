@@ -32,15 +32,13 @@ const useStyles = createStyles((theme) => ({
         : theme.colors.blue[6]
         }`,
     },
-  }
+  },
 }));
 
 function ProductId({ product }) {
   const { title, images, price, rating, _id } = product;
   const { classes } = useStyles();
   const [index, setIndex] = useState(0);
-  const cols = images.length;
-  const grid = `hidden md:grid grid-cols-${cols} pl-4 pb-4`
 
   return (
     <Stack spacing='sm' className={classes.wrapper}>
@@ -77,22 +75,31 @@ function ProductId({ product }) {
                   </Carousel>
                 </div>
               </div>
-              <div className={grid}>
-                {images.map((image, ind) => {
-                  return <div key={ind} style={
-                    {
-                      width: '100%',
-                      maxHeight: '75px',
-                      border: ind === index ? '1px solid #228be6' : ''
-                    }
-                  }>
-                    <img
-                      onClick={() => setIndex(ind)}
-                      className="w-full h-full object-contain"
-                      src={image}
-                    />
-                  </div>
-                })}
+              <div className="md:block hidden">
+                <div style={{
+                  paddingBottom: '1rem',
+                  paddingLeft: '1rem',
+                  display: 'grid',
+                  width: '100%',
+                  height: '100%',
+                  gridTemplateColumns: `repeat(${images.length}, minmax(0, 1fr))`
+                }}>
+                  {images.map((image, ind) => {
+                    return <div key={ind} style={
+                      {
+                        width: '100%',
+                        maxHeight: '75px',
+                        border: ind === index ? '1px solid #228be6' : ''
+                      }
+                    }>
+                      <img
+                        onClick={() => setIndex(ind)}
+                        className="w-full h-full object-contain"
+                        src={image}
+                      />
+                    </div>
+                  })}
+                </div>
               </div>
 
             </div>
