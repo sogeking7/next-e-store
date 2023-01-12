@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, createStyles, Flex, Modal, Stack, Divider } from "@mantine/core";
+import { Container, createStyles, Box, Flex, Modal, Stack, Divider } from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
 
 import Header from "../../components/layouts/Header";
@@ -10,11 +10,8 @@ import ProductDetail from '../../components/pages/productId/product/ProductDetai
 
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]
-  },
   Card: {
-    backgroundColor: 'white',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#fff',
     width: '100%',
     border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
@@ -45,10 +42,10 @@ function ProductId({ product }) {
       <Header />
       <MobileNavBar />
 
-      <Container size="lg" className="w-full">
+      <Container size="md" className="w-full">
         <div className={classes.Card}>
           <Flex className="md:flex-row flex-col w-full">
-            <div className="flex flex-col md:w-2/3 h-full relative">
+            <div className="flex flex-col md:w-2/3 h-full relative bg-white">
 
               <div className="w-full h-full pt-4 md:pb-32 pb-0 md:px-16 px-4 duration-500 transition ease-in-out">
                 <img
@@ -68,6 +65,7 @@ function ProductId({ product }) {
                       return <Carousel.Slide key={ind} className="mb-10">
                         <img
                           src={image}
+                        
                           className="max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
                         />
                       </Carousel.Slide>

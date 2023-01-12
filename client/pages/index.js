@@ -14,19 +14,22 @@ const useStyle = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
     overflow: 'hidden',
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0]
+  },
+  container: {
+    padding: '0 1rem',
   }
 }));
 
 function Home({ products }) {
-  const {classes} = useStyle()
+  const { classes } = useStyle()
   const [opened, setOpened] = useState(false); //FilterDrawer hook
   return (
     <Box className={classes.wrapper}>
       <Header setOpened={setOpened} />
       <MobileNavBar />
       <FilterDrawer opened={opened} setOpened={setOpened} />
-      <Container size="lg" className="py-4">
+      <Container size="md" className="md:p-4 px-0 py-4">
         <Flex gap="lg">
           <FilterSideBar />
           <ProductGrid products={products} />

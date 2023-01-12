@@ -17,9 +17,8 @@ const useStyles = createStyles((theme) => ({
   footer: {
     marginTop: 120,
     marginBottom: 120,
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
+    borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
+      }`,
   },
 
   inner: {
@@ -46,7 +45,7 @@ export default function Footer() {
 
   return (
     <div className={classes.footer}>
-      <Container className={classes.inner} size="lg">
+      <Container className={classes.inner} size="md">
         <Logo />
         <Group spacing={0} className={classes.links} position="right" noWrap>
           <ActionIcon size="lg">

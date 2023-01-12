@@ -9,8 +9,9 @@ import { IconHeart, IconShoppingCart, IconUser } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   border: {
-    borderTop: `1px solid ${theme.colors.gray[4]}`,
-    backgroundColor: 'white',
+    borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
+      }`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#fff',
     position: "fixed",
     zIndex: 50,
     bottom: 0,
