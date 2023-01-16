@@ -12,15 +12,32 @@ router.get("/products", (req, res, next) => {
 });
 router.get("/products/:id", (req, res, next) => {
   const id = req.params.id;
-  Product.findById(id).then((products) => {
-    res.send(products);
-  });
+  // Product.findById(id).then((products) => {
+  //   res.send(products);
+  // });
   // res.send({ type: "GET" });
+
+  //GPT response
+  Product.findById(id)
+    .then((product) => {
+      if (!product) {
+        res.status(404).send({ message: "Product not found" });
+      } else {
+        res.send(product);
+      }
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        res.status(400).send({ message: "Invalid product ID" });
+      } else {
+        next(err);
+      }
+    });
 });
 
 // add a new product to the db
 router.post("/products", (req, res, next) => {
- 
+
   Product.create(req.body)
     .then((product) => {
       res.send(product);

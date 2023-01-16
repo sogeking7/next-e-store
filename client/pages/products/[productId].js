@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, createStyles, Box, Flex, Modal, Stack, Divider } from "@mantine/core";
+import { Container, createStyles, Box, Flex, Modal, Stack, Divider, Loader } from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
 
 import Header from "../../components/layouts/Header";
@@ -8,6 +8,7 @@ import MobileNavBar from "../../components/layouts/MobileNavBar";
 
 import ProductDetail from '../../components/pages/productId/product/ProductDetail'
 
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -33,9 +34,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductId({ product }) {
+  const router = useRouter();
+  
   const { title, images, price, rating, _id } = product;
   const { classes } = useStyles();
   const [index, setIndex] = useState(0);
+
 
   return (
     <Stack spacing='sm' className={classes.wrapper}>
@@ -65,7 +69,7 @@ function ProductId({ product }) {
                       return <Carousel.Slide key={ind} className="mb-10">
                         <img
                           src={image}
-                        
+
                           className="max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
                         />
                       </Carousel.Slide>
@@ -115,32 +119,24 @@ function ProductId({ product }) {
 const prod = "https://next-e-store-api-sogeking7.vercel.app";
 const dev = "http:localhost:9000";
 
-export const getStaticPaths = async () => {
-  const res = await fetch(`${prod}/api/products`);
-  const data = await res.json();
+export const getServerSideProps = async (context) => {
+  const {params} = context;
 
-  const paths = data.map((product) => {
-    return {
-      params: { productId: product._id.toString() },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async (context) => {
-  const productId = context.params.productId;
+  const productId = params.productId;
   const res = await fetch(`${prod}/api/products/${productId}`);
-  const data = await res.json();
+  if(res.status === 404 || res.status === 400){
+    return { 
+      notFound: true
+    };
+  }
+
+  const product = await res.json();
+
 
   return {
     props: {
-      product: data,
+      product: product,
     },
-    revalidate: 300
   };
 };
 
