@@ -1,13 +1,20 @@
-import { Text, Button, Rating, Group, Box } from "@mantine/core";
+import { Text, Button, createStyles, Rating, Group, Box } from "@mantine/core";
 
 import Link from "next/link";
 
 import { AddToFavorite } from "./AddToFavorite";
 
+const useStyles = createStyles((theme) => ({
+  border: {
+    // paddingBottom: '1rem',
+    // borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[4]}`
+  }
+}));
+
 const grid = {
   wrapper: "flex flex-col gap-2",
-  image: 'object-contain h-[150px] w-full',
-  imageBox: "relative p-5 bg-white rounded-[4px]",
+  image: 'object-contain h-[160px] w-full',
+  imageBox: "relative p-5 bg-white rounded-xl ",
   body: "flex flex-col gap-2",
 };
 const flex = {
@@ -19,9 +26,11 @@ const flex = {
 function ProductCard(props) {
   const { product, layout } = props;
   const { title, thumbnail, price, rating, _id } = product;
-
+  const { classes } = useStyles();
   return (
+    
     <Box className={layout ? flex.wrapper : grid.wrapper}>
+      
       <div className={layout ? flex.imageBox : grid.imageBox}>
         <Link href={"/products/" + _id}>
           <img
@@ -34,7 +43,7 @@ function ProductCard(props) {
       <Box className={layout ? flex.body : grid.body}>
         <Box>
           <Link href={"/products/" + _id}>
-            <Text lineClamp={2} size='sm' className="cursor-pointer hover:text-[#37B24D]">
+            <Text lineClamp={2} size='sm' className="cursor-pointer hover:text-[#228be6]">
               {title}
             </Text>
           </Link>
@@ -47,14 +56,16 @@ function ProductCard(props) {
             </Box>
           </Link>
         </Box>
-        <Text weight="bold" size="md">
+        <Text weight="bold">
           {price}$
         </Text>
+        <div className={classes.border}>
         <Group>
-          <Button color="green" variant="filled" size="xs">
-            + Add to cart
+          <Button color="gray" variant="outline" size="xs" radius="lg">
+            Add to cart +
           </Button>
         </Group>
+        </div>
       </Box>
     </Box>
   );

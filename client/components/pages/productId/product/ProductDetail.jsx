@@ -18,7 +18,7 @@ function ProductDetail({ title, price, rating }) {
       <Text className="text-xl" weight="bold">
         {price}$
       </Text>
-      <Button color="green" variant="filled" >
+      <Button color="blue" variant="filled" radius='md' >
         Add to Cart
       </Button>
     </Stack>

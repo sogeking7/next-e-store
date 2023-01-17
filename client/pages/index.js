@@ -14,7 +14,9 @@ const useStyle = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
     overflow: 'hidden',
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0]
+    fontFami: 'Roboto',
+
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : '#FFFFFF'
   },
   container: {
     padding: '0 1rem',
@@ -29,8 +31,8 @@ function Home({ products }) {
       <Header setOpened={setOpened} />
       <MobileNavBar />
       <FilterDrawer opened={opened} setOpened={setOpened} />
-      <Container size="md" className="md:p-4 px-0 py-4">
-        <Flex gap="lg">
+      <Container size="lg" className="md:p-0 px-0 py-4">
+        <Flex>
           <FilterSideBar />
           <ProductGrid products={products} />
         </Flex>
@@ -41,13 +43,13 @@ function Home({ products }) {
 }
 
 const prod = "https://next-e-store-api-sogeking7.vercel.app",
-      dev = "http://localhost:9000";
+  dev = "http://localhost:9000";
 
 export const getStaticProps = async () => {
   const res = await fetch(`${prod}/api/products`);
   console.log('(Re-)Generating...');
   const products = await (res).json();
-  
+
   return {
     props: {
       products,

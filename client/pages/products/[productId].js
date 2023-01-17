@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
-    borderRadius: '4px'
+    borderRadius: '8px'
   },
   carouselIndicator: {
     width: 6,
@@ -46,10 +46,10 @@ function ProductId({ product }) {
       <Header />
       <MobileNavBar />
 
-      <Container size="md" className="w-full">
+      <Container size="lg" className="w-full">
         <div className={classes.Card}>
-          <Flex className="md:flex-row flex-col w-full">
-            <div className="flex flex-col md:w-2/3 h-full relative bg-white">
+          <Flex className="md:flex-row flex-col w-full rounded-md">
+            <div className="flex flex-col md:w-2/3 h-full relative bg-white rounded-lg">
 
               <div className="w-full h-full pt-4 md:pb-32 pb-0 md:px-16 px-4 duration-500 transition ease-in-out">
                 <img

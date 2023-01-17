@@ -28,6 +28,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"></link>
       </Head>
       <ColorSchemeProvider
         colorScheme={colorScheme}
@@ -36,7 +37,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
         <MantineProvider
           theme={{
             colorScheme,
-            fontFamily: 'Verdana, sans-serif',
+            fontFamily: 'Roboto',
             fontFamilyMonospace: 'Monaco, Courier, monospace',
             headings: { fontFamily: 'Greycliff CF, sans-serif' },
           }}

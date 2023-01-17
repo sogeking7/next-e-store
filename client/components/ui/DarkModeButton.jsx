@@ -7,12 +7,12 @@ export const DarkModeButton = () => {
 
   return (
     <ActionIcon
-      variant="transparent"
-      color={dark ? 'yellow' : 'blue'}
+      variant="subtle"
+      color={dark ? 'yellow' : 'dark'}
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
-      {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
+      {dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
     </ActionIcon>
   );
 }
