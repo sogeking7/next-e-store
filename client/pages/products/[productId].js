@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, createStyles, Box, Flex, Modal, Stack, Divider, Loader } from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
 
-import Header from "../../components/layouts/Header";
+import CatalogHeader from '../../components/layouts/CatalogHeader'
 import Footer from "../../components/layouts/Footer";
 import MobileNavBar from "../../components/layouts/MobileNavBar";
 
@@ -43,7 +43,7 @@ function ProductId({ product }) {
 
   return (
     <Stack spacing='sm' className={classes.wrapper}>
-      <Header />
+      <CatalogHeader />
       <MobileNavBar />
 
       <Container size="lg" className="w-full">

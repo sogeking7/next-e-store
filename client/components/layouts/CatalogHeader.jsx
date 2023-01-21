@@ -2,11 +2,13 @@ import React from "react";
 
 import {
   Container,
+  Header,
   Flex,
   ActionIcon,
   Avatar,
   Box,
   createStyles,
+  Group,
 } from "@mantine/core";
 
 import Logo from "../ui/Logo";
@@ -28,12 +30,12 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-function Header({ setOpened }) {
+function CatalogHeader({ setOpened }) {
   const { classes } = useStyles();
   return (
-    <Box py="xs" className={classes.border}>
-      <Container size="lg">
-        <Flex className="flex  md:flex-row  basic:flex-col basic:gap-2 md:gap-0 md:pt-0 md:pb-0 pb-[6px] basic:pt-4 md:items-center">
+    <Header height={60} className={classes.border} px="md">
+      <Container size="lg" sx={{height:'100%'}}>
+          <Flex className="flex  md:flex-row  h-full first-letter:basic:flex-col basic:gap-2 md:gap-0 md:pt-0 md:pb-0 pb-[6px] basic:pt-4 md:items-center">
           <Flex justify='space-between' className="lg:w-[23.2%] md:w-[28.5%] md:mr-4" align='center'><Logo /> <Box className="md:hidden block"><DarkModeButton /></Box></Flex>
           <Flex className="justify-between lg:w-[76%] md:w-[70%]">
             <Search setOpened={setOpened} />
@@ -62,8 +64,8 @@ function Header({ setOpened }) {
           </Flex>
         </Flex>
       </Container>
-    </Box>
+    </Header>
   );
 }
 
-export default Header;
+export default CatalogHeader;
