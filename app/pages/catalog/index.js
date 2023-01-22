@@ -43,9 +43,9 @@ function Catalog({ products }) {
   );
 }
 
-export const getStaticProps = async() => {
+export const getStaticProps = async () => {
   const data = await getAllProducts();
-  
+
   return {
     props: {
       products: data
