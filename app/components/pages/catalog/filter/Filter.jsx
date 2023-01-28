@@ -15,45 +15,7 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
-const categories = [
-  {
-    title: 'All',
-    route: 'all'
-  },
-  {
-    title: 'Computers',
-    route: 'computers'
-  },
-  {
-    title: 'Smartphones',
-    route: 'smartphones'
-  },
-  {
-    title: 'Headphones',
-    route: 'headphones'
-  },
-  {
-    title: 'Laptops',
-    route: 'laptops'
-  },
-  {
-    title: 'Tablets',
-    route: 'tablets'
-  },
-  {
-    title: 'Fitness bracelets',
-    route: 'fitness-bracelets'
-  },
-  {
-    title: 'Smart watches',
-    route: 'smart-watches'
-  },
-  {
-    title: 'Electronic books',
-    route: 'electronic-books'
-  }
-];
+import { categories } from "../../../../data/categories";
 
 const useStyles = createStyles((theme) => ({
   filter: {
@@ -63,6 +25,10 @@ const useStyles = createStyles((theme) => ({
     height: '100%'
   }
 }));
+
+const unslugify = (str) => {
+  return str.replace(/-|_/g, ' ').replace(/\b\w/g, function(l){ return l.toUpperCase() });
+}
 
 function Filter() {
   const router = useRouter()
@@ -76,12 +42,41 @@ function Filter() {
 
   const categoryHandler = (index, event) => {
     setCurCategory(categories[index])
-    const currentPath = router.pathname;
-    const newPath = `${currentPath}/${curCategory.route}`;
-    router.push(newPath)
-    console.log(newPath)
+
+    const query = router.query
+    query.category = curCategory.title
+
+    router.push({
+      pathname: router.pathname,
+      query: query
+    })
   }
 
+  const ratingHandler = (rating, event) => {
+    setCurRating(rating)
+
+    const query = router.query;
+    query.rating = rating
+
+    router.push({
+      pathname: router.pathname,
+      query: query
+    })
+  }
+
+
+  useEffect(() => {
+    const path = router.pathname;
+    const query = router.query;
+    query.from = priceRange[0]
+    query.to = priceRange[1]
+
+    router.push({
+      pathname: path,
+      query: query
+    })
+
+  }, [priceRange])
 
   return (
     <Stack className={classes.filter}>
@@ -148,10 +143,11 @@ function Filter() {
           {categories.map((category, index) => {
             return (
               <button
+                key={index}
                 onClick={(event) => categoryHandler(index, event)}
                 className={`${curCategory.title == category.title ? `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} border-none font-bold ${colorScheme === 'dark' ? 'bg-[#25262B]' : 'bg-[#E9ECEF]'} py-[6px] px-2` : `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} ${colorScheme === 'dark' ? 'bg-[#141517]' : 'bg-white'} border-none  ${colorScheme === 'dark' ? 'hover:bg-[#25262B]' : 'hover:bg-[#E9ECEF]'} py-[6px] px-2`}`}>
                 <Text>
-                  {category.title}
+                  {unslugify(category.title)}
                 </Text>
               </button>
             )
@@ -165,7 +161,7 @@ function Filter() {
           Array(4).fill(0).map((val, ind) => {
             const rating = 4 - ind;
             return (
-              <Flex key={ind} className="gap-1" align='center' onClick={() => { setCurRating(rating) }} >
+              <Flex key={ind} className="gap-1" align='center' onClick={(event) => ratingHandler(rating, event)} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
                 <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? '#C1C2C5' : 'dark'}` : 'blue'} className="cursor-pointer hover:underline">
                   and above
@@ -175,8 +171,6 @@ function Filter() {
             )
           })
         }
-
-
       </Stack>
       <Button className="fixed w-full bottom-0 right-0 md:hidden" size="lg">Show {20} items</Button>
     </Stack>

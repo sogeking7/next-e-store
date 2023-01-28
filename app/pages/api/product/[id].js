@@ -1,24 +1,23 @@
+import prisma from '../../../lib/prisma/index'
 
-const mongoose = require('mongoose')
-import clientPromise from "../../../utils/db";
+export default async function handler(req, res) {
+  const {method} = req
+  const id = req.query.id;
 
-export const getProductById = async (id) => {
-  const client = await clientPromise;
-  const db = client.db("test")
-  const collection = db.collection('products')
-
-  try {
-    const data = await collection
-      .find({ _id: mongoose.Types.ObjectId(id) })
-      .toArray()
-    return data[0]
-  } catch (error) {
-    return { error: error.message }
+  switch(method) {
+    case 'GET':
+      const product = await prisma.products.findUnique({where : {id : id}});
+      console.log(id)
+      res.status(200).json(product)
+    case 'POST':
+      res.status(200).json({ method, name: "POST request"});
+    case 'PUT':
+      res.status(200).json({ method, name: "PUT request"});
+    case 'DELETE':
+      res.status(200).json({ method, name: "DELETE request"});
+    default:
+      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE'])
+      res.status(405).end('Method ${method} Not Allowed')
   }
 }
 
-export default async (req, res) => {
-  const id = req.query.id;
-  const data = await getProductById(id);
-  res.status(200).json(JSON.parse(JSON.stringify(data)))
-}

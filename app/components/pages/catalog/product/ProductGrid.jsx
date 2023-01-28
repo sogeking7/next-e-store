@@ -51,7 +51,7 @@ function ProductGrid({ products }) {
         <Box className="">
           <div className={layout ? flex : grid}>
             {products.map((product) => (
-              <ProductCard key={product._id} product={product} layout={layout} />
+              <ProductCard key={product.id} product={product} layout={layout} />
             ))}
           </div>
         </Box>

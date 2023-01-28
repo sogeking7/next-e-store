@@ -9,7 +9,9 @@ import ProductGrid from "../../components/pages/catalog/product/ProductGrid";
 import FilterDrawer from "../../components/pages/catalog/filter/FilterDrawer";
 import FilterSideBar from "../../components/pages/catalog/filter/FilterSideBar";
 import CatalogHeader from "../../components/layouts/CatalogHeader";
-import { getAllProducts } from "../api/products";
+
+import prisma from "../../lib/prisma";
+import {useRouter} from "next/router";
 
 const useStyle = createStyles((theme) => ({
   wrapper: {
@@ -44,11 +46,23 @@ function Catalog({ products }) {
 }
 
 export const getStaticProps = async () => {
-  const data = await getAllProducts();
+  const router = useRouter();
+  const {from, to} = router.query;
+
+  console.log(from, to);
+
+  const products = await prisma.products.findMany({
+    where: {
+      price: {
+        gte: from,
+        lte: to
+      },
+    }
+  })
 
   return {
     props: {
-      products: data
+      products: products
     },
     revalidate: 5,
   };

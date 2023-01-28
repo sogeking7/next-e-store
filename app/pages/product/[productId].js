@@ -9,7 +9,6 @@ import MobileNavBar from "../../components/layouts/MobileNavBar";
 import ProductDetail from '../../components/pages/productId/product/ProductDetail'
 
 import { useRouter } from "next/router";
-import { getProductById } from "../api/product/[id]";
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -121,7 +120,11 @@ export const getServerSideProps = async (context) => {
   const { params } = context;
   const productId = params.productId;
 
-  const data = await getProductById(productId)
+  console.log(productId);
+
+  const url = 'http://localhost:3000';
+  const res = await fetch(`${url}/api/product/${productId}`)
+  const data = await res.json()
 
   if (!Object.keys(data).length || data.error || !data) {
     return {

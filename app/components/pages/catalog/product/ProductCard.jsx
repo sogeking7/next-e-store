@@ -25,24 +25,25 @@ const flex = {
 };
 function ProductCard(props) {
   const { product, layout } = props;
-  const { title, thumbnail, price, rating, _id } = product;
+  const { title, images, price, rating, _id: id } = product;
   const { classes } = useStyles();
+
   return (
     
     <Box className={layout ? flex.wrapper : grid.wrapper}>
       
       <div className={layout ? flex.imageBox : grid.imageBox}>
-        <Link href={"/product/" + _id}>
+        <Link href={"/product/" + id}>
           <img
             className={layout ? flex.image : grid.image}
-            src={thumbnail}
+            src={images[0]}
           />
         </Link>
         {!layout && <AddToFavorite />}
       </div>
       <Box className={layout ? flex.body : grid.body}>
         <Box>
-          <Link href={"/product/" + _id}>
+          <Link href={"/product/" + id}>
             <Text lineClamp={2} size='sm' className="cursor-pointer hover:text-[#228be6]">
               {title}
             </Text>
