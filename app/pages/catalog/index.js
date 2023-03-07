@@ -36,7 +36,7 @@ function Catalog(options) {
     if (router.query.category && router.query.category !== 'all') category = router.query.category;
     if (router.query.rating) rating = parseFloat(router.query.rating);
     const params = `from=${from}&to=${to}${category ? `&category=${category}` : ``}${rating ? `&rating=${rating}` : ``}`
-    link = `http://localhost:3000/api/products?${params}&order=${router.query.order}`;
+    link = `/api/products?${params}&order=${router.query.order}`;
     try {
       setLoading(true);
       axios

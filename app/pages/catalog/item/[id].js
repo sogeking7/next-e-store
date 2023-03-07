@@ -119,8 +119,7 @@ export const getServerSideProps = async (context) => {
 
   console.log(productId);
 
-  const url = 'http://localhost:3000';
-  const res = await fetch(`${url}/api/products/${productId}`)
+  const res = await axios.get(`/api/products/${productId}`)
   const data = await res.json()
 
   return {
