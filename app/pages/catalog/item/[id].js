@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Container, createStyles, Box, Flex, Modal, Stack, Divider, Loader } from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
 import CatalogHeader from '../../../components/layouts/CatalogHeader'
@@ -6,6 +6,7 @@ import Footer from "../../../components/layouts/Footer";
 import MobileNavBar from "../../../components/layouts/MobileNavBar";
 import ProductDetail from '../../../components/pages/productId/product/ProductDetail'
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -30,27 +31,33 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Id({ product }) {
+function Id() {
   const router = useRouter();
+  const [product, setProduct] = useState({});
 
-  const { title, images, price, rating, _id } = product;
+  useEffect(() => {
+    axios
+      .get(`/api/products/${router.query.id}`)
+      .then(res => {
+        setProduct(res.data)
+      })
+  }, [])
+
+  const { title, images, price, rating, id } = product;
   const { classes } = useStyles();
   const [index, setIndex] = useState(0);
-
 
   return (
     <Stack spacing='sm' className={classes.wrapper}>
       <CatalogHeader />
       <MobileNavBar />
-
       <Container size="lg" className="w-full">
         <div className={classes.Card}>
           <Flex className="md:flex-row flex-col w-full rounded-md">
             <div className="flex flex-col md:w-2/3 h-full relative bg-white rounded-lg">
-
               <div className="w-full h-full pt-4 md:pb-32 pb-0 md:px-16 px-4 duration-500 transition ease-in-out">
                 <img
-                  src={images[index]}
+                  src={images ? images[index] : ''}
                   className="md:block hidden max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
                 />
                 <div className="md:hidden block">
@@ -62,15 +69,19 @@ function Id({ product }) {
                       indicator: classes.carouselIndicator,
                     }}
                   >
-                    {images.map((image, ind) => {
-                      return <Carousel.Slide key={ind} className="mb-10">
-                        <img
-                          src={image}
+                    {
+                      images ?
+                      images.map((image, ind) => {
+                        return <Carousel.Slide key={ind} className="mb-10">
+                          <img
+                            src={image}
 
-                          className="max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
-                        />
-                      </Carousel.Slide>
-                    })}
+                            className="max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
+                          />
+                        </Carousel.Slide>
+                      })
+                      : <></>
+                    }
                   </Carousel>
                 </div>
               </div>
@@ -81,9 +92,9 @@ function Id({ product }) {
                   display: 'grid',
                   width: '100%',
                   height: '100%',
-                  gridTemplateColumns: `repeat(${images.length}, minmax(0, 1fr))`
+                  gridTemplateColumns: `repeat(${images ? images.length : 0}, minmax(0, 1fr))`
                 }}>
-                  {images.map((image, ind) => {
+                  {images ? images.map((image, ind) => {
                     return <div key={ind} style={
                       {
                         width: '100%',
@@ -97,7 +108,7 @@ function Id({ product }) {
                         src={image}
                       />
                     </div>
-                  })}
+                  }) : <></>}
                 </div>
               </div>
 
@@ -112,21 +123,5 @@ function Id({ product }) {
     </Stack>
   );
 }
-
-export const getServerSideProps = async (context) => {
-  const { params } = context;
-  const productId = params.id;
-
-  console.log(productId);
-
-  const res = await axios.get(`/api/products/${productId}`)
-  const data = await res.json()
-
-  return {
-    props: {
-      product: data
-    },
-  }
-};
 
 export default Id;
