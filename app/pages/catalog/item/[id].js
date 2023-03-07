@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Container, createStyles, Box, Flex, Modal, Stack, Divider, Loader } from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
-
-import CatalogHeader from '../../components/layouts/CatalogHeader'
-import Footer from "../../components/layouts/Footer";
-import MobileNavBar from "../../components/layouts/MobileNavBar";
-
-import ProductDetail from '../../components/pages/productId/product/ProductDetail'
-
+import CatalogHeader from '../../../components/layouts/CatalogHeader'
+import Footer from "../../../components/layouts/Footer";
+import MobileNavBar from "../../../components/layouts/MobileNavBar";
+import ProductDetail from '../../../components/pages/productId/product/ProductDetail'
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
@@ -33,7 +30,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function ProductId({ product }) {
+function Id({ product }) {
   const router = useRouter();
 
   const { title, images, price, rating, _id } = product;
@@ -118,25 +115,19 @@ function ProductId({ product }) {
 
 export const getServerSideProps = async (context) => {
   const { params } = context;
-  const productId = params.productId;
+  const productId = params.id;
 
   console.log(productId);
 
   const url = 'http://localhost:3000';
-  const res = await fetch(`${url}/api/product/${productId}`)
+  const res = await fetch(`${url}/api/products/${productId}`)
   const data = await res.json()
-
-  if (!Object.keys(data).length || data.error || !data) {
-    return {
-      notFound: true
-    }
-  }
 
   return {
     props: {
-      product: JSON.parse(JSON.stringify(data)),
+      product: data
     },
   }
 };
 
-export default ProductId;
+export default Id;

@@ -34,49 +34,47 @@ function Filter() {
   const router = useRouter()
 
   const { classes } = useStyles();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { colorScheme, toggleColorScheme} = useMantineColorScheme();
 
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [curCategory, setCurCategory] = useState(categories[0]);
-  const [curRating, setCurRating] = useState()
-
-  const categoryHandler = (index, event) => {
-    setCurCategory(categories[index])
-
-    const query = router.query
-    query.category = curCategory.title
-
-    router.push({
-      pathname: router.pathname,
-      query: query
-    })
-  }
-
-  const ratingHandler = (rating, event) => {
-    setCurRating(rating)
-
-    const query = router.query;
-    query.rating = rating
-
-    router.push({
-      pathname: router.pathname,
-      query: query
-    })
-  }
+  const [curCategory, setCurCategory] = useState(null);
+  const [curRating, setCurRating] = useState(0)
 
 
   useEffect(() => {
-    const path = router.pathname;
     const query = router.query;
     query.from = priceRange[0]
     query.to = priceRange[1]
-
+    console.log(router.pathname)
     router.push({
-      pathname: path,
+      pathname: '/catalog/',
       query: query
     })
+  }, [priceRange[0], priceRange[1]]);
 
-  }, [priceRange])
+
+  useEffect(() => {
+    if (curCategory) {
+      const query = router.query;
+      query.category = curCategory.title;
+      router.push({
+        pathname: '/catalog/',
+        query: query
+      })
+    }
+  }, [curCategory]);
+
+
+  useEffect(()=>{
+    if (curRating) {
+      const query = router.query;
+      query.rating = curRating;
+      router.push({
+        pathname: '/catalog/',
+        query: query
+      })
+    }
+  }, [curRating]);
 
   return (
     <Stack className={classes.filter}>
@@ -144,8 +142,8 @@ function Filter() {
             return (
               <button
                 key={index}
-                onClick={(event) => categoryHandler(index, event)}
-                className={`${curCategory.title == category.title ? `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} border-none font-bold ${colorScheme === 'dark' ? 'bg-[#25262B]' : 'bg-[#E9ECEF]'} py-[6px] px-2` : `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} ${colorScheme === 'dark' ? 'bg-[#141517]' : 'bg-white'} border-none  ${colorScheme === 'dark' ? 'hover:bg-[#25262B]' : 'hover:bg-[#E9ECEF]'} py-[6px] px-2`}`}>
+                onClick={() => setCurCategory(categories[index])}
+                className={`${curCategory != null && curCategory.title === category.title ? `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} border-none font-bold ${colorScheme === 'dark' ? 'bg-[#25262B]' : 'bg-[#E9ECEF]'} py-[6px] px-2` : `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} ${colorScheme === 'dark' ? 'bg-[#141517]' : 'bg-white'} border-none  ${colorScheme === 'dark' ? 'hover:bg-[#25262B]' : 'hover:bg-[#E9ECEF]'} py-[6px] px-2`}`}>
                 <Text>
                   {unslugify(category.title)}
                 </Text>
@@ -161,12 +159,11 @@ function Filter() {
           Array(4).fill(0).map((val, ind) => {
             const rating = 4 - ind;
             return (
-              <Flex key={ind} className="gap-1" align='center' onClick={(event) => ratingHandler(rating, event)} >
+              <Flex key={ind} className="gap-1" align='center' onClick={() => setCurRating(rating)} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
                 <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? '#C1C2C5' : 'dark'}` : 'blue'} className="cursor-pointer hover:underline">
                   and above
                 </Text>
-
               </Flex>
             )
           })

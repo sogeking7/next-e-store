@@ -1,5 +1,7 @@
 import { Box, createStyles, Group, Select, Stack } from "@mantine/core";
 import ProductCard from "./ProductCard";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 
 const layout = 0;
 // 0 grid
@@ -27,20 +29,32 @@ const flex = "flex flex-col gap-4";
 
 function ProductGrid({ products }) {
   const { classes } = useStyle();
+  const router = useRouter();
+
+  const [value, setValue] = useState(router.query.order ? router.query.order : "featured");
+  useEffect(() => {
+    const query = router.query;
+    query.order = value;
+    router.push({
+      pathname: '/catalog/',
+      query: query
+    })
+  }, [value])
   return (
     <Stack spacing="md" className="overflow-hidden w-full md:w-[80%] p-4">
       <Box className="md:block hidden">
         <Group position="right">
           <Select
             radius="md"
-            className="w-[130px]"
-            defaultValue="featured"
+            value={value}
+            className="w-[140px]"
             placeholder="Not set"
             size="xs"
+            onChange={setValue}
             data={[
-              { value: "price descending", label: "Price: high to low" },
-              { value: "price ascending", label: "Price: low to high" },
-              { value: "alphabtically", label: "Alphabetically" },
+              { value: "high-to-low", label: "Price: high to low" },
+              { value: "low-to-high", label: "Price: low to high" },
+              { value: "alphabetically", label: "Alphabetically" },
               { value: "featured", label: "Featured" },
             ]}
           />

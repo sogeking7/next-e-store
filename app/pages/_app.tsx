@@ -1,18 +1,18 @@
 import { useState } from "react";
-
 import Head from "next/head";
 import NextApp, { AppProps, AppContext } from "next/app";
 import { getCookie, setCookie } from "cookies-next";
-
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-
 import { RouterTransition } from "../components/layouts/RouterTransition";
+import { QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
 import "../styles/index.css";
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
+  const [queryClient] = useState(() => new QueryClient());
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
@@ -42,7 +42,10 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
         >
           <RouterTransition />
           <NotificationsProvider>
-            <Component {...pageProps} />
+            <QueryClientProvider client={queryClient}>
+              <Component {...pageProps} />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
           </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>

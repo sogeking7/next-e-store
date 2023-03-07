@@ -1,8 +1,7 @@
 import { Text, Button, createStyles, Rating, Group, Box } from "@mantine/core";
-
 import Link from "next/link";
-
 import { AddToFavorite } from "./AddToFavorite";
+import {useRouter} from "next/router";
 
 const useStyles = createStyles((theme) => ({
   border: {
@@ -10,7 +9,6 @@ const useStyles = createStyles((theme) => ({
     // borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[4]}`
   }
 }));
-
 const grid = {
   wrapper: "flex flex-col gap-2",
   image: 'object-contain h-[160px] w-full',
@@ -23,31 +21,37 @@ const flex = {
   image: 'object-contain',
   imageBox: "w-1/2",
 };
+
 function ProductCard(props) {
+  const router = useRouter();
+
   const { product, layout } = props;
-  const { title, images, price, rating, _id: id } = product;
+  const { title, images, price, rating, id } = product;
   const { classes } = useStyles();
+  console.log(product)
+
+  const routerHandler = (id) => {
+    const query = router.query;
+    query.id = id;
+    console.log(id)
+    router.push(`/catalog/item/${id}`)
+   }
 
   return (
-    
     <Box className={layout ? flex.wrapper : grid.wrapper}>
-      
       <div className={layout ? flex.imageBox : grid.imageBox}>
-        <Link href={"/product/" + id}>
-          <img
-            className={layout ? flex.image : grid.image}
-            src={images[0]}
-          />
-        </Link>
+        <img
+          onClick={() => routerHandler(id)}
+          className={layout ? flex.image : grid.image}
+          src={images[0]}
+        />
         {!layout && <AddToFavorite />}
       </div>
       <Box className={layout ? flex.body : grid.body}>
         <Box>
-          <Link href={"/product/" + id}>
-            <Text lineClamp={2} size='sm' className="cursor-pointer hover:text-[#228be6]">
-              {title}
-            </Text>
-          </Link>
+          <Text onClick={() => routerHandler(id)} lineClamp={2} size='sm' className="cursor-pointer hover:text-[#228be6]">
+            {title}
+          </Text>
           <Link href="/">
             <Rating defaultValue={rating} size="xs" fractions={2} readOnly className="" />
           </Link>
