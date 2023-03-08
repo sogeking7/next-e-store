@@ -40,6 +40,7 @@ function ProductGrid({ products }) {
       query: query
     })
   }, [value])
+
   return (
     <Stack spacing="md" className="overflow-hidden w-full md:w-[80%] p-4">
       <Box className="md:block hidden">

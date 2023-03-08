@@ -3377,7 +3377,7 @@
   "resolved" "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
 
-"next@*", "next@12.1.7-canary.31":
+"next@*", "next@^12.1.7-canary.31":
   "integrity" "sha512-3R02/hwxkr5477nC4FqL6+oxdifRyh2kBNg3WNStpaSRIaGMhymg3fdECPTzIFeUspZ+/E1vPWQ9xjYqUQexfQ=="
   "resolved" "https://registry.npmjs.org/next/-/next-12.1.7-canary.31.tgz"
   "version" "12.1.7-canary.31"

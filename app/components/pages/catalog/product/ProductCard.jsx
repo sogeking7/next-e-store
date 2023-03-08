@@ -28,12 +28,12 @@ function ProductCard(props) {
   const { product, layout } = props;
   const { title, images, price, rating, id } = product;
   const { classes } = useStyles();
-  console.log(product)
+  // console.log(product)
 
   const routerHandler = (id) => {
     const query = router.query;
     query.id = id;
-    console.log(id)
+    // console.log(id)
     router.push(`/catalog/item/${id}`)
    }
 

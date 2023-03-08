@@ -1,12 +1,12 @@
+import axios from "axios";
 import {useEffect, useState} from "react";
-import { Container, createStyles, Box, Flex, Modal, Stack, Divider, Loader } from "@mantine/core";
+import { Container, createStyles, Flex, Stack, Divider } from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
 import CatalogHeader from '../../../components/layouts/CatalogHeader'
 import Footer from "../../../components/layouts/Footer";
 import MobileNavBar from "../../../components/layouts/MobileNavBar";
 import ProductDetail from '../../../components/pages/productId/product/ProductDetail'
 import { useRouter } from "next/router";
-import axios from "axios";
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -111,7 +111,6 @@ function Id() {
                   }) : <></>}
                 </div>
               </div>
-
             </div>
             <Divider orientation="vertical" />
             <ProductDetail title={title} price={price} rating={rating} />
@@ -119,7 +118,6 @@ function Id() {
         </div>
       </Container>
       <Footer />
-
     </Stack>
   );
 }
