@@ -1,4 +1,3 @@
-var slugify = require('slugify')
 
 export const categories = [
   {

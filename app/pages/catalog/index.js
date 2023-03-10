@@ -7,6 +7,7 @@ import FilterDrawer from "../../components/pages/catalog/filter/FilterDrawer";
 import FilterSideBar from "../../components/pages/catalog/filter/FilterSideBar";
 import CatalogHeader from "../../components/layouts/CatalogHeader";
 import {useRouter} from "next/router";
+import LoaderComponent from '../../components/ui/Loader'
 import {useQuery} from "react-query";
 import axios from "axios";
 
@@ -27,10 +28,11 @@ function Catalog(options) {
   const { classes } = useStyle()
   const [opened, setOpened] = useState(false);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     try {
-      // setLoading(true);
+      setLoading(true);
       let rating, category;
       const {from, to} = router.query;
       if (router.query.category && router.query.category !== 'all') category = router.query.category;
@@ -44,8 +46,9 @@ function Catalog(options) {
           const sortedProducts = res.data;
           setProducts(sortedProducts)
         })
+      setLoading(false)
     } catch (e) {
-      // setLoading(false);
+      setLoading(false);
       console.error(e)
     }
   }, [router]);
@@ -70,20 +73,23 @@ function Catalog(options) {
   //   return <Box>Error!</Box>
   // }
   // if (isSuccess) {
-    return (
-      <Box className={classes.wrapper}>
-        <CatalogHeader setOpened={setOpened}/>
-        <MobileNavBar/>
-        <FilterDrawer opened={opened} setOpened={setOpened}/>
-        <Container size="lg" className="md:p-0 px-0 py-4">
-          <Flex>
-            <FilterSideBar/>
-            <ProductGrid products={products}/>
-          </Flex>
-        </Container>
-        <Footer/>
-      </Box>
-    );
+
+      return (
+        <Box className={classes.wrapper}>
+          <CatalogHeader setOpened={setOpened}/>
+          <MobileNavBar/>
+          <FilterDrawer opened={opened} setOpened={setOpened}/>
+          <Container size="lg" className="md:p-0 px-0 py-4">
+            <Flex>
+              <FilterSideBar/>
+              {loading ? <LoaderComponent/> :
+              <ProductGrid  products={products}/>}
+            </Flex>
+          </Container>
+          <Footer/>
+        </Box>
+      );
+
   // }
 
 }
