@@ -34,7 +34,7 @@ function ProductCard(props) {
     const query = router.query;
     query.id = id;
     // console.log(id)
-    router.push(`/catalog/item/${id}`)
+    router.push(`/catalog/${router.query.category_name}/item/${id}`)
    }
 
   return (

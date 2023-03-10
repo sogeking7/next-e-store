@@ -31,12 +31,12 @@ function ProductGrid({ products }) {
   const { classes } = useStyle();
   const router = useRouter();
 
-  const [value, setValue] = useState(router.query.order ? router.query.order : "featured");
+  const [value, setValue] = useState(router.query.sort ? router.query.sort : "featured");
   useEffect(() => {
     const query = router.query;
-    query.order = value;
+    query.sort = value;
     router.push({
-      pathname: '/catalog/',
+      pathname: `/catalog/${query.category_name}`,
       query: query
     })
   }, [value])
@@ -53,9 +53,9 @@ function ProductGrid({ products }) {
             size="xs"
             onChange={setValue}
             data={[
-              { value: "high-to-low", label: "Price: high to low" },
-              { value: "low-to-high", label: "Price: low to high" },
-              { value: "alphabetically", label: "Alphabetically" },
+              { value: "desc", label: "Price: high to low" },
+              { value: "asc", label: "Price: low to high" },
+              { value: "name", label: "Alphabetically" },
               { value: "featured", label: "Featured" },
             ]}
           />

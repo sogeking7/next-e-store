@@ -8,20 +8,19 @@ datasource db {
 }
 
 model Product {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
   price       Float
   rating      Float
   brand       String
   images      String[]
-  categoryIDs String[]   @db.ObjectId
-  categories  Category[] @relation(fields: [categoryIDs], references: [id])
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String   @db.ObjectId
 }
 
 model Category {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  productIDs String[]  @db.ObjectId
-  products   Product[] @relation(fields: [productIDs], references: [id])
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String    @unique
+  products Product[]
 }

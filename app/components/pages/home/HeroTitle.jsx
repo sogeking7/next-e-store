@@ -1,4 +1,4 @@
-import { createStyles, Container, Text, Button, Group } from '@mantine/core';
+import {createStyles, Container, Text, Button, Group, Divider} from '@mantine/core';
 // import { GithubIcon } from '@mantine/core';
 import { IconBrandGithub, IconBuildingStore} from '@tabler/icons';
 
@@ -13,16 +13,16 @@ const useStyles = createStyles((theme) => ({
   },
   wrapper: {
     position: 'relative',
-    height: '100vh',
     boxSizing: 'border-box',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
   },
 
   inner: {
     position: 'relative',
-    paddingTop: 200,
+    paddingTop: 120,
     paddingBottom: 120,
-
+    display: 'flex',
+    justifyContent: 'center',
     [BREAKPOINT]: {
       paddingBottom: 80,
       paddingTop: 80,
@@ -31,7 +31,7 @@ const useStyles = createStyles((theme) => ({
 
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: 62,
+    fontSize: 36,
     fontWeight: 900,
     lineHeight: 1.1,
     margin: 0,
@@ -80,7 +80,7 @@ export default function HeroTitle() {
   const router = useRouter()
   return (
     <div className={classes.wrapper}>
-      <Container size="lg" className={classes.inner}>
+      <Container size="lg"  className={classes.inner}>
         <h1 className={classes.title}>
           A{' '}
           <Text component="span" variant="gradient" className={classes.gradient} inherit>
@@ -89,35 +89,38 @@ export default function HeroTitle() {
           Ecommerce Store
         </h1>
 
-        <Text className={classes.description} color="dimmed">
-          Shop the latest trends and styles at our e-store
-        </Text>
+        {/*<Text className={classes.description} color="dimmed">*/}
+        {/*  Shop the latest trends and styles at our e-store*/}
+        {/*</Text>*/}
 
-        <Group className={classes.controls}>
-          <Button
-            size="xl"
-            className={classes.control}
-            variant="gradient"
-            radius="md"
-            onClick={() => router.push('/catalog')}
-            gradient={{ from: 'indigo', to: 'indigo' }}
-            leftIcon={<IconBuildingStore size={20} />}
-          >
-            Shop
-          </Button>
+        {/*<Group className={classes.controls}>*/}
+        {/*  <Button*/}
+        {/*    size="xl"*/}
+        {/*    className={classes.control}*/}
+        {/*    variant="gradient"*/}
+        {/*    radius="md"*/}
+        {/*    onClick={() => router.push('/catalog')}*/}
+        {/*    gradient={{ from: 'indigo', to: 'indigo' }}*/}
+        {/*    leftIcon={<IconBuildingStore size={20} />}*/}
+        {/*  >*/}
+        {/*    Shop*/}
+        {/*  </Button>*/}
 
-          <Button
-            component="a"
-            href="https://github.com/sogeking7/next-e-store"
-            size="xl"
-            radius="md"
-            variant="default"
-            className={classes.control}
-            leftIcon={<IconBrandGithub size={20} />}
-          >
-            GitHub
-          </Button>
-        </Group>
+        {/*  <Button*/}
+        {/*    component="a"*/}
+        {/*    href="https://github.com/sogeking7/next-e-store"*/}
+        {/*    size="xl"*/}
+        {/*    radius="md"*/}
+        {/*    variant="default"*/}
+        {/*    className={classes.control}*/}
+        {/*    leftIcon={<IconBrandGithub size={20} />}*/}
+        {/*  >*/}
+        {/*    GitHub*/}
+        {/*  </Button>*/}
+        {/*</Group>*/}
+      </Container>
+      <Container size="lg" >
+
       </Container>
     </div>
   );

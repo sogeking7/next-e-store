@@ -2,13 +2,13 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Container, createStyles, Flex, Stack, Divider} from "@mantine/core";
 import { Carousel } from '@mantine/carousel'
-import Loader from "../../../components/ui/Loader";
-import CatalogHeader from '../../../components/layouts/CatalogHeader'
-import Footer from "../../../components/layouts/Footer";
-import MobileNavBar from "../../../components/layouts/MobileNavBar";
-import ProductDetail from '../../../components/pages/productId/product/ProductDetail'
+import Loader from "../../../../components/ui/Loader";
+import CatalogHeader from '../../../../components/layouts/CatalogHeader'
+import Footer from "../../../../components/layouts/Footer";
+import MobileNavBar from "../../../../components/layouts/MobileNavBar";
+import ProductDetail from '../../../../components/pages/productId/product/ProductDetail'
 import { useRouter } from "next/router";
-import LoaderComponent from "../../../components/ui/Loader";
+import LoaderComponent from "../../../../components/ui/Loader";
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -42,7 +42,7 @@ function Id() {
     try {
       setLoading(true);
       axios
-        .get(`/api/products/${router.query.id}`)
+        .get(`/api/products/${router.query.category_name}/${router.query.id}`)
         .then(res => {
           setProduct(res.data)
         })

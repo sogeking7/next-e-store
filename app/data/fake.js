@@ -16,7 +16,7 @@
 //     description: faker.commerce.productDescription(),
 //     price: parseInt(faker.commerce.price(1, 1000)),
 //     rating: parseFloat(faker.commerce.price(1, 5)),
-//     category: categories[randomInteger(0, categories.length-1)].title,
+//     [category_name]: categories[randomInteger(0, categories.length-1)].title,
 //     brand: brands[randomInteger(0, brands.length-1)],
 //     images: [imageUrl]
 //   };
@@ -690,3 +690,5 @@ export const data = [
     ]
   }
 ]
+
+// console.log(data.length)

@@ -26,9 +26,6 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-const unslugify = (str) => {
-  return str.replace(/-|_/g, ' ').replace(/\b\w/g, function(l){ return l.toUpperCase() });
-}
 
 function Filter() {
   const router = useRouter()
@@ -37,7 +34,6 @@ function Filter() {
   const { colorScheme, toggleColorScheme} = useMantineColorScheme();
 
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [curCategory, setCurCategory] = useState(null);
   const [curRating, setCurRating] = useState(0)
 
 
@@ -45,24 +41,11 @@ function Filter() {
     const query = router.query;
     query.from = priceRange[0]
     query.to = priceRange[1]
-    console.log(router.pathname)
     router.push({
-      pathname: '/catalog/',
+      pathname: router.pathname,
       query: query
     })
   }, [priceRange[0], priceRange[1]]);
-
-
-  useEffect(() => {
-    if (curCategory) {
-      const query = router.query;
-      query.category = curCategory.title;
-      router.push({
-        pathname: '/catalog/',
-        query: query
-      })
-    }
-  }, [curCategory]);
 
 
   useEffect(()=>{
@@ -70,7 +53,7 @@ function Filter() {
       const query = router.query;
       query.rating = curRating;
       router.push({
-        pathname: '/catalog/',
+        pathname: router.pathname,
         query: query
       })
     }
@@ -133,24 +116,6 @@ function Filter() {
             },
           })}
         />
-      </Stack>
-      <Divider my="xs" />
-      <Stack spacing="xs">
-        <Text weight="bold">Category</Text>
-        <Flex direction="column">
-          {categories.map((category, index) => {
-            return (
-              <button
-                key={index}
-                onClick={() => setCurCategory(categories[index])}
-                className={`${curCategory != null && curCategory.title === category.title ? `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} border-none font-bold ${colorScheme === 'dark' ? 'bg-[#25262B]' : 'bg-[#E9ECEF]'} py-[6px] px-2` : `text-left rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} ${colorScheme === 'dark' ? 'bg-[#141517]' : 'bg-white'} border-none  ${colorScheme === 'dark' ? 'hover:bg-[#25262B]' : 'hover:bg-[#E9ECEF]'} py-[6px] px-2`}`}>
-                <Text>
-                  {unslugify(category.title)}
-                </Text>
-              </button>
-            )
-          })}
-        </Flex>
       </Stack>
       <Divider my="xs" />
       <Stack spacing="xs">
