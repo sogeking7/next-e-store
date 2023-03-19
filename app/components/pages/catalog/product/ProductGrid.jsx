@@ -1,34 +1,19 @@
-import { Box, createStyles, Group, Select, Stack } from "@mantine/core";
+import {Box, Container, Group, Select, Stack} from "@mantine/core";
 import ProductCard from "./ProductCard";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import {useQuery} from "react-query";
+import axios from "axios";
+import Loader from "../../../ui/Loader";
 
 const layout = 0;
-// 0 grid
-// 1 flex
-
-const useStyle = createStyles((theme) => ({
-  wrapper: {
-    // backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#fff',
-    // border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[3]
-    //   }`,
-    borderRadius: "8px",
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      // Type safe child reference in nested selectors via ref
-      // [`& .${getRef('child')}`]: {
-      //   fontSize: theme.fontSizes.xs,
-      // },
-      border: 'none'
-    },
-  },
-}));
 
 const grid =
   "grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6";
 const flex = "flex flex-col gap-4";
 
-function ProductGrid({ products }) {
-  const { classes } = useStyle();
+function ProductGrid() {
+  // const { classes } = useStyle();
   const router = useRouter();
 
   const [value, setValue] = useState(router.query.sort ? router.query.sort : "featured");
@@ -41,8 +26,27 @@ function ProductGrid({ products }) {
     })
   }, [value])
 
+
+  const {isLoading, error, data} = useQuery(['products', router], () => {
+    let rating;
+    let {from, to, category_name} = router.query;
+    if (!to) to = 1000
+    if (router.query.rating) rating = parseFloat(router.query.rating);
+    const params = `from=${from ? from : '0'}&to=${to ? to : '0'}${rating ? `&rating=${rating}` : ``}`
+    const link = `/api/products/${category_name}?${params}&sort=${router.query.sort ? router.query.sort : 'featured'}`;
+    return axios.get(link).then(res => res.data)
+  })
+
+  if (isLoading) return (
+    <Container size="lg" className="flex justify-center p-[20vh]">
+      <Loader size="lg" color="blue" variant="oval"/>
+    </Container>
+  )
+  if (error) return 'An error has occurred: ' + error.message
+
   return (
     <Stack spacing="md" className="overflow-hidden w-full md:w-[80%] p-4">
+
       <Box className="md:block hidden">
         <Group position="right">
           <Select
@@ -62,14 +66,10 @@ function ProductGrid({ products }) {
         </Group>
       </Box>
 
-      <Box className={classes.wrapper}>
-        <Box className="">
-          <div className={layout ? flex : grid}>
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} layout={layout} />
-            ))}
-          </div>
-        </Box>
+      <Box className={layout ? flex : grid}>
+        {data.map((product) => (
+          <ProductCard key={product.id} product={product} layout={layout} />
+        ))}
       </Box>
     </Stack>
   );

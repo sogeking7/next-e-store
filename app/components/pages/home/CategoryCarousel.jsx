@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Container, createStyles, Flex, Text} from "@mantine/core";
+import {Box, Button, Container, createStyles, Flex, Image, Text, Title} from "@mantine/core";
 import axios from "axios";
 import {useRouter} from "next/router";
 import Link from "next/link";
@@ -11,6 +11,8 @@ import {
   IconDeviceWatchStats2, IconFileUnknown, IconGridDots,
   IconHeadphones
 } from "@tabler/icons";
+import {useQuery} from "react-query";
+import Loader from "../../ui/Loader";
 
 const icons = [
 
@@ -25,23 +27,26 @@ const icons = [
   <IconDeviceIpad />,
   <IconFileUnknown />,
   <IconGridDots />,
-
-
 ]
 const useStyle = createStyles((theme) => ({
   wrapper: {
-    // backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3],
-    // color: theme.colorScheme === 'dark' ? theme.colors.gray[0] : theme.colors.dark[5],
-    fontSize: '16px',
-    height: '120px',
-    borderRadius: "8px",
+    // border: '1px solid black',
+    height: '240px',
+    cursor: 'pointer',
+    // fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '16px 16px 16px 16px',
+    borderRadius: '16px',
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : 'white',
   },
   gradient: {
     backgroundImage: theme.colorScheme === 'dark' ? theme.fn.linearGradient(85, theme.colors.blue[4], theme.colors.grape[2], theme.colors.grape[5]) : theme.fn.linearGradient(85, theme.colors.blue[6], theme.colors.grape[7])
   },
-  bg: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : '#fff',
-
+  bgGray: {
+    paddingBottom: '2rem',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
   }
 }));
 const unslugify = (slug) => slug.replace(/\-/g, " ").replace(/\w\S*/g,
@@ -51,40 +56,35 @@ const unslugify = (slug) => slug.replace(/\-/g, " ").replace(/\w\S*/g,
 function CategoryCarousel() {
   const router = useRouter();
   const { classes } = useStyle();
+  const {isLoading, error, data} = useQuery('categories', ()=>{
+    return axios.get('/api/categories').then(res => res.data)
+  })
 
-  const [categories, setCategories] = useState([]);
-  useEffect(()=>{
-    try {
-      const link = `/api/categories`;
-      axios
-        .get(link)
-        .then(res => {
-          setCategories(res.data)
-        })
-    } catch (e) {
-      console.error(e)
-    }
-  }, []);
+  if (isLoading) return <Loader/>
+  if (error) return 'An error has occurred: ' + error.message
   return (
-    <Box className={classes.bg}>
-      <Container size="lg">
-        <Box className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-4 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6">
-          {categories.map((category, ind) => {
+    <Box className={classes.bgGray}>
+      <Container size="lg" className="py-16">
+        <Box className="text-center pb-8">
+          <Title>Online Store</Title>
+        </Box>
+        <Box className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-4 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-3 gap-y-6">
+          {
+            data.map((category, ind) => {
             return <Link href={`/catalog/${category.name}`}>
-                <Button variant="default" className={classes.wrapper}>
-                  <Box className='flex gap-y-2 justify-center flex-col items-center'>
-                    <Box>{icons[ind]}</Box>
-                    <Box>{unslugify(category.name)}</Box>
+                <Box className={classes.wrapper}>
+                  <Box className='flex gap-y-2 justify-center flex-col w-[150px] relative items-center break-words'  >
+                    <Image src={category.image} className="object-contain "/>
+                    <Box className="text-center">{unslugify(category.name)}</Box>
                   </Box>
-
-                </Button>
+                </Box>
               </Link>
-
-          })}
+            })
+          }
         </Box>
       </Container>
     </Box>
   )
 }
 
-export default CategoryCarousel;
+export default CategoryCarousel

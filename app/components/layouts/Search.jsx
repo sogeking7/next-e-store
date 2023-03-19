@@ -1,29 +1,29 @@
 import React from "react";
-import { TextInput, ActionIcon, Box } from "@mantine/core";
+import {TextInput, ActionIcon, Box, Flex} from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
-  IconSearch,
+  IconSearch, IconShoppingCart,
 } from "@tabler/icons";
 
 export default function Search({ setOpened }) {
   return (
-    <Box className="md:block flex items-center gap-2 md:w-[500px] w-full md:mr-8">
+    <Flex className="justify-center md:flex items-center gap-2 md:w-[500px] w-full md:mr-8">
       <TextInput
-        radius="lg"
+        radius="xl"
         className="w-full overflow-hidden"
-        icon={<IconSearch size={14} />}
+        icon={<IconSearch size={16} />}
         placeholder="Search in Store"
       ></TextInput>
       <ActionIcon
-        radius="md"
+        size="md"
+        color='dark'
         onClick={() => setOpened(true)}
-        className="md:hidden text-white hover:text-[#ADB5BD]"
         variant="transparent"
-        color="dark"
+        className="md:hidden"
       >
         <IconAdjustmentsHorizontal />
       </ActionIcon>
-    </Box>
+    </Flex>
   );
 }
 

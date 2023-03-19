@@ -7,10 +7,11 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { RouterTransition } from "../components/layouts/RouterTransition";
 import { QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
+import { SessionProvider } from "next-auth/react";
 import "../styles/index.css";
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
-  const { Component, pageProps } = props
+  const { Component, pageProps: {session, ...pageProps} } = props
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
   const [queryClient] = useState(() => new QueryClient());
 
@@ -29,26 +30,30 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
-      >
-        <MantineProvider
-          theme={{
-            colorScheme,
-          }}
-          withNormalizeCSS
-          withGlobalStyles
+      <SessionProvider session={session}>
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
         >
-          <RouterTransition />
-          <NotificationsProvider>
-            <QueryClientProvider client={queryClient}>
-              <Component {...pageProps} />
-              <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
-          </NotificationsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+          {/*<CustomFonts/>*/}
+          <MantineProvider
+            theme={{
+              colorScheme,
+              fontFamily: "Inter, sans-serif"
+            }}
+            withNormalizeCSS
+            withGlobalStyles
+          >
+            <RouterTransition />
+            <NotificationsProvider>
+              <QueryClientProvider client={queryClient}>
+                  <Component {...pageProps} />
+                <ReactQueryDevtools initialIsOpen={false} />
+              </QueryClientProvider>
+            </NotificationsProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </SessionProvider>
     </>
   );
 }

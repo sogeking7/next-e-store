@@ -3,10 +3,8 @@ import {Box, Container, Loader} from '@mantine/core'
 
 function LoaderComponent(props) {
   return (
-    <Container className="">
-      <Box className="pt-24">
-        <Loader size="lg" color="indigo"/>
-      </Box>
+    <Container size="lg" className="flex justify-center p-16">
+      <Loader size="lg" color="blue" variant="oval"/>
     </Container>
   );
 }
