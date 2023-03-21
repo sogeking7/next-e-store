@@ -19,8 +19,7 @@ import { useRouter } from "next/router";
 const useStyles = createStyles((theme) => ({
   filter: {
     padding: '1rem',
-    borderRight: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
-      }`,
+    // borderRight: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]}`,
     height: '100%'
   }
 }));
@@ -100,9 +99,9 @@ function Filter() {
           min={0}
           max={1000}
           label={null}
+          color='blue'
           value={priceRange}
           onChange={setPriceRange}
-          color="indigo"
           className="w-full"
           defaultValue={[priceRange[0], priceRange[1]]}
           styles={(theme) => ({
@@ -125,7 +124,7 @@ function Filter() {
             return (
               <Flex key={ind} className="gap-1" align='center' onClick={() => setCurRating(rating)} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
-                <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? '#C1C2C5' : 'dark'}` : 'blue'} className="cursor-pointer hover:underline">
+                <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? '#C1C2C5' : 'dark'}` : '#4dabf7'} className="cursor-pointer hover:underline">
                   and above
                 </Text>
               </Flex>

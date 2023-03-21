@@ -14,12 +14,11 @@ const useStyle = createStyles((theme) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.dark[8],
   },
   wrapper: {
-    minHeight: '120vh',
-    paddingBottom: '168.19px',
+    minHeight: '100vh',
+    paddingBottom: '392.19px',
     position: 'relative'
   }
 }));
-
 
 // const UserContext = createContext();
 
@@ -30,7 +29,7 @@ function Home() {
     <div className={classes.wrapper}>
       <CatalogHeader />
       <HeroTitle />
-      <CategoryCarousel />
+      {/*<CategoryCarousel />*/}
       <Footer/>
     </div>
   )

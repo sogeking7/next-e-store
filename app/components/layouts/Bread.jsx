@@ -1,30 +1,20 @@
-import { Breadcrumbs, Anchor, Box, Text, createStyles } from '@mantine/core';
+import { Breadcrumbs, Anchor, Box, Text } from '@mantine/core';
 
 import React from 'react'
 
-const items = [
-	{ title: 'e-store', href: '#' },
-	{ title: 'CategoryName', href: '#' },
-	{ title: 'ProductName/Id', href: '#' },
-].map((item, index) => (
-	<Anchor href={item.href} key={index}>
-		<Text size="sm">{item.title}</Text>
-	</Anchor>
-));
 
-const useStyles = createStyles((theme) => ({
-	bread: {
-		padding: '1rem',
-		borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
-	}`
-	}
-}))
+function getItems(list) {
+	return list.map((item, index) => (
+		<Anchor href={item.href} key={index} >
+			<Text size="md">{item.title}</Text>
+		</Anchor>
+	));
+}
 
-function Bread() {
-	const {classes} = useStyles()
+function Bread({list}) {
 	return (
-		<Box className={classes.bread}>
-			<Breadcrumbs separator="/">{items}</Breadcrumbs>
+		<Box className="p-4">
+			<Breadcrumbs separator="/" color="green">{getItems(list)}</Breadcrumbs>
 		</Box>
 	)
 }

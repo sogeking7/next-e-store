@@ -1,31 +1,21 @@
-import {Box, Container, Group, Select, Stack} from "@mantine/core";
+import {Box, Container, Group, Select, Text, Title,} from "@mantine/core";
 import ProductCard from "./ProductCard";
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useQuery} from "react-query";
 import axios from "axios";
 import Loader from "../../../ui/Loader";
+import Image from "next/image";
+import error_navigation
+  from '../../../../public/error-support-navigation-lost-not-found-question-questions-faq-people.png'
 
 const layout = 0;
 
-const grid =
-  "grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6";
+const grid = "grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6";
 const flex = "flex flex-col gap-4";
 
-function ProductGrid() {
-  // const { classes } = useStyle();
+function ProductGrid({title}) {
   const router = useRouter();
-
-  const [value, setValue] = useState(router.query.sort ? router.query.sort : "featured");
-  useEffect(() => {
-    const query = router.query;
-    query.sort = value;
-    router.push({
-      pathname: `/catalog/${query.category_name}`,
-      query: query
-    })
-  }, [value])
-
 
   const {isLoading, error, data} = useQuery(['products', router], () => {
     let rating;
@@ -42,36 +32,23 @@ function ProductGrid() {
       <Loader size="lg" color="blue" variant="oval"/>
     </Container>
   )
-  if (error) return 'An error has occurred: ' + error.message
+  if (error) return (
+    <Container size="lg" className="flex justify-center pt-[12.3vh]">
+      <Box className="w-[50%]">
+        <Image src={error_navigation}/>
+        <Text>Sorry, no products were found matching your criteria.</Text>
+      </Box>
+    </Container>
+  )
 
   return (
-    <Stack spacing="md" className="overflow-hidden w-full md:w-[80%] p-4">
-
-      <Box className="md:block hidden">
-        <Group position="right">
-          <Select
-            radius="md"
-            value={value}
-            className="w-[140px]"
-            placeholder="Not set"
-            size="xs"
-            onChange={setValue}
-            data={[
-              { value: "desc", label: "Price: high to low" },
-              { value: "asc", label: "Price: low to high" },
-              { value: "name", label: "Alphabetically" },
-              { value: "featured", label: "Featured" },
-            ]}
-          />
-        </Group>
-      </Box>
-
-      <Box className={layout ? flex : grid}>
+    <>
+      <Box className={grid}>
         {data.map((product) => (
-          <ProductCard key={product.id} product={product} layout={layout} />
+          <ProductCard key={product.id} product={product} layout={layout}/>
         ))}
       </Box>
-    </Stack>
+    </>
   );
 }
 

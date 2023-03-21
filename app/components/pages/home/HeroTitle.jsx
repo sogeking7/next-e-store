@@ -2,6 +2,7 @@ import illustration from '../../../public/design-workflow-web-graphic-website-la
 import {createStyles, Container, Text, Box, Title, Flex} from '@mantine/core';
 import { useRouter } from 'next/router'
 import Image from "next/image";
+import {useHover} from "@mantine/hooks";
 
 
 const useStyles = createStyles((theme) => ({
@@ -19,6 +20,7 @@ const useStyles = createStyles((theme) => ({
 export default function HeroTitle() {
   const { classes } = useStyles();
   const router = useRouter()
+  const { hovered, ref } = useHover();
   return (
     <div className={classes.wrapper}>
       <Container size="lg" className="py-[2rem]">
@@ -35,6 +37,7 @@ export default function HeroTitle() {
           <Box className="w-[40%]">
             <Image src={illustration} />
           </Box>
+
         </Flex>
       </Container>
     </div>

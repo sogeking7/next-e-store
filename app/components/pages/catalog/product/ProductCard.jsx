@@ -45,7 +45,7 @@ function ProductCard(props) {
           className={layout ? flex.image : grid.image}
           src={images[0]}
         />
-        {!layout && <AddToFavorite />}
+
       </div>
       <Box className={layout ? flex.body : grid.body}>
         <Box>
