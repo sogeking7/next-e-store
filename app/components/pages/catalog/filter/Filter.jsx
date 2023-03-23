@@ -17,11 +17,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
-  filter: {
-    padding: '1rem',
-    // borderRight: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]}`,
-    height: '100%'
-  }
 }));
 
 
@@ -42,7 +37,7 @@ function Filter() {
     router.push({
       pathname: router.pathname,
       query: query
-    })
+    }, undefined,  { shallow: true })
   }, [priceRange[0], priceRange[1]]);
 
 
@@ -53,12 +48,12 @@ function Filter() {
       router.push({
         pathname: router.pathname,
         query: query
-      })
+      }, undefined,  { shallow: true })
     }
   }, [curRating]);
 
   return (
-    <Stack className={classes.filter}>
+    <Stack className="h-full">
       <Stack spacing="xs" >
         <Text weight="bold">Price</Text>
         <Group spacing="xs">

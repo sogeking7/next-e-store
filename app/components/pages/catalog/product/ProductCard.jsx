@@ -41,6 +41,7 @@ function ProductCard(props) {
     <Box className={layout ? flex.wrapper : grid.wrapper}>
       <div className={layout ? flex.imageBox : grid.imageBox}>
         <img
+
           onClick={() => routerHandler(id)}
           className={layout ? flex.image : grid.image}
           src={images[0]}

@@ -17,28 +17,23 @@ const flex = "flex flex-col gap-4";
 function ProductGrid({title}) {
   const router = useRouter();
 
-  const {isLoading, error, data} = useQuery(['products', router], () => {
+  const {isLoading, error, data} = useQuery(['products', router], async () => {
     let rating;
     let {from, to, category_name} = router.query;
     if (!to) to = 1000
     if (router.query.rating) rating = parseFloat(router.query.rating);
     const params = `from=${from ? from : '0'}&to=${to ? to : '0'}${rating ? `&rating=${rating}` : ``}`
     const link = `/api/products/${category_name}?${params}&sort=${router.query.sort ? router.query.sort : 'featured'}`;
-    return axios.get(link).then(res => res.data)
+    return await axios.get(link).then(res => res.data)
   })
 
   if (isLoading) return (
-    <Container size="lg" className="flex justify-center p-[20vh]">
+    <Container size="lg" className="flex justify-center py-[20vh]">
       <Loader size="lg" color="blue" variant="oval"/>
     </Container>
   )
   if (error) return (
-    <Container size="lg" className="flex justify-center pt-[12.3vh]">
-      <Box className="w-[50%]">
-        <Image src={error_navigation}/>
-        <Text>Sorry, no products were found matching your criteria.</Text>
-      </Box>
-    </Container>
+    <Text weight={500}>Sorry, no products were found matching your criteria.</Text>
   )
 
   return (

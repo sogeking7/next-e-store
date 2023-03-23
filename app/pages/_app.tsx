@@ -21,7 +21,6 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
     setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
   };
   return (
-
     <>
       <Head>
         <title>e-store</title>
@@ -35,7 +34,6 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           colorScheme={colorScheme}
           toggleColorScheme={toggleColorScheme}
         >
-          {/*<CustomFonts/>*/}
           <MantineProvider
             theme={{
               colorScheme,

@@ -4,9 +4,6 @@ import {
   Container,
   Flex,
   createStyles,
-  Breadcrumbs,
-  Text,
-  Anchor,
   Group,
   Select,
   Stack,
@@ -27,7 +24,7 @@ const useStyle = createStyles((theme) => ({
     paddingBottom: '256.19px',
     minHeight: '100vh',
     overflow: 'hidden',
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : '#FFFFFF'
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
   },
   container: {
     padding: '0 1rem',
@@ -36,8 +33,7 @@ const useStyle = createStyles((theme) => ({
 
 const unslugify = (slug) => slug.replace(/\-/g, " ")
   .replace(/\w\S*/g,
-    (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
-  );
+    (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase());
 
 function getList(router) {
   const list = [
@@ -58,20 +54,20 @@ function Category(options) {
     query.sort = value;
     router.push({
       pathname: `/catalog/${query.category_name}`,
-      query: query
-    })
+      query: query,
+    }, undefined,  { shallow: true })
   }, [value])
 
   return (
     <Box className={classes.wrapper}>
-      <CatalogHeader setOpened={setOpened}/>
+      <CatalogHeader setOpened={setOpened} isFilterOn={true}/>
       <MobileNavBar/>
       <FilterDrawer opened={opened} setOpened={setOpened}/>
       <Container size="lg" className="md:p-0 px-0 py-4 mb-16">
         <Bread list={getList(router)}/>
         <Flex>
           <FilterSideBar />
-          <Stack spacing="md" className="overflow-hidden w-full md:w-[80%] p-4">
+          <Stack spacing="md" className="overflow-hidden w-full md:w-[80%]">
             <Box className="md:block hidden">
               <Box className="mb-4">
                 <Title order={1}>{getList(router)[1].title}</Title>

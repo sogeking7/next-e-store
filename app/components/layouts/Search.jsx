@@ -1,13 +1,12 @@
 import React from "react";
-import {TextInput, ActionIcon, Flex, HoverCard, Box, Text} from "@mantine/core";
+import {TextInput, ActionIcon, Flex, HoverCard} from "@mantine/core";
 import {
   IconAdjustmentsHorizontal, IconMenu2,
   IconSearch,
 } from "@tabler/icons";
 import CategoryHoverCard from "./CategoryHoverCard";
-import {categories} from "../../data/categories";
 
-export default function Search({ setOpened }) {
+export default function Search({ setOpened, isFilterOn}) {
   return (
     <Flex className="justify-center md:flex items-center gap-2 md:w-[500px] w-full md:mr-8">
       <HoverCard width={700} position="bottom-start"  onPositionChange={30} shadow="md">
@@ -33,15 +32,17 @@ export default function Search({ setOpened }) {
         icon={<IconSearch size={16} />}
         placeholder="Search in Store"
       ></TextInput>
-      <ActionIcon
-        size="md"
-        color='dark'
-        onClick={() => setOpened(true)}
-        variant="transparent"
-        className="md:hidden"
-      >
-        <IconAdjustmentsHorizontal />
-      </ActionIcon>
+      {isFilterOn ?
+        <ActionIcon
+          size="md"
+          color='dark'
+          onClick={() => setOpened(true)}
+          variant="transparent"
+          className="md:hidden"
+        >
+          <IconAdjustmentsHorizontal />
+        </ActionIcon> : <></>
+      }
     </Flex>
   );
 }

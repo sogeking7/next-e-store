@@ -5,14 +5,17 @@ import {useRouter} from "next/router";
 import {useQuery} from "react-query";
 import axios from "axios";
 import Loader from "../../../ui/Loader";
+import Bread from "../../../layouts/Bread";
 
 const useStyles = createStyles((theme) => ({
   Card: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#fff',
     width: '100%',
-    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
-    }`,
-    borderRadius: '8px'
+    [`@media (min-width: 768px)`]: {
+      border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
+      }`,
+      borderRadius: '8px'
+    }
   },
   carouselIndicator: {
     width: 6,
@@ -29,12 +32,27 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+
+const unslugify = (slug) => slug.replace(/\-/g, " ")
+  .replace(/\w\S*/g,
+    (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase());
+
+
+function getList(router) {
+  const list = [
+    {title: 'Home', href: '/'},
+    {title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}`},
+  ]
+  return list;
+}
+
+
 function ProductDetail() {
   const router = useRouter();
-  const { classes } = useStyles();
+  const {classes} = useStyles();
 
   const [index, setIndex] = useState(0);
-  const {isLoading, error, data} = useQuery(['productId',{ type: 'done' }], () => {
+  const {isLoading, error, data} = useQuery(['productId', {type: 'done'}], () => {
     return axios
       .get(`/api/products/${router.query.category_name}/${router.query.id}`)
       .then(res => res.data)
@@ -47,14 +65,18 @@ function ProductDetail() {
   )
   if (error) return 'An error has occurred: ' + error.message
 
-  const { title, images, price, rating, id } = data;
+  const {title, images, price, rating, id} = data;
+
+  const list = getList(router);
+  list .push({title: title, href: `/catalog/${router.query.category_name}/item/${id}`})
 
   return (
-    <Container size="lg" className="w-full">
+    <Container size="lg" className="w-full py-4">
+      <Bread list={list}/>
       <div className={classes.Card}>
         <Flex className="md:flex-row flex-col w-full rounded-md">
           <div className="flex flex-col md:w-2/3 h-full relative bg-white rounded-lg">
-            <div className="w-full h-full pt-4 md:pb-32 pb-0 md:px-16 px-4 duration-500 transition ease-in-out">
+            <div className="w-full h-full md:pt-4 md:pb-32 pb-0 md:px-16 md:px-4 duration-500 transition ease-in-out">
               <img
                 src={images ? images[index] : ''}
                 className="md:block hidden max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
@@ -74,7 +96,6 @@ function ProductDetail() {
                         return <Carousel.Slide key={ind} className="mb-10">
                           <img
                             src={image}
-
                             className="max-h-[300px] transition-opacity w-full duration-500 object-contain ease-in-out"
                           />
                         </Carousel.Slide>
@@ -111,14 +132,14 @@ function ProductDetail() {
               </div>
             </div>
           </div>
-          <Divider orientation="vertical" />
-          <Stack spacing="md" className="md:w-1/3 w-full p-4">
+          <Divider orientation="vertical"/>
+          <Stack spacing="md" className="md:w-1/3 w-full md:p-4 py-4">
             <Box>
               <Text className="text-2xl">
                 {title}
               </Text>
               <Flex align="center" className="gap-1">
-                <Rating readOnly defaultValue={rating} fractions={2} />
+                <Rating readOnly defaultValue={rating} fractions={2}/>
                 <Text color="blue" className="text-sm cursor-pointer hover:underline">
                   ({100} review)
                 </Text>
@@ -127,7 +148,7 @@ function ProductDetail() {
             <Text className="text-xl" weight="bold">
               {price}$
             </Text>
-            <Button color="blue" variant="filled" radius='md' >
+            <Button color="blue" variant="filled" radius='md'>
               Add to Cart
             </Button>
           </Stack>

@@ -1,45 +1,35 @@
-import illustration from '../../../public/design-workflow-web-graphic-website-layout-teamwork-team-effort-wyauwzntwl.png'
 import {createStyles, Container, Text, Box, Title, Flex} from '@mantine/core';
-import { useRouter } from 'next/router'
-import Image from "next/image";
+import {useRouter} from 'next/router'
 import {useHover} from "@mantine/hooks";
 
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    boxSizing: 'border-box',
-    background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#fff'
-  },
   main: {
-    color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7]
+    color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[6]
   },
-
+  title: {
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.dark[6],
+    fontSize: '50px'
+  }
 }));
 
 export default function HeroTitle() {
-  const { classes } = useStyles();
+  const {classes} = useStyles();
   const router = useRouter()
-  const { hovered, ref } = useHover();
+  const {hovered, ref} = useHover();
   return (
-    <div className={classes.wrapper}>
-      <Container size="lg" className="py-[2rem]">
-        <Flex>
-          <Flex className="w-[60%] justify-left items-center">
-            <Title className="text-5xl">
-              A{' '}
-              <Text component="span" className={classes.main} inherit>
-                fully featured
-              </Text>{' '}
-              e-store
-            </Title>
-          </Flex>
-          <Box className="w-[40%]">
-            <Image src={illustration} />
-          </Box>
-
+    <Box>
+      <Container size="lg" className="pt-[6rem] pb-[3rem]">
+        <Flex className="justify-center items-center">
+          <Title className={classes.title}>
+            A{' '}
+            <Text component="span" className={classes.main} inherit>
+              fully featured
+            </Text>{' '}
+            e&#8209;store
+          </Title>
         </Flex>
       </Container>
-    </div>
+    </Box>
   );
 }

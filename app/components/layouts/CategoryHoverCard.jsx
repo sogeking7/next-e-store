@@ -1,5 +1,4 @@
-import {ActionIcon, Box, createStyles, Flex, HoverCard, Text, Title, useMantineColorScheme} from "@mantine/core";
-import {IconMenu2} from "@tabler/icons";
+import {Box, createStyles, Flex, Text, useMantineColorScheme} from "@mantine/core";
 import React, {useState} from "react";
 import {categories} from "../../data/categories";
 import {useRouter} from "next/router";
@@ -38,7 +37,7 @@ export default function CategoryHoverCard() {
                     onClick={() => {
                       router.push(`/catalog/${val.path}`)
                     }}
-                    className={`text-l  eft rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} ${colorScheme === 'dark' ? 'bg-[#141517]' : 'bg-white'} border-none  ${colorScheme === 'dark' ? 'hover:bg-[#25262B]' : 'hover:bg-[#E9ECEF]'} py-[6px] px-2`}>
+                    className={`text-l  eft rounded-lg text-sm ${colorScheme === 'dark' ? 'text-[#C1C2C5]' : 'text-[#1A1B1E]'} ${colorScheme === 'dark' ? 'bg-[#25262B]' : 'bg-white'} border-none  ${colorScheme === 'dark' ? 'hover:bg-[#1A1B1E]' : 'hover:bg-[#E9ECEF]'} py-[6px] px-2`}>
                     <Flex className="gap-3 items-center ">
                       {/*{val.icon}*/}
                       <Text className="text-[1rem]" weight={600}>{val.title}</Text>

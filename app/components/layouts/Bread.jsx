@@ -13,7 +13,7 @@ function getItems(list) {
 
 function Bread({list}) {
 	return (
-		<Box className="p-4">
+		<Box className="pb-4">
 			<Breadcrumbs separator="/" color="green">{getItems(list)}</Breadcrumbs>
 		</Box>
 	)

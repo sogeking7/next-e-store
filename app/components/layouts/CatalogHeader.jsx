@@ -21,12 +21,12 @@ import {useRouter} from "next/router";
 
 const useStyles = createStyles((theme) => ({
   border: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#FFF',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]}`
   },
 }));
 
-function CatalogHeader({ setOpened }) {
+function CatalogHeader({ setOpened, isFilterOn }) {
   const { classes } = useStyles();
   const router = useRouter();
   return (
@@ -37,7 +37,7 @@ function CatalogHeader({ setOpened }) {
               <Logo />
             </Flex>
             <Flex className="justify-between lg:w-[76%] md:w-[70%] w-full">
-              <Search setOpened={setOpened} />
+              <Search setOpened={setOpened} isFilterOn={isFilterOn}/>
               <Flex className="gap-6 md:flex basic:hidden" align='center'>
                 <AuthBtn />
                 <Flex align="center" className="flex-col w-[50px]">
