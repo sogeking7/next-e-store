@@ -1,16 +1,15 @@
-import React, {useState} from "react";
-import {createStyles, Title} from "@mantine/core";
-
+import React, { useState } from "react";
+import { createStyles, Title } from "@mantine/core";
 import Footer from "../../../components/layouts/Footer";
 import MobileNavBar from "../../../components/layouts/MobileNavBar";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
 import FilterDrawer from "../../../components/pages/catalog/filter/FilterDrawer";
-import FilterSideBar from "../../../components/pages/catalog/filter/FilterSideBar";
 import CatalogHeader from "../../../components/layouts/CatalogHeader";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import Bread from "../../../components/layouts/Bread";
 import SortSelect from "../../../components/pages/catalog/SortSelect";
-import {unslugify} from "../../../lib/utils/method";
+import { unslugify } from "../../../lib/utils/method";
+import Filter from "../../../components/pages/catalog/filter/Filter";
 
 const useStyle = createStyles((theme) => ({
   wrapper: {
@@ -24,40 +23,44 @@ const useStyle = createStyles((theme) => ({
 
 function getList(router) {
   return [
-    {title: 'Home', href: '/'},
-    {title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}`},
+    { title: 'Home', href: '/' },
+    { title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}` },
   ]
 }
 
 function Store() {
   const router = useRouter();
-  const {classes} = useStyle();
+  const { classes } = useStyle();
   const [opened, setOpened] = useState(false);
   const breadList = getList(router);
 
   return (
     <div className={classes.wrapper}>
-      <CatalogHeader setOpened={setOpened} isFilterOn={true}/>
-      <FilterDrawer opened={opened} setOpened={setOpened}/>
+      <CatalogHeader setOpened={setOpened} isFilterOn={true} />
+      <FilterDrawer opened={opened} setOpened={setOpened} />
 
       <div className="max-w-5xl mx-auto p-4">
-        <Bread list={breadList}/>
-        <div className="flex">
-          <FilterSideBar/>
-          <div className="w-full md:w-[80%]">
+        <Bread list={breadList} />
+        <div className="flex w-full">
+          <div className="hidden md:block">
+            <div style={{ minWidth: '210px', marginRight: '2rem' }}>
+              <Filter />
+            </div>
+          </div>
+          <div className="w-full">
             <div className="mb-4">
               <Title className="mb-4" order={1}>{breadList[1].title}</Title>
               <div className="md:block hidden">
-                <SortSelect/>
+                <SortSelect />
               </div>
             </div>
-            <ProductGrid/>
+            <ProductGrid />
           </div>
         </div>
       </div>
 
-      <MobileNavBar/>
-      <Footer/>
+      <MobileNavBar />
+      <Footer />
     </div>
   );
 }
