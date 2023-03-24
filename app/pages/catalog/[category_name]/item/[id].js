@@ -6,10 +6,7 @@ import ProductDetail from '../../../../components/pages/productId/product/Produc
 function Id() {
   return (
     <>
-      <CatalogHeader />
-      <MobileNavBar />
       <ProductDetail />
-      <Footer />
     </>
   );
 }

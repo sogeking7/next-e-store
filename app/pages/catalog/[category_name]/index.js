@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { createStyles, Title } from "@mantine/core";
-import Footer from "../../../components/layouts/Footer";
-import MobileNavBar from "../../../components/layouts/MobileNavBar";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
 import FilterDrawer from "../../../components/pages/catalog/filter/FilterDrawer";
-import CatalogHeader from "../../../components/layouts/CatalogHeader";
 import { useRouter } from "next/router";
 import Bread from "../../../components/layouts/Bread";
 import SortSelect from "../../../components/pages/catalog/SortSelect";
@@ -35,8 +32,7 @@ function Store() {
   const breadList = getList(router);
 
   return (
-    <div className={classes.wrapper}>
-      <CatalogHeader setOpened={setOpened} isFilterOn={true} />
+    <>
       <FilterDrawer opened={opened} setOpened={setOpened} />
 
       <div className="max-w-5xl mx-auto p-4">
@@ -58,10 +54,7 @@ function Store() {
           </div>
         </div>
       </div>
-
-      <MobileNavBar />
-      <Footer />
-    </div>
+    </>
   );
 }
 
