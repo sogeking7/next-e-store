@@ -1,13 +1,10 @@
 import React from "react";
 import {
-  Button,
   Flex,
-  Group,
   NumberInput,
   Divider,
   RangeSlider,
   createStyles,
-  Stack,
   useMantineColorScheme,
   Text,
   Rating,
@@ -53,17 +50,17 @@ function Filter() {
   }, [curRating]);
 
   return (
-    <Stack className="h-full">
-      <Stack spacing="xs" >
-        <Text weight="bold">Price</Text>
-        <Group spacing="xs">
+    <div className="h-full w-full">
+      <div>
+        <Text weight="bold" className="mb-4">Price</Text>
+        <div className="flex mb-4">
           <NumberInput
             max={priceRange[1]}
             weight="bold"
             min={0}
             value={priceRange[0]}
             onChange={(val) => setPriceRange([val, priceRange[1]])}
-            className="w-[100px]"
+            className="w-[100px] mr-4"
             size="xs"
             radius="md"
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
@@ -89,7 +86,7 @@ function Filter() {
                 : "$ "
             }
           />
-        </Group>
+        </div>
         <RangeSlider
           min={0}
           max={1000}
@@ -97,7 +94,7 @@ function Filter() {
           color='blue'
           value={priceRange}
           onChange={setPriceRange}
-          className="w-full"
+          className="w-full mb-4"
           defaultValue={[priceRange[0], priceRange[1]]}
           styles={(theme) => ({
             thumb: {
@@ -109,15 +106,15 @@ function Filter() {
             },
           })}
         />
-      </Stack>
+      </div>
       <Divider my="xs" />
-      <Stack spacing="xs">
-        <Text weight="bold">Rating</Text>
+      <div>
+        <Text weight="bold" className="mb-4">Rating</Text>
         {
           Array(4).fill(0).map((val, ind) => {
             const rating = 4 - ind;
             return (
-              <Flex key={ind} className="gap-1" align='center' onClick={() => setCurRating(rating)} >
+              <Flex key={ind} className="gap-1 mb-2" align='center' onClick={() => setCurRating(rating)} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
                 <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? '#C1C2C5' : 'dark'}` : '#4dabf7'} className="cursor-pointer hover:underline">
                   and above
@@ -126,9 +123,8 @@ function Filter() {
             )
           })
         }
-      </Stack>
-      <Button className="fixed w-full bottom-0 right-0 md:hidden" size="lg">Show {20} items</Button>
-    </Stack>
+      </div>
+    </div>
   );
 }
 
