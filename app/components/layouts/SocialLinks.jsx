@@ -1,32 +1,33 @@
-import {ActionIcon, createStyles, Group} from "@mantine/core";
+import {ActionIcon, Group} from "@mantine/core";
 import {IconBrandGithub, IconBrandInstagram, IconBrandTelegram} from "@tabler/icons";
 
-
-const useStyles = createStyles((theme) => ({
-  links: {
-    [theme.fn.smallerThan("xs")]: {
-      marginTop: theme.spacing.md,
-    },
+const links = [
+  {
+    icon: <IconBrandTelegram size={20} stroke={1.5}/>,
+    title: 'Telegram'
   },
-}));
+  {
+    icon: <IconBrandInstagram size={20} stroke={1.5}/>,
+    title: 'Instagram'
+  },
+  {
+    icon: <IconBrandGithub size={20} stroke={1.5}/>,
+    title: 'Github'
+  }
+]
 
-function SocialLinks(){
-  const { classes } = useStyles();
-  return(
-    <Group spacing={0} className={classes.links} position="right" noWrap>
-      <ActionIcon size="lg" color='dark'
-                  variant="transparent">
-        <IconBrandTelegram size={18} stroke={1.5} />
-      </ActionIcon>
-      <ActionIcon size="lg" color='dark'
-                  variant="transparent">
-        <IconBrandGithub size={18} stroke={1.5} />
-      </ActionIcon>
-      <ActionIcon size="lg" color='dark'
-                  variant="transparent">
-        <IconBrandInstagram size={18} stroke={1.5} />
-      </ActionIcon>
+function SocialLinks() {
+  return (
+    <Group spacing={20} noWrap>
+      {
+        links.map((item, ind) => {
+          return <ActionIcon key={ind} color='gray' variant="transparent">
+            {item.icon}
+          </ActionIcon>
+        })
+      }
     </Group>
   )
 }
+
 export default SocialLinks;
