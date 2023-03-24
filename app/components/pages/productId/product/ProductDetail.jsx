@@ -6,6 +6,7 @@ import {useQuery} from "react-query";
 import axios from "axios";
 import Loader from "../../../ui/Loader";
 import Bread from "../../../layouts/Bread";
+import { unslugify } from '../../../../lib/utils/method'
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -31,11 +32,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
-
-const unslugify = (slug) => slug.replace(/\-/g, " ")
-  .replace(/\w\S*/g,
-    (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase());
 
 
 function getList(router) {
@@ -71,7 +67,7 @@ function ProductDetail() {
   list .push({title: title, href: `/catalog/${router.query.category_name}/item/${id}`})
 
   return (
-    <Container size="lg" className="w-full py-4">
+    <div className="max-w-5xl mx-auto p-4">
       <Bread list={list}/>
       <div className={classes.Card}>
         <Flex className="md:flex-row flex-col w-full rounded-md">
@@ -154,7 +150,7 @@ function ProductDetail() {
           </Stack>
         </Flex>
       </div>
-    </Container>
+    </div>
 
   );
 }
