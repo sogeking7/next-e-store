@@ -1,10 +1,7 @@
-import {createStyles, Container, Text, Box, Title, Flex} from '@mantine/core';
-import {useRouter} from 'next/router'
-import {useHover} from "@mantine/hooks";
-
+import {createStyles, Text, Title} from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
-  main: {
+  featured: {
     color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[6]
   },
   title: {
@@ -15,21 +12,17 @@ const useStyles = createStyles((theme) => ({
 
 export default function HeroTitle() {
   const {classes} = useStyles();
-  const router = useRouter()
-  const {hovered, ref} = useHover();
   return (
-    <Box>
-      <Container size="lg" className="pt-[6rem] pb-[3rem]">
-        <Flex className="justify-center items-center">
-          <Title className={classes.title}>
-            A{' '}
-            <Text component="span" className={classes.main} inherit>
-              fully featured
-            </Text>{' '}
-            e&#8209;store
-          </Title>
-        </Flex>
-      </Container>
-    </Box>
+    <div className="max-w-5xl mx-auto px-4 pt-16 pb-16">
+      <div className="w-full">
+        <Title className={classes.title}>
+          A{' '}
+          <Text component="span" className={classes.featured} inherit>
+            fully featured
+          </Text>{' '}
+          e&#8209;store
+        </Title>
+      </div>
+    </div>
   );
 }
