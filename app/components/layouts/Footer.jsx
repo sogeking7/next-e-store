@@ -1,58 +1,16 @@
-import {
-  createStyles,
-  Container,
-  Group,
-  ActionIcon, Title,
-} from "@mantine/core";
-
-import {
-  IconBrandTelegram,
-  IconBrandInstagram,
-  IconBrandGithub,
-} from "@tabler/icons";
-
-import Logo from "../ui/Logo";
+import {Footer, Flex, Box} from "@mantine/core";
 import SocialLinks from "./SocialLinks";
-import Link from "next/link";
+import {DarkModeButton} from "../ui/DarkModeButton";
 
-const useStyles = createStyles((theme) => ({
-  icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[0],
-  },
-  logo: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[0],
-  },
-  footer: {
-    width: '100%',
-    position: 'absolute',
-    bottom: '0',
-    paddingTop: 60,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-  },
-
-  inner: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: theme.spacing.xl,
-    paddingBottom: theme.spacing.xl,
-
-    [theme.fn.smallerThan("xs")]: {
-      flexDirection: "column",
-    },
-  },
-
-}));
-
-export default function Footer() {
-  const { classes } = useStyles();
-
+export default function MyFooter() {
   return (
-    <div className={classes.footer}>
-      <Container className={classes.inner} size="lg">
-        <Logo isFooterOn={true}/>
+    <Footer px="md" py="md" className="max-w-5xl mx-auto absolute bottom-0">
+      <Flex className="justify-between md:flex-row flex-col items-center">
         <SocialLinks/>
-      </Container>
-    </div>
+        <Box className="hidden md:block">
+          <DarkModeButton/>
+        </Box>
+      </Flex>
+    </Footer>
   );
 }
