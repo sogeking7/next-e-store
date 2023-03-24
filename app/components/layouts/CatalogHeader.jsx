@@ -3,21 +3,25 @@ import {
   Header,
   Flex,
   ActionIcon,
-  Text,
+  Text, Box,
 } from "@mantine/core";
 import Logo from "../ui/Logo";
 import {IconHeart, IconShoppingCart} from "@tabler/icons";
 import Search from "./Search";
 import AuthBtn from "../pages/auth/AuthBtn";
 import {useRouter} from "next/router";
+import {DarkModeButton} from "../ui/DarkModeButton";
 
 function CatalogHeader({setOpened, isFilterOn}) {
   const router = useRouter();
 
   return (
-    <Header px="md" className="md:py-1 py-2 max-w-5xl mx-auto">
-      <Flex className="justify-between md:flex-row flex-col md:gap-0 gap-4">
+    <Header px="md" className="py-2 max-w-5xl mx-auto">
+      <Flex className="justify-between items-center flex-row md:gap-0 gap-4">
         <Logo/>
+        <Box className="md:hidden">
+          <DarkModeButton/>
+        </Box>
         <Search setOpened={setOpened} isFilterOn={isFilterOn}/>
         <Flex className="gap-4 items-center hidden md:flex">
           <AuthBtn/>
