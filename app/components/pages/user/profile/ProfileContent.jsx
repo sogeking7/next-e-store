@@ -22,7 +22,7 @@ export default function ProfileContent(props) {
   if (error) return 'An error has occurred: ' + error.message
 
   return (
-    <Box className="w-[80%] p-4">
+    <Box className="w-[80%]">
       <Box className="mb-4">
         <Box className="mb-2">
           <Image src={session.user.image} alt={session.user.name}  width={100} height={100} className="rounded-full" />

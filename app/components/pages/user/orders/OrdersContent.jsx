@@ -20,7 +20,7 @@ export default function OrdersContent(props) {
   if (error) return 'An error has occurred: ' + error.message
 
   return (
-    <Box className="w-[80%] p-4">
+    <Box className="w-[80%]">
       Hello Orders!
     </Box>
   );

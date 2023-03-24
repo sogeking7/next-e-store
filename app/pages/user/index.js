@@ -16,7 +16,7 @@ export default function User() {
 
   return (
     <>
-      <div className="max-w-5xl mx-auto py-4">
+      <div className="max-w-5xl mx-auto p-4">
         <Flex>
           <SideBar/>
           <ProfileContent/>
