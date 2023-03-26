@@ -6,6 +6,9 @@ import MobileNavBar from './MobileNavBar';
 const useStyle = createStyles((theme) => ({
   wrapper: {
     minHeight: '100vh',
+    ['@media (max-width: 768px)']: {
+      marginBottom: '67px',
+    },
     paddingBottom: '61px',
     position: 'relative',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
