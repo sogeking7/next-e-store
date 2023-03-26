@@ -1,23 +1,15 @@
 import React from "react";
 import {
-  Box,
   Flex,
   Text,
   ActionIcon,
-  createStyles,
-  MediaQuery,
   Footer,
 } from "@mantine/core";
-import { useRouter } from 'next/router'
-import { IconHeart, IconShoppingCart, IconUser } from "@tabler/icons";
+import {useRouter} from 'next/router'
+import {IconHeart, IconShoppingCart} from "@tabler/icons";
 import AuthBtn from "../pages/auth/AuthBtn";
 
-const useStyles = createStyles((theme) => ({
-
-}));
-
 export default function MobileNavBar() {
-  const { classes } = useStyles();
   const router = useRouter();
   return (
     <div className="md:hidden block">
@@ -32,7 +24,7 @@ export default function MobileNavBar() {
                 router.push('/user/cart')
               }}
             >
-              <IconShoppingCart size={20} />
+              <IconShoppingCart size={20}/>
             </ActionIcon>
             <Text size={12} weight={600}>Cart</Text>
           </Flex>
@@ -45,11 +37,11 @@ export default function MobileNavBar() {
                 router.push('/user/wishlist')
               }}
             >
-              <IconHeart size={20} />
+              <IconHeart size={20}/>
             </ActionIcon>
             <Text size={12} weight={600}>Wishlist</Text>
           </Flex>
-          <AuthBtn />
+          <AuthBtn/>
         </div>
       </Footer>
     </div>
