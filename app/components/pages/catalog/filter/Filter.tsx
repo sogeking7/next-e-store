@@ -1,51 +1,41 @@
-import React from "react";
+import React, {FC} from "react";
 import {
   Flex,
   NumberInput,
   Divider,
   RangeSlider,
-  createStyles,
   useMantineColorScheme,
   Text,
-  Rating,
+  Rating, MantineTheme,
 } from "@mantine/core";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const useStyles = createStyles((theme) => ({
-}));
-
-
-function Filter() {
+const Filter:FC = () => {
   const router = useRouter()
-
-  const { classes } = useStyles();
-  const { colorScheme, toggleColorScheme} = useMantineColorScheme();
-
-  const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [curRating, setCurRating] = useState(0)
-
+  const { colorScheme }: { colorScheme: 'light' | 'dark' } = useMantineColorScheme();
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  const [curRating, setCurRating] = useState<number>(0)
 
   useEffect(() => {
     const query = router.query;
-    query.from = priceRange[0]
-    query.to = priceRange[1]
+    query.from = `${priceRange[0]}`;
+    query.to = `${priceRange[1]}`;
     router.push({
       pathname: router.pathname,
       query: query
-    }, undefined,  { shallow: true })
+    })
   }, [priceRange[0], priceRange[1]]);
-
 
   useEffect(()=>{
     if (curRating) {
       const query = router.query;
-      query.rating = curRating;
+      query.rating = `${curRating}`;
       router.push({
         pathname: router.pathname,
         query: query
-      }, undefined,  { shallow: true })
+      })
     }
   }, [curRating]);
 
@@ -56,15 +46,14 @@ function Filter() {
         <div className="flex mb-4">
           <NumberInput
             max={priceRange[1]}
-            weight="bold"
             min={0}
             value={priceRange[0]}
-            onChange={(val) => setPriceRange([val, priceRange[1]])}
+            onChange={(val:number) => setPriceRange([val, priceRange[1]])}
             className="w-[100px] mr-4"
             size="xs"
             radius="md"
-            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            formatter={(value) =>
+            parser={(value:any) => value.replace(/\$\s?|(,*)/g, "")}
+            formatter={(value:any) =>
               !Number.isNaN(parseFloat(value))
                 ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 : "$ "
@@ -73,14 +62,13 @@ function Filter() {
           <NumberInput
             max={1000}
             min={priceRange[0]}
-            weight="bold"
             value={priceRange[1]}
-            onChange={(val) => setPriceRange([priceRange[0], val])}
-            className="w-[100px]"
+            onChange={(val:any) => setPriceRange([priceRange[0], val])}
+            className="w-[100px] font-bold"
             size="xs"
             radius="md"
-            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            formatter={(value) =>
+            parser={(value:any) => value.replace(/\$\s?|(,*)/g, "")}
+            formatter={(value:any) =>
               !Number.isNaN(parseFloat(value))
                 ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 : "$ "
@@ -96,7 +84,7 @@ function Filter() {
           onChange={setPriceRange}
           className="w-full mb-4"
           defaultValue={[priceRange[0], priceRange[1]]}
-          styles={(theme) => ({
+          styles={(theme:MantineTheme) => ({
             thumb: {
               height: 16,
               backgroundColor: 'white',
@@ -111,7 +99,7 @@ function Filter() {
       <div>
         <Text weight="bold" className="mb-4">Rating</Text>
         {
-          Array(4).fill(0).map((val, ind) => {
+          Array(4).fill(0).map((_val:number, ind:number) => {
             const rating = 4 - ind;
             return (
               <Flex key={ind} className="gap-1 mb-2" align='center' onClick={() => setCurRating(rating)} >

@@ -1,10 +1,9 @@
-import React from "react";
-
+import React, {FC} from "react";
 import { Drawer } from "@mantine/core";
-
 import Filter from "./Filter";
 
-function FilterDrawer(props) {
+export const FilterDrawer:FC<any> = (props) => {
+
   const { opened, setOpened } = props;
   return (
     <Drawer
@@ -19,5 +18,3 @@ function FilterDrawer(props) {
     </Drawer>
   );
 }
-
-export default FilterDrawer;
