@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createStyles, Title } from "@mantine/core";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
-import FilterDrawer from "../../../components/pages/catalog/filter/FilterDrawer";
+import {FilterDrawer} from "../../../components/pages/catalog/filter/FilterDrawer";
 import { useRouter } from "next/router";
 import Bread from "../../../components/layouts/Bread";
 import SortSelect from "../../../components/pages/catalog/SortSelect";

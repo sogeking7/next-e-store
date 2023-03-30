@@ -2,7 +2,8 @@ import {createStyles, Text, Title} from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   featured: {
-    color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[6]
+    color: theme.colorScheme === 'dark' ? theme.white : theme.white,
+    backgroundImage: theme.colorScheme === 'dark' ? theme.fn.gradient({ from: 'red', to: 'violet', deg: 45 }) : theme.fn.gradient({ from: 'red', to: 'violet', deg: 45 })
   },
   title: {
     color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.dark[6],
