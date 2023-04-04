@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
 function CategoryCarousel() {
   const {classes} = useStyles();
   return (
-    <Box className="max-w-5xl mx-auto px-4 mb-6">
+    <div className="max-w-5xl mx-auto px-4 mb-6">
       <Title order={2} className="mb-4">Catalogs</Title>
       <Carousel
         height={130}
@@ -65,7 +65,7 @@ function CategoryCarousel() {
           })
         }
       </Carousel>
-    </Box>
+    </div>
   )
 }
 
