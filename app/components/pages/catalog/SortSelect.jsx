@@ -18,9 +18,14 @@ export default function SortSelect() {
   return (
     <Group position="left" className="mb-4 md:block hidden">
       <Select
-        radius="md"
+        radius="sm"
         value={value}
         className="w-[140px]"
+        styles={{
+          input: {
+            border: 'none'
+          }
+        }}
         placeholder="Not set"
         size="xs"
         onChange={setValue}
