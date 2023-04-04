@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {createStyles, Title} from "@mantine/core";
+import {Box, createStyles, Title} from "@mantine/core";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
 import {FilterDrawer} from "../../../components/pages/catalog/filter/FilterDrawer";
 import {useRouter} from "next/router";
@@ -31,7 +31,7 @@ const useStyle = createStyles((theme) => ({
   },
   orders: {
     minWidth: '210px',
-    ['@media (max-width: 768px)']: {
+    ['@media (max-width: 1023px)']: {
       display: 'none'
     },
     backgroundColor: 'red'
@@ -55,7 +55,7 @@ function Store() {
     <>
       <FilterDrawer opened={opened} setOpened={setOpened}/>
 
-      <div className="max-w-7xl mx-auto p-4">
+      <Box className="max-w-7xl mx-auto p-4">
         <Bread list={breadList}/>
         <div className="flex">
           <div className={classes.filter}>
@@ -70,7 +70,7 @@ function Store() {
 
           </div>
         </div>
-      </div>
+      </Box>
     </>
   );
 }

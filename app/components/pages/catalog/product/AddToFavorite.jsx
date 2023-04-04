@@ -1,16 +1,15 @@
 import { ActionIcon } from "@mantine/core";
-import { IconHeart } from "@tabler/icons";
+import {IconHeart, IconShoppingCartPlus} from "@tabler/icons";
 
 export const AddToFavorite = () => {
   return (
     <ActionIcon
       size="lg"
-      variant="light"
-      color="gray.9"
-      radius="xl"
-      className="bg-white absolute shadow-md top-2 right-2"
+      variant="transparent"
+      color="dark"
+      // className=" absolute shadow-md top-2 right-2"
     >
-      <IconHeart size={16} />
+      <IconShoppingCartPlus size={20} />
     </ActionIcon>
   );
 };
