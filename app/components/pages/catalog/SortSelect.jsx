@@ -21,11 +21,27 @@ export default function SortSelect() {
         radius="sm"
         value={value}
         className="w-[140px]"
-        styles={{
+        styles={(theme) => ({
           input: {
+            border: theme.colorScheme === "dark" ? 'none' : ''
+          },
+          dropdown: {
             border: 'none'
-          }
-        }}
+          },
+          item: {
+            // applies styles to selected item
+            '&[data-selected]': {
+              '&, &:hover': {
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? theme.colors.indigo[9] : theme.colors.indigo[1],
+                color: theme.colorScheme === 'dark' ? theme.white : theme.colors.indigo[9],
+              },
+            },
+
+            // applies styles to hovered item (with mouse or keyboard)
+            '&[data-hovered]': {},
+          },
+        })}
         placeholder="Not set"
         size="xs"
         onChange={setValue}

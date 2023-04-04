@@ -49,11 +49,11 @@ const Filter:FC = () => {
             min={0}
             value={priceRange[0]}
             onChange={(val:number) => setPriceRange([val, priceRange[1]])}
-            styles={{
+            styles={(theme) => ({
               input: {
-                border: 'none'
+                border: theme.colorScheme === "dark" ? 'none' : ''
               }
-            }}
+            })}
             className="w-[100px] mr-4"
             size="xs"
             radius="sm"
@@ -69,11 +69,11 @@ const Filter:FC = () => {
             min={priceRange[0]}
             value={priceRange[1]}
             onChange={(val:any) => setPriceRange([priceRange[0], val])}
-            styles={{
+            styles={(theme) => ({
               input: {
-                border: 'none'
+                border: theme.colorScheme === "dark" ? 'none' : ''
               }
-            }}
+            })}
             className="w-[100px] font-bold"
             size="xs"
             radius="sm"
