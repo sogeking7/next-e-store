@@ -14,16 +14,14 @@ const useStyles = createStyles((theme) => ({
 export default function HeroTitle() {
   const {classes} = useStyles();
   return (
-    <div className="max-w-7xl mx-auto px-4 pt-16 pb-16">
-      <div className="w-full">
-        <Title className={classes.title}>
-          A{' '}
-          <Text component="span" className={classes.featured} inherit>
-            fully featured
-          </Text>{' '}
-          e&#8209;store
-        </Title>
-      </div>
+    <div className="max-w-5xl mx-auto p-4 py-32">
+      <Title className={classes.title}>
+        A{' '}
+        <Text component="span" className={classes.featured} inherit>
+          fully featured
+        </Text>{' '}
+        e&#8209;store
+      </Title>
     </div>
   );
 }
