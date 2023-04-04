@@ -30,7 +30,7 @@ const useStyle = createStyles((theme) => ({
     },
   },
   orders: {
-    minWidth: '210px',
+    minWidth: '250px',
     ['@media (max-width: 1023px)']: {
       display: 'none'
     },
