@@ -16,7 +16,7 @@ export default function SortSelect() {
   }, [value])
 
   return (
-    <Group position="left">
+    <Group position="left" className="mb-4 md:block hidden">
       <Select
         radius="md"
         value={value}
