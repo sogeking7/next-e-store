@@ -49,9 +49,14 @@ const Filter:FC = () => {
             min={0}
             value={priceRange[0]}
             onChange={(val:number) => setPriceRange([val, priceRange[1]])}
+            styles={{
+              input: {
+                border: 'none'
+              }
+            }}
             className="w-[100px] mr-4"
             size="xs"
-            radius="md"
+            radius="sm"
             parser={(value:any) => value.replace(/\$\s?|(,*)/g, "")}
             formatter={(value:any) =>
               !Number.isNaN(parseFloat(value))
@@ -64,9 +69,14 @@ const Filter:FC = () => {
             min={priceRange[0]}
             value={priceRange[1]}
             onChange={(val:any) => setPriceRange([priceRange[0], val])}
+            styles={{
+              input: {
+                border: 'none'
+              }
+            }}
             className="w-[100px] font-bold"
             size="xs"
-            radius="md"
+            radius="sm"
             parser={(value:any) => value.replace(/\$\s?|(,*)/g, "")}
             formatter={(value:any) =>
               !Number.isNaN(parseFloat(value))
