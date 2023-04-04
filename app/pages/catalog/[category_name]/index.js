@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { createStyles, Title } from "@mantine/core";
+import React, {useState} from "react";
+import {createStyles, Title} from "@mantine/core";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
 import {FilterDrawer} from "../../../components/pages/catalog/filter/FilterDrawer";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import Bread from "../../../components/layouts/Bread";
 import SortSelect from "../../../components/pages/catalog/SortSelect";
-import { unslugify } from "../../../lib/utils/method";
+import {unslugify} from "../../../lib/utils/method";
 import Filter from "../../../components/pages/catalog/filter/Filter";
 
 const useStyle = createStyles((theme) => ({
@@ -16,41 +16,58 @@ const useStyle = createStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
   },
+  filter: {
+    minWidth: '210px',
+    ['@media (max-width: 768px)']: {
+      display: 'none'
+    },
+  },
+  products: {
+    width: '100%',
+    padding: '0 2rem',
+    ['@media (max-width: 768px)']: {
+      padding: '0'
+    },
+  },
+  orders: {
+    minWidth: '210px',
+    ['@media (max-width: 768px)']: {
+      display: 'none'
+    },
+    backgroundColor: 'red'
+  }
 }));
 
 function getList(router) {
   return [
-    { title: 'Home', href: '/' },
-    { title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}` },
+    {title: 'Home', href: '/'},
+    {title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}`},
   ]
 }
 
 function Store() {
   const router = useRouter();
-  const { classes } = useStyle();
+  const {classes} = useStyle();
   const [opened, setOpened] = useState(false);
   const breadList = getList(router);
 
   return (
     <>
-      <FilterDrawer opened={opened} setOpened={setOpened} />
+      <FilterDrawer opened={opened} setOpened={setOpened}/>
 
       <div className="max-w-7xl mx-auto p-4">
-        <Bread list={breadList} />
-        <div className="flex w-full">
-          <div className="hidden md:block">
-            <div style={{ minWidth: '210px', marginRight: '2rem' }}>
-              <Filter />
-            </div>
+        <Bread list={breadList}/>
+        <div className="flex">
+          <div className={classes.filter}>
+            <Filter/>
           </div>
-          <div className="w-full">
-            <div className="mb-4">
-              <Title className="mb-4" order={1}>{breadList[1].title}</Title>
-              <div className="md:block hidden">
-                <SortSelect />
-              </div>
-            </div>
-            <ProductGrid />
+          <div className={classes.products}>
+            <Title className="mb-4" order={1}>{breadList[1].title}</Title>
+            <SortSelect/>
+            <ProductGrid/>
+          </div>
+          <div className={classes.orders}>
+
           </div>
         </div>
       </div>
