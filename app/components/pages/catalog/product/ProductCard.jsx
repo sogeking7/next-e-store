@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
     padding: '1rem .75rem',
-    border: theme.colorScheme === "dark" ? `` : `1px solid ${theme.colors.gray[2]}`,
+    border: theme.colorScheme === "dark" ? `` : `1px solid ${theme.colors.gray[4]}`,
     borderRadius: theme.radius.md,
     ['@media (max-width: 768px)']: {
       padding: '1rem .5rem',
