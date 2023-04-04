@@ -1,17 +1,22 @@
 import React from "react";
-import {Box, Card, createStyles, Image, Title} from "@mantine/core";
+import {createStyles, Title} from "@mantine/core";
 import Link from "next/link";
 import {data} from "../../../data/categories";
 import {Carousel} from "@mantine/carousel";
 
 const useStyles = createStyles((theme) => ({
-
+  card: {
+    height: '130px',
+    cursor: 'pointer',
+    borderRadius: '10px',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+  }
 }));
 
 function CategoryCarousel() {
   const {classes} = useStyles();
   return (
-    <Box className="max-w-7xl mx-auto px-4 mb-6">
+    <Box className="max-w-5xl mx-auto px-4 mb-6">
       <Title order={2} className="mb-4">Catalogs</Title>
       <Carousel
         height={130}
@@ -51,9 +56,9 @@ function CategoryCarousel() {
             return (
               <Carousel.Slide>
                 <Link key={ind} href={`/catalog/${category.path}`}>
-                  <Card shadow="xs" padding="lg" radius="md" withBorder className="h-[130px] cursor-pointer">
-                    <Card.Section className="p-4 text-center text-[14px] font-[600]">{category.title}</Card.Section>
-                  </Card>
+                  <div className={classes.card}>
+                    <div className="p-4 text-center text-[14px] font-[600]">{category.title}</div>
+                  </div>
                 </Link>
               </Carousel.Slide>
             )
