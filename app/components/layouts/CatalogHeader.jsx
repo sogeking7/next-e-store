@@ -8,7 +8,7 @@ import {
 import Logo from "../ui/Logo";
 import {IconHeart, IconShoppingCart} from "@tabler/icons";
 import Search from "./Search";
-import AuthBtn from "../pages/auth/AuthBtn";
+import AuthBtn from "../pages/auth/buttons/AuthBtn";
 import {useRouter} from "next/router";
 import {DarkModeButton} from "../ui/DarkModeButton";
 
@@ -17,7 +17,7 @@ function CatalogHeader({setOpened, isFilterOn}) {
 
   return (
     <Header px="md" className="py-2">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
       <Flex className="justify-between items-center flex-row md:gap-0 gap-4">
         <Logo/>
         <div className="md:hidden">

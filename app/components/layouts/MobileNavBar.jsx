@@ -7,7 +7,7 @@ import {
 } from "@mantine/core";
 import {useRouter} from 'next/router'
 import {IconHeart, IconShoppingCart} from "@tabler/icons";
-import AuthBtn from "../pages/auth/AuthBtn";
+import AuthBtn from "../pages/auth/buttons/AuthBtn";
 
 export default function MobileNavBar() {
   const router = useRouter();

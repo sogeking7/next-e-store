@@ -1,5 +1,5 @@
 {
-  "name": "mantine-next",
+  "name": "next-e-store",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,25 +24,21 @@
     "@prisma/client": "^4.11.0",
     "@tabler/icons": "^1.118.0",
     "axios": "^1.2.2",
-    "bson": "^5.0.1",
     "cookie": "^0.5.0",
     "cookies-next": "^2.1.1",
-    "embla-carousel-react": "^7.0.5",
+    "embla-carousel-react": "^7.1.0",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
-    "mongodb": "^4.13.0",
-    "mongoose": "^6.8.4",
+    "mongoose": "^7.0.3",
     "next": "^12.1.7-canary.31",
     "next-auth": "^4.20.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.3",
     "slugify": "^1.6.5",
-    "tsconfig.json": "^1.0.11",
-    "unslugify": "^1.0.3"
+    "tsconfig.json": "^1.0.11"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "autoprefixer": "^10.4.13",

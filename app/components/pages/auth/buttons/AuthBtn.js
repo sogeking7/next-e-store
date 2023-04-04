@@ -2,7 +2,7 @@ import {IconUser} from '@tabler/icons'
 import {useDisclosure} from '@mantine/hooks';
 import {Modal,Flex, ActionIcon, Loader, Text} from '@mantine/core';
 import {useSession, signIn} from "next-auth/react";
-import {AuthenticationForm} from "./AuthentificationForm";
+import {AuthenticationForm} from "../AuthentificationForm"
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";

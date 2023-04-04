@@ -13,7 +13,7 @@ import {
   Anchor,
   Stack,
 } from '@mantine/core';
-import {GoogleButton} from "../SocialButtons/GoogleButton";
+import {GoogleButton} from "./buttons/GoogleButton"
 
 export function AuthenticationForm(props) {
   const [type, toggle] = useToggle(['login', 'register']);

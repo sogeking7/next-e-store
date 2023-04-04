@@ -1,5 +1,5 @@
 
-export const categories = [
+export const data = [
   {
     title: 'Computers',
     path: 'computers',

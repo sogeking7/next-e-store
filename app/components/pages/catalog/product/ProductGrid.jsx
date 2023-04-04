@@ -19,7 +19,7 @@ function ProductGrid() {
   })
 
   if (isLoading) return (
-    <div className="max-w-5xl mx-auto flex justify-center py-[20vh]">
+    <div className="max-w-7xl mx-auto flex justify-center py-[20vh]">
       <Loader size="lg" color="blue" variant="oval" />
     </div>
   )

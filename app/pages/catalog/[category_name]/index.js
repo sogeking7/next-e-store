@@ -35,7 +35,7 @@ function Store() {
     <>
       <FilterDrawer opened={opened} setOpened={setOpened} />
 
-      <div className="max-w-5xl mx-auto p-4">
+      <div className="max-w-7xl mx-auto p-4">
         <Bread list={breadList} />
         <div className="flex w-full">
           <div className="hidden md:block">

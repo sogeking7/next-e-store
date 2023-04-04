@@ -1,14 +1,10 @@
 import prisma from '../../../../lib/prisma'
-import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   const {method} = req
   const productId = req.query.id;
   const categoryName = req.query.category_name;
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
-    res.status(400).json({error: 'Invalid ID'});
-    return;
-  }
+
   switch (method) {
     case 'GET':
       const get_category = await prisma.Category.findUnique({

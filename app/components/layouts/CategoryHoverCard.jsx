@@ -1,6 +1,6 @@
 import {Box, createStyles, Flex, Text, useMantineColorScheme} from "@mantine/core";
 import React, {useState} from "react";
-import {categories} from "../../data/categories";
+import {data} from "../../data/categories";
 import {useRouter} from "next/router";
 import {useHover} from "@mantine/hooks";
 
@@ -26,7 +26,7 @@ export default function CategoryHoverCard() {
       <Box className="w-1/3">
         <Box className={classes.border}>
           <Flex className="flex-col">
-            {categories.map((val, ind) => {
+            {data.map((val, ind) => {
               return (
                 // <Box >
                   <button
@@ -50,7 +50,7 @@ export default function CategoryHoverCard() {
         </Box>
       </Box>
       <Box className="w-2/3 ml-4 ">
-        <Text className="text-2xl" weight={600}>{categories[active].title}</Text>
+        <Text className="text-2xl" weight={600}>{data[active].title}</Text>
       </Box>
     </Flex>
   )

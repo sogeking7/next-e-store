@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Card, createStyles, Image, Title} from "@mantine/core";
 import Link from "next/link";
-import {categories} from "../../../data/categories";
+import {data} from "../../../data/categories";
 import {Carousel} from "@mantine/carousel";
 
 const useStyles = createStyles((theme) => ({
@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
 function CategoryCarousel() {
   const {classes} = useStyles();
   return (
-    <Box className="max-w-5xl mx-auto px-4 mb-6">
+    <Box className="max-w-7xl mx-auto px-4 mb-6">
       <Title order={2} className="mb-4">Catalogs</Title>
       <Carousel
         height={130}
@@ -46,7 +46,7 @@ function CategoryCarousel() {
         }) }
       >
         {
-          categories.map((category, ind) => {
+          data.map((category, ind) => {
 
             return (
               <Carousel.Slide>

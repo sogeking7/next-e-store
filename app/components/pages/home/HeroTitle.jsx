@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
 export default function HeroTitle() {
   const {classes} = useStyles();
   return (
-    <div className="max-w-5xl mx-auto px-4 pt-16 pb-16">
+    <div className="max-w-7xl mx-auto px-4 pt-16 pb-16">
       <div className="w-full">
         <Title className={classes.title}>
           A{' '}

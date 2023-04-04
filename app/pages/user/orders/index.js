@@ -12,7 +12,7 @@ function Orders() {
 
   return (
     <>
-      <div className="max-w-5xl mx-auto p-4">
+      <div className="max-w-7xl mx-auto p-4">
         <Flex>
           <SideBar />
           <OrdersContent />
