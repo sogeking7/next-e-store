@@ -1,6 +1,6 @@
 import { Text, Button, createStyles, Rating, Group, Box } from "@mantine/core";
 import Link from "next/link";
-import { AddToFavorite } from "./AddToFavorite";
+import { AddToCart } from "./AddToCart";
 import {useRouter} from "next/router";
 
 const useStyles = createStyles((theme) => ({
@@ -51,7 +51,7 @@ function ProductCard({layout, product}) {
             <Text weight="bold">
               {price}$
             </Text>
-            <AddToFavorite/>
+            <AddToCart/>
           </div>
         </Box>
       </div>
