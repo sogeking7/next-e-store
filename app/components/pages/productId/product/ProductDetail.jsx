@@ -18,6 +18,7 @@ import {unslugify} from '../../../../lib/utils/method'
 
 import {IconHeart} from '@tabler/icons'
 import {useRouter} from "next/router";
+import {AddToWishlistBtn} from "./buttons/AddToWishlistBtn";
 
 const useStyles = createStyles((theme) => ({
   Card: {
@@ -128,21 +129,11 @@ function ProductDetail({data}) {
           <Text className="text-xl" weight="bold">
             {price}$
           </Text>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-4 items-center">
             <Button className="w-[100%]" color="indigo.5" variant="filled" radius='md'>
               Add to Cart
             </Button>
-            <ActionIcon
-              size="lg"
-              color='red'
-              radius="md"
-              variant="outline"
-              onClick={() => {
-
-              }}
-            >
-              <IconHeart size={20}/>
-            </ActionIcon>
+            <AddToWishlistBtn productId={id}/>
           </div>
         </Stack>
       </Flex>
