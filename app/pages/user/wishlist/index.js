@@ -1,23 +1,33 @@
-import { createStyles, Flex } from "@mantine/core";
-import { useState } from "react";
-import WishlistContent from "../../../components/pages/user/wishlist/WishlistContent";
+import {createStyles, Title} from "@mantine/core";
 import SideBar from "../../../components/pages/user/SideBar";
+import Head from "next/head";
 
 
-const useStyle = createStyles((theme) => ({
-}));
+const useStyle = createStyles((theme) => ({}));
+
+
+function Main(props) {
+  return (
+    <>
+      <Title className="mb-4" order={1}>Wishlist</Title>
+    </>
+  );
+}
+
 
 function Wishlist() {
-  const { classes } = useStyle();
-  const [opened, setOpened] = useState(false);
 
   return (
     <>
-      <div className="max-w-7xl mx-auto p-4">
-        <Flex>
-          <SideBar />
-          <WishlistContent />
-        </Flex>
+      <Head>
+        <title>Wishlist</title>
+        <meta property="og:title" content="Wishlist title" key="title"/>
+      </Head>
+      <div className="max-w-7xl mx-auto flex p-4">
+        <SideBar/>
+        <div className="md:px-4">
+          <Main/>
+        </div>
       </div>
     </>
   );
