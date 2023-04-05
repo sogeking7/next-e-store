@@ -55,9 +55,9 @@ function SideBar() {
                 key={ind}
                 onClick={() => router.push({pathname: val.path})}
                 className={cx(classes.link, {[classes.linkActive]: val.path === router.pathname.split('/')[2]})}>
-                <Flex className="gap-3 items-center">
+                <Flex className="gap-3 items-center cursor-default">
                   {val.icon}
-                  <Text className="text-[1rem]" weight={500}>{val.name}</Text>
+                  <Text>{val.name}</Text>
                 </Flex>
               </a>
             )
@@ -69,9 +69,9 @@ function SideBar() {
               router.push({pathname: '/'}).then(() => signOut())
             }}
             className={classes.link}>
-            <Flex className="gap-3 items-center">
+            <Flex className="gap-3 items-center cursor-default">
               <IconLogout size={22}/>
-              <Text className="text-[1rem]" weight={500}>Sign out</Text>
+              <Text>Sign out</Text>
             </Flex>
           </a>
         </Flex>
