@@ -27,6 +27,7 @@ export default async function handler(req, res) {
           },
         },
       })
+      get_product_by_id.products[0].categoryName = categoryName;
       if (get_product_by_id) {
         res.status(200).json(get_product_by_id.products[0]);
       } else {
