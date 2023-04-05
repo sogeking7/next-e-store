@@ -11,10 +11,10 @@ export const RemoveFromWishlistBtn = () => {
     >
       <ActionIcon
         size="lg"
-        variant="transparent"
-        color="dark"
+        variant="subtle"
+        className='hover:text-red-500 text-gray-500'
       >
-        <IconTrash size={20}/>
+        <IconTrash size={20} />
       </ActionIcon>
     </Tooltip>
   );
