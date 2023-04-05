@@ -1,23 +1,25 @@
 import prisma from "../../../../lib/prisma";
+import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
   const {method} = req;
 
+  const session = await getSession({req});
+  const {user} = session;
+  const userId = user.id;
+
   switch(method) {
     case 'GET':
-      const get_wishlist = await prisma.Product.findMany({
-
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId
+        },
+        include: {
+          wishlist: true
+        }
       })
-      res.status(200).json("Get")
-      break
-    case 'POST':
-      return res.status(200).json("Post")
-      break
-    case 'PUT':
-      res.status(200).json({ method, name: "PUT request"});
-      break
-    case 'DELETE':
-      res.status(200).json({ method, name: "DELETE request"});
+      const userWishlist = user.wishlist
+      res.status(200).json(userWishlist)
       break
     default:
       res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE'])
