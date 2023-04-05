@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         }
       });
       return res.status(200).json('Item added to wishlist');
-    case 'GET':
+    case 'DELETE':
       await prisma.user.update({
         where: {
           id: userId
