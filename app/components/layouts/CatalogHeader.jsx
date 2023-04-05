@@ -16,9 +16,9 @@ function CatalogHeader({setOpened, isFilterOn}) {
   const router = useRouter();
 
   return (
-    <Header px="md" className="py-2">
+    <Header className="py-2">
       <div className="max-w-7xl mx-auto">
-      <Flex className="justify-between items-center flex-row md:gap-0 gap-4">
+      <Flex className="justify-between items-center flex-row md:gap-0 gap-4 px-4">
         <Logo/>
         <div className="md:hidden">
           <DarkModeButton/>
