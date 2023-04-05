@@ -1,7 +1,7 @@
 import {ActionIcon, Tooltip} from "@mantine/core";
 import {IconShoppingCartPlus} from "@tabler/icons";
 
-export const AddToCart = () => {
+export const AddToCartBtn = () => {
   return (
     <Tooltip
       label="Add to Cart"
