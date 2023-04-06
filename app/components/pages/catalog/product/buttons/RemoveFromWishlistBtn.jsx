@@ -1,39 +1,51 @@
-import {ActionIcon, Tooltip} from "@mantine/core";
-import {IconTrash} from "@tabler/icons";
-import {useState} from "react";
+import {ActionIcon} from "@mantine/core";
+import {IconCheck, IconTrash} from "@tabler/icons";
 import axios from "axios";
+import {useMutation, useQueryClient} from "react-query";
+import React from "react";
+import {showNotification, updateNotification} from "@mantine/notifications";
+
+export const useDeleteItemFromWishlist = (setDeletionError) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (id) => {
+      return await axios.delete(`/api/user/wishlist/${id}`);
+    },
+    {
+      onSuccess: async () => {
+        await queryClient.cancelQueries(["wishlist"]);
+        await queryClient.invalidateQueries(["wishlist"]);
+        await showNotification({
+          id: 'load-data',
+          color: 'teal',
+          title: 'Deleted From Wishlist',
+          autoClose: 2000,
+        })
+      },
+      onError: ({message}) => {
+        setDeletionError(message);
+      },
+    }
+  );
+};
 
 export const RemoveFromWishlistBtn = ({productId}) => {
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDeleteClick = () => {
-    setIsDeleting(true);
-    axios.delete(`/api/user/wishlist/${productId}`)
-      .then(() => {
-        setIsDeleting(false);
-        console.log(`Item ${productId} deleted successfully!`);
-      })
-      .catch(error => {
-        setIsDeleting(false);
-        console.log(`Error deleting item ${productId}:`, error);
-      });
+  const {mutate, isLoading} = useDeleteItemFromWishlist();
+  const handleDeleteClick = (id) => {
+    mutate(id);
   };
 
   return (
-    <Tooltip
-      label="Delete item"
-      position="top"
-      withArrow
-      color="red"
+    <ActionIcon
+      size="lg"
+      variant="subtle"
+      className='hover:text-red-500 text-gray-500'
+      onClick={() => handleDeleteClick(productId)}
+      loading={isLoading}
     >
-      <ActionIcon
-        size="lg"
-        variant="subtle"
-        className='hover:text-red-500 text-gray-500'
-        onClick={handleDeleteClick}
-      >
-        <IconTrash size={20}/>
-      </ActionIcon>
-    </Tooltip>
+      <IconTrash size={20}/>
+    </ActionIcon>
+
   );
 };

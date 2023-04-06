@@ -1,41 +1,62 @@
-import {ActionIcon, Tooltip} from "@mantine/core";
-import {IconHeart, IconTrash} from "@tabler/icons";
-import {useState} from "react";
+import {ActionIcon} from "@mantine/core";
+import {IconHeart} from "@tabler/icons";
+import React, {useState} from "react";
 import axios from "axios";
+import {useMutation, useQueryClient} from "react-query";
+import {showNotification} from "@mantine/notifications";
+import {IconHeartFilled} from "@tabler/icons-react";
+import {useDeleteItemFromWishlist} from "../../../catalog/product/buttons/RemoveFromWishlistBtn";
 
-export const AddToWishlistBtn = ({productId}) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const useAddItemToWishlist = (setDeletionError) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (id) => {
+      return await axios.post(`/api/user/wishlist/${id}`);
+    },
+    {
+      onSuccess: async () => {
+        await queryClient.cancelQueries(["wishlist"]);
+        await queryClient.invalidateQueries(["wishlist"]);
+        await showNotification({
+          id: 'load-data',
+          color: 'teal',
+          title: 'Added To Wishlist',
+          autoClose: 2000,
+        })
+      },
+      onError: ({message}) => {
+        setDeletionError(message);
+      },
+    }
+  );
+};
 
-  const handleAddClick = () => {
-    setIsLoading(true);
-    axios.post(`/api/user/wishlist/${productId}`)
-      .then(() => {
-        setIsLoading(false);
-        console.log(`Item ${productId} deleted successfully!`);
-      })
-      .catch(error => {
-        setIsLoading(false);
-        console.log(`Error deleting item ${productId}:`, error);
-      });
-  };
+export const AddToWishlistBtn = ({productId, isWihslist}) => {
+  const [active, setActive] = useState(isWihslist);
+
+  const {mutate:mutateDelete, isLoading: isDeleting} = useDeleteItemFromWishlist();
+  const handleDeleteClick = (id) => {
+    mutateDelete(id);
+  }
+
+  const {mutate:mutateAdd, isLoading: isAdding} = useAddItemToWishlist();
+  const handleAddClick = (id) => {
+    mutateAdd(id);
+  }
 
   return (
-    <Tooltip
-      label="Add to wishlist"
-      position="top"
-      withArrow
-      color="red"
+    <ActionIcon
+      size="lg"
+      radius="md"
+      variant="subtle"
+      className={active ? 'hover:text-red-500 text-red-500' : 'hover:text-red-500 text-gray-500'}
+      onClick={() => {
+        active ? handleDeleteClick(productId) :handleAddClick(productId)
+        setActive(!active);
+      }}
+      loading={isAdding || isDeleting}
     >
-      <ActionIcon
-        size="lg"
-        radius="md"
-        variant="subtle"
-        className='h-[36px] hover:text-red-500 text-gray-500'
-        onClick={handleAddClick}
-        disabled={isLoading}
-      >
-        <IconHeart size={24}/>
-      </ActionIcon>
-    </Tooltip>
+      {active ? <IconHeartFilled size={20}/> : <IconHeart size={20}/>}
+    </ActionIcon>
   );
 };
