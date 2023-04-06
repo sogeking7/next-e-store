@@ -4,6 +4,8 @@ import {AddToCartBtn} from "./buttons/AddToCartBtn";
 import {useRouter} from "next/router";
 import React from "react";
 import {RemoveFromWishlistBtn} from "./buttons/RemoveFromWishlistBtn";
+import {useMutation, useQueryClient} from "react-query";
+import axios from "axios";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -44,14 +46,17 @@ function ProductCard({layout, product, isLoading, url}) {
                 isLoading ?
                   <Skeleton height={layout ? 160 : 200} width={layout ? 160 : 200} radius="md"/>
                   :
-                  <Link href={`/catalog/${product.categoryName}/item/${product.id}`}>
-                    <img
-                      className='object-contain w-full'
-                      src={product.images[0]}
-                      alt={null}
-                    />
-                  </Link>
+                  <>
+                    <Link href={`/item/${product.id}?category_name=${product.category.name}`}>
+                      <img
+                        className='object-contain w-full'
+                        src={product.images[0]}
+                        alt={null}
+                      />
+                    </Link>
+                  </>
               }
+
             </div>
           </div>
           <div className="flex flex-col justify-between w-full">
@@ -61,7 +66,7 @@ function ProductCard({layout, product, isLoading, url}) {
                   isLoading ?
                     <Skeleton height={20} width="100%" mb={4}/>
                     :
-                    <Link href={`/catalog/${product.categoryName}/item/${product.id}`}>
+                    <Link href={`/item/${product.id}?category_name=${product.category.name}`}>
                       <Text lineClamp={2} size='sm'
                             className="cursor-pointer hover:text-[#228be6] mb-1">
                         {product.title}
