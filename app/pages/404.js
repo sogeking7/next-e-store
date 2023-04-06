@@ -6,7 +6,6 @@ import {
   Button,
   Group,
 } from "@mantine/core";
-import Router, { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -58,14 +57,12 @@ const useStyles = createStyles((theme) => ({
 
 export default function NothingFoundBackground() {
   const { classes } = useStyles();
-  const router = useRouter();
 
   return (
     <Container className={classes.root}>
       <div className={classes.inner}>
-        {/* <Illustration className={classes.image} /> */}
         <div className={classes.content}>
-          <Title className={classes.title}>Nothing to see here</Title>
+          <Title className={classes.title}>404</Title>
           <Text
             color="dimmed"
             size="lg"
@@ -77,8 +74,8 @@ export default function NothingFoundBackground() {
             this is an error contact support.
           </Text>
           <Group position="center">
-            <Button size="md" onClick={() => Router.back()}>
-              Take me back to home page
+            <Button size="md" onClick={() => window.history.go(-3)}>
+              Take me back
             </Button>
           </Group>
         </div>
