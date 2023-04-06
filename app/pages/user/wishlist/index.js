@@ -1,10 +1,10 @@
-import {createStyles, Text, Title} from "@mantine/core";
+import {Box, createStyles, Text} from "@mantine/core";
 import SideBar from "../../../components/pages/user/SideBar";
 import Head from "next/head";
-import {useMutation, useQuery} from "react-query";
+import {useQuery} from "react-query";
 import axios from "axios";
-import Loader from "../../../components/ui/Loader";
 import ProductCard from "../../../components/pages/catalog/product/ProductCard";
+import {AlertBox} from "../../../components/pages/user/wishlist/AlertBox";
 
 
 const useStyle = createStyles((theme) => ({
@@ -30,31 +30,46 @@ const useStyle = createStyles((theme) => ({
   }
 }));
 
+const fetchAllWishlist = async () => {
+  return await axios.get('/api/user/wishlist').catch((e) => console.log(e.response)).then(res => res.data.wishlist)
+}
 
 function Main(props) {
-  const {isLoading, error, data} = useQuery(['wishlist'], async () => {
-    return await axios.get('/api/user/wishlist').then(res => res.data)
-  })
 
-  if (isLoading) return (
-    <div className="w-full">
-      <ProductCard isLoading={1} product={undefined} layout={1}/>
-      <ProductCard isLoading={1} product={undefined} layout={1}/>
-      <ProductCard isLoading={1} product={undefined} layout={1}/>
-    </div>
-  )
-  if (error) return (
-    <Text weight={500}>Sorry, no products were found matching your criteria.</Text>
-  )
+  const {isLoading, error, data} =
+    useQuery({
+      queryKey: ['wishlist'],
+      queryFn: fetchAllWishlist,
+      retry: false
+    });
+
+  if (isLoading) {
+    return (
+      <div className="w-full">
+        {/*<ProductCard isLoading={1} product={undefined} layout={1}/>*/}
+        {/*<ProductCard isLoading={1} product={undefined} layout={1}/>*/}
+        {/*<ProductCard isLoading={1} product={undefined} layout={1}/>*/}
+      </div>
+    )
+  }
+  if (error) {
+    return (
+      // <Text weight={500}>Sorry, no products were found matching your criteria. </Text>
+      <AlertBox/>
+    )
+  }
+
   return (
     <div className="w-full">
       {data.map((item) => {
         return (
-          <ProductCard key={item.id} product={item} layout={1} isLoading={0} url={"user/wishlist"}/>
+          <Box mb='md'>
+            <ProductCard key={item.id} product={item} layout={1} isLoading={0} url={"user/wishlist"}/>
+          </Box>
         )
       })}
     </div>
-  );
+  )
 }
 
 
@@ -69,7 +84,7 @@ function Wishlist() {
       <div className="max-w-7xl mx-auto flex p-4">
         <SideBar/>
         <div className={classes.wrapper}>
-          <Text className={classes.title} >Wishlist</Text>
+          <Text className={classes.title}>Wishlist</Text>
           <Main/>
         </div>
       </div>
