@@ -5,21 +5,46 @@ export default async function handler(req, res) {
   const {method} = req;
 
   const session = await getSession({req});
-  const {user} = session;
-  const userId = user.id;
+  const {user: {id: userId}} = session;
 
   switch(method) {
     case 'GET':
-      const user = await prisma.user.findUnique({
+
+      if (!session) {
+        return res.status(401).json({message: 'You must be logged in'})
+      }
+
+      const userWishlist = await prisma.user.findUnique({
         where: {
           id: userId
         },
-        include: {
-          wishlist: true
+        select: {
+          wishlist: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              price: true,
+              rating: true,
+              brand: true,
+              images: true,
+              category: {
+                select: {
+                  name: true,
+                },
+              },
+              users: {
+                select: {
+                  id: true,
+                }
+              }
+            },
+          }
         }
       })
-      const userWishlist = user.wishlist
+
       res.status(200).json(userWishlist)
+
       break
     default:
       res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE'])
