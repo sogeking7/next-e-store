@@ -4,7 +4,7 @@ import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
   const {method} = req;
-  const productId = req.query.id;
+  const {id: productId} = req.query;
 
   const session = await getSession({req});
   const {user} = session;
@@ -12,22 +12,29 @@ export default async function handler(req, res) {
 
   switch(method) {
     case 'POST':
-      await prisma.user.update({
+      let userWishlistIDs =  await prisma.user.findUnique({
+        where: {
+          id: userId
+        },
+        select: {
+          wishlistIDs: true
+        }
+      });
+
+      const updatedUserWishlistIDs = userWishlistIDs.wishlistIDs;
+      updatedUserWishlistIDs.push(productId)
+
+      const updatedUser = await prisma.user.update({
         where: {
           id: userId
         },
         data: {
-          wishlist: {
-            set: {
-              id: productId
-            }
-          }
+          wishlistIDs: updatedUserWishlistIDs
         },
-        include: {
-          wishlist: true
-        }
       });
-      return res.status(200).json('Item added to wishlist');
+
+      return res.status(200).json(updatedUser);
+      // return res.status(200).json('Item added to wishlist');
     case 'DELETE':
       await prisma.user.update({
         where: {
