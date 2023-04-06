@@ -3,22 +3,22 @@ import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
   const {method} = req
-  const {productId, categoryName} = req.query;
+  const {id: productId, category_name: categoryName} = req.query;
 
   const session = await getSession({req});
+  const {user: {id: userId}} = session;
 
   switch (method) {
     case 'GET':
-
       const category = await prisma.Category.findUnique({
         where: {
           name: categoryName
         }
       })
-
-      if (!category) return res.status(404).json();
-
-      const allProducts = await prisma.Category.findUnique({
+      if (!category) {
+        return res.status(404).json();
+      }
+      const get_product_by_id = await prisma.Category.findUnique({
         where: {
           id: category.id
         },
@@ -37,14 +37,17 @@ export default async function handler(req, res) {
           },
         },
       });
-      const wishlist = session ? await prisma.user.findUnique({
-          where: { id: session.user.id },
-          select: { wishlist: { select: { id: true } } },
-        }).then((user) => user.wishlist.some((p) => p.id === productId)) :0
+      const productExistsInWishlist = session ? await prisma.user.findUnique({
+        where: {id: userId},
+        select: {wishlist: {select: {id: true}}},
+      }).then((user) => user.wishlist.some((p) => p.id === productId)) : false
 
-      allProducts.products[0].wishlist = wishlist;
+      get_product_by_id.products[0].wishlist = productExistsInWishlist;
 
-      if (allProducts) res.status(200).json(allProducts.products[0]);
+      if (get_product_by_id) {
+        res.status(200).json(get_product_by_id.products[0]);
+      }
+
       res.status(404).json({error: 'Product Not Found'});
 
       break;
@@ -62,4 +65,5 @@ export default async function handler(req, res) {
       res.status(405).end('Method ${method} Not Allowed')
   }
 }
+
 
