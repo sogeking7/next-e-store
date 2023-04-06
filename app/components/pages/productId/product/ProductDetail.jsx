@@ -8,15 +8,8 @@ import {
   Stack,
   createStyles,
   Divider,
-  Container,
-  Group,
-  ActionIcon
 } from "@mantine/core";
 import {Carousel} from "@mantine/carousel";
-import Bread from "../../../layouts/Bread";
-import {unslugify} from '../../../../lib/utils/method'
-
-import {IconHeart} from '@tabler/icons'
 import {useRouter} from "next/router";
 import {AddToWishlistBtn} from "./buttons/AddToWishlistBtn";
 
@@ -45,10 +38,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
 function ProductDetail({data}) {
   const router = useRouter();
-  const {title, images, price, rating, id} = data;
+  const {title, images, price, rating, wishlist, id} = data;
   const {classes} = useStyles();
   const [index, setIndex] = useState(0);
 
@@ -133,7 +125,7 @@ function ProductDetail({data}) {
             <Button className="w-[100%]" color="indigo.5" variant="filled" radius='md'>
               Add to Cart
             </Button>
-            <AddToWishlistBtn productId={id}/>
+            <AddToWishlistBtn productId={id} isWihslist={wishlist}/>
           </div>
         </Stack>
       </Flex>
