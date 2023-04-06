@@ -1,5 +1,23 @@
 import {ActionIcon, Group} from "@mantine/core";
-import {data} from '../../data/social_links'
+import {IconBrandGithub, IconBrandInstagram, IconBrandTelegram} from "@tabler/icons";
+
+const data = [
+  {
+    icon: <IconBrandTelegram size={20} stroke={1.5}/>,
+    title: 'Telegram',
+    link: 'https://www.t.me/kair011a'
+  },
+  {
+    icon: <IconBrandInstagram size={20} stroke={1.5}/>,
+    title: 'Instagram',
+    link: 'https://www.instagram.com/sogeking_7/'
+  },
+  {
+    icon: <IconBrandGithub size={20} stroke={1.5}/>,
+    title: 'Github',
+    link: 'https://github.com/sogeking7'
+  }
+]
 
 function SocialLinks() {
   return (
