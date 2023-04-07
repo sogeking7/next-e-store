@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/core';
 import CatalogHeader from './CatalogHeader';
 import MyFooter from './Footer';
-import MobileNavBar from './MobileNavBar';
+import MobileNavBar from './mobile/MobileNavBar';
 
 const useStyle = createStyles((theme) => ({
   wrapper: {
