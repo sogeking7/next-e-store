@@ -7,20 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  price       Float
-  rating      Float
-  brand       String
-  images      String[]
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String   @db.ObjectId
-  userIDs     String[] @db.ObjectId
-  users       User[]   @relation(fields: [userIDs], references: [id])
-}
-
 model Category {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name     String    @unique
@@ -54,6 +40,22 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Product {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  price           Float
+  rating          Float
+  brand           String
+  images          String[]
+  category        Category @relation(fields: [categoryId], references: [id])
+  categoryId      String   @db.ObjectId
+  userWishlist    User[]   @relation("UserWishlist", fields: [userWishlistIDs], references: [id])
+  userWishlistIDs String[] @db.ObjectId
+  userCart        User[]   @relation("UserCart", fields: [userCartIDs], references: [id])
+  userCartIDs     String[] @db.ObjectId
+}
+
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -63,7 +65,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   wishlistIDs   String[]  @db.ObjectId
-  wishlist      Product[] @relation(fields: [wishlistIDs], references: [id])
+  wishlist      Product[] @relation("UserWishlist", fields: [wishlistIDs], references: [id])
+  cartIDs       String[]  @db.ObjectId
+  cart          Product[] @relation("UserCart", fields: [cartIDs], references: [id])
 }
 
 model VerificationToken {
