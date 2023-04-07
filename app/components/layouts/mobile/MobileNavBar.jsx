@@ -2,7 +2,6 @@ import React from "react";
 import {ActionIcon, Flex, Footer, Text,} from "@mantine/core";
 import {useRouter} from 'next/router'
 import {IconBuildingStore, IconCategory, IconHeart, IconShoppingCart} from "@tabler/icons";
-import AuthBtn from "../../pages/auth/buttons/AuthBtn";
 import Link from "next/link";
 import AuthBtnMobile from "../../pages/auth/buttons/AuthBtnMobile";
 
@@ -19,9 +18,9 @@ export default function MobileNavBar() {
                 color='dark'
                 variant="transparent"
               >
-                <IconBuildingStore size={26}/>
+                <IconBuildingStore strokeWidth={1.75}/>
               </ActionIcon>
-              <Text size={10} weight={600}>Store</Text>
+              <Text size={12}>Store</Text>
             </Flex>
           </Link>
           <Link href="/categories">
@@ -31,9 +30,9 @@ export default function MobileNavBar() {
                 color='dark'
                 variant="transparent"
               >
-                <IconCategory size={26}/>
+                <IconCategory strokeWidth={1.75}/>
               </ActionIcon>
-              <Text size={10} weight={600}>Catalog</Text>
+              <Text size={12}>Catalog</Text>
             </Flex>
           </Link>
           <Link href="/user/wishlist">
@@ -43,9 +42,9 @@ export default function MobileNavBar() {
                 color='dark'
                 variant="transparent"
               >
-                <IconHeart size={26}/>
+                <IconHeart strokeWidth={1.75}/>
               </ActionIcon>
-              <Text size={10} weight={600}>Wishlist</Text>
+              <Text size={12}>Wishlist</Text>
             </Flex>
           </Link>
           <Link href="/user/cart">
@@ -55,9 +54,9 @@ export default function MobileNavBar() {
                 color='dark'
                 variant="transparent"
               >
-                <IconShoppingCart size={26}/>
+                <IconShoppingCart strokeWidth={1.75}/>
               </ActionIcon>
-              <Text size={10} weight={600}>Cart</Text>
+              <Text size={12}>Cart</Text>
             </Flex>
           </Link>
           <AuthBtnMobile/>

@@ -40,9 +40,9 @@ const AuthBtnMobile = () => {
             color='dark'
             variant="transparent"
           >
-            <IconUser size={26}/>
+            <IconUser strokeWidth={1.75}/>
           </ActionIcon>
-          <Text size={10} weight={600}>Sign in</Text>
+          <Text size={12} >Sign in</Text>
         </Flex>
       </>
     );
@@ -51,7 +51,7 @@ const AuthBtnMobile = () => {
     <Link href="/user/profile">
       <Flex className="flex-col  items-center h-[50px] w-[50px] hover:cursor-pointer">
         <Image src={session.user.image} alt={session.user.name} width={28} height={28} className="rounded-full"/>
-        <Text weight={600} size={10}>Profile</Text>
+        <Text size={12}>Profile</Text>
       </Flex>
     </Link>
   );
