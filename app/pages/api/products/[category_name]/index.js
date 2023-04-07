@@ -1,7 +1,9 @@
 import prisma from "../../../../lib/prisma";
+import {getSession} from "next-auth/react";
 
 export default async function handler(req, res) {
   const {method} = req;
+  const session = await getSession({req});
   const {category_name: categoryName, sort} = req.query;
 
   const from = req.query.from ? req.query.from : "0";
@@ -185,7 +187,15 @@ export default async function handler(req, res) {
           })
           break;
       }
+      const userCartIDs = await prisma.user.findUnique({
+        where: {id: session.user.id},
+        select: {cart: {select: {id: true}}},
+      })
 
+      for (let i = 0; i < allSortedProducts.products.length; i++) {
+        const productId = allSortedProducts.products[i].id;
+        allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
+      }
       if (!allSortedProducts) {
         res.status(404).json({error: 'Products Not Found'});
       } else {

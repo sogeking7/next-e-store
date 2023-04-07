@@ -33,11 +33,6 @@ export default async function handler(req, res) {
                   name: true,
                 },
               },
-              users: {
-                select: {
-                  id: true,
-                }
-              }
             },
           }
         }

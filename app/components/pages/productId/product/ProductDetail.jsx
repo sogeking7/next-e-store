@@ -40,7 +40,7 @@ const useStyles = createStyles((theme) => ({
 
 function ProductDetail({data}) {
   const router = useRouter();
-  const {title, images, price, rating, wishlist, id} = data;
+  const {title, images, price, rating, inWishlist, id} = data;
   const {classes} = useStyles();
   const [index, setIndex] = useState(0);
 
@@ -125,7 +125,7 @@ function ProductDetail({data}) {
             <Button className="w-[100%]" color="indigo.5" variant="filled" radius='md'>
               Add to Cart
             </Button>
-            <AddToWishlistBtn productId={id} isWihslist={wishlist}/>
+            <AddToWishlistBtn productId={id} inWishlist={inWishlist}/>
           </div>
         </Stack>
       </Flex>

@@ -93,7 +93,7 @@ function ProductCard({layout, product, isLoading, url}) {
                 layout ?
                   <></>
                   :
-                  <AddToCartBtn isInCart={true}/>
+                  <AddToCartBtn productId={product.id} inCart={product.inCart}/>
               }
 
             </Flex>
