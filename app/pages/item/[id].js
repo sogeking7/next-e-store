@@ -31,8 +31,9 @@ function Id() {
   )
 
   if (error) {
-    router.push('/404');
-    return;
+    // router.push('/404');
+
+    return <Text>{error.message}</Text>
   }
 
   const list = [{title: 'Home', href: '/'},]

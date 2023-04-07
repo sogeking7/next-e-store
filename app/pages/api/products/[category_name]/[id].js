@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const {id: productId, category_name: categoryName} = req.query;
 
   const session = await getSession({req});
-  const {user: {id: userId}} = session;
+  // const {user: {id: userId}} = session;
 
   switch (method) {
     case 'GET':
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         },
       });
       const productExistsInWishlist = session ? await prisma.user.findUnique({
-        where: {id: userId},
+        where: {id: session.user.id},
         select: {wishlist: {select: {id: true}}},
       }).then((user) => user.wishlist.some((p) => p.id === productId)) : false
 
