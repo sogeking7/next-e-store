@@ -4,8 +4,6 @@ import {AddToCartBtn} from "./buttons/AddToCartBtn";
 import {useRouter} from "next/router";
 import React from "react";
 import {RemoveFromWishlistBtn} from "./buttons/RemoveFromWishlistBtn";
-import {useMutation, useQueryClient} from "react-query";
-import axios from "axios";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -83,22 +81,21 @@ function ProductCard({layout, product, isLoading, url}) {
                   }
                 </Link>
               </div>
-              <Flex justify="space-between">
-                <Text weight="bold">
-                  {
-                    isLoading ?
-                      <Skeleton height={20} width={100}/>
-                      :
-                      '$' + product.price
-                  }
-                </Text>
+              <Text weight="bold" mb={8}>
                 {
-                  layout ?
-                    <></>
+                  isLoading ?
+                    <Skeleton height={20} width={100}/>
                     :
-                    <AddToCartBtn/>
+                    '$' + product.price
                 }
-              </Flex>
+              </Text>
+              {
+                layout ?
+                  <></>
+                  :
+                  <AddToCartBtn isInCart={true}/>
+              }
+
             </Flex>
             {
               layout && !isLoading ?
