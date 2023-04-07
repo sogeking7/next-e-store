@@ -10,7 +10,7 @@ export const useAddItemToCart = (setDeletionError) => {
   const queryClient = useQueryClient();
   return useMutation(
     async (id) => {
-      return await axios.post(`/api/cart/${id}`);
+      return await axios.post(`/api/user/cart/${id}`);
     },
     {
       onSuccess: async () => {
@@ -19,7 +19,7 @@ export const useAddItemToCart = (setDeletionError) => {
         await showNotification({
           id: 'load-data',
           color: 'teal',
-          title: 'Added To Wishlist',
+          title: 'Added To Cart',
           autoClose: 2000,
         })
       },
@@ -33,7 +33,7 @@ export const useDeleteItemFromCart = (setDeletionError) => {
   const queryClient = useQueryClient();
   return useMutation(
     async (id) => {
-      return await axios.delete(`/api/cart/${id}`);
+      return await axios.delete(`/api/user/cart/${id}`);
     },
     {
       onSuccess: async () => {
@@ -41,7 +41,7 @@ export const useDeleteItemFromCart = (setDeletionError) => {
         await queryClient.invalidateQueries(["cart"]);
         await showNotification({
           id: 'load-data',
-          color: 'teal',
+          color: 'red',
           title: 'Deleted From Cart',
           autoClose: 2000,
         })
@@ -53,8 +53,8 @@ export const useDeleteItemFromCart = (setDeletionError) => {
   );
 };
 
-export const AddToCartBtn = ({productId, isInCart}) => {
-  const [active, setActive] = useState(isInCart);
+export const AddToCartBtn = ({productId, inCart}) => {
+  const [active, setActive] = useState(inCart);
 
 
   const {mutate: mutateAdd, isLoading: isAdding} = useAddItemToCart();
@@ -74,7 +74,7 @@ export const AddToCartBtn = ({productId, isInCart}) => {
         radius="xl"
         color={active ? "green.5" : "indigo.5"}
         onClick={() => {
-          // active ? handleDeleteClick(productId) : handleAddClick(productId)
+          active ? handleDeleteClick(productId) : handleAddClick(productId)
           setActive(!active);
         }}
         loading={isAdding || isDeleting}
