@@ -31,8 +31,8 @@ export const useAddItemToWishlist = (setDeletionError) => {
   );
 };
 
-export const AddToWishlistBtn = ({productId, isWihslist}) => {
-  const [active, setActive] = useState(isWihslist);
+export const AddToWishlistBtn = ({productId, inWishlist}) => {
+  const [active, setActive] = useState(inWishlist);
 
   const {mutate:mutateDelete, isLoading: isDeleting} = useDeleteItemFromWishlist();
   const handleDeleteClick = (id) => {
