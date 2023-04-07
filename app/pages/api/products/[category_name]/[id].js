@@ -45,11 +45,10 @@ export default async function handler(req, res) {
       get_product_by_id.products[0].wishlist = productExistsInWishlist;
 
       if (get_product_by_id) {
-        res.status(200).json(get_product_by_id.products[0]);
+        return res.status(200).json(get_product_by_id.products[0]);
+      } else {
+        return res.status(404).json({error: 'Product Not Found'});
       }
-
-      res.status(404).json({error: 'Product Not Found'});
-
       break;
     case 'POST':
       res.status(200).json({method, name: "POST request"});
