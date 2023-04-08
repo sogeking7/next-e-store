@@ -191,14 +191,16 @@ export default async function handler(req, res) {
           break;
       }
 
-      const userCartIDs = await prisma.user.findUnique({
+      const userCartIDs = session ? await prisma.user.findUnique({
         where: {id: session.user.id},
         select: {cart: {select: {id: true}}},
-      })
+      }) : null;
 
       for (let i = 0; i < allSortedProducts.products.length; i++) {
         const productId = allSortedProducts.products[i].id;
-        allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
+        if (userCartIDs) {
+          allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
+        }
       }
 
       if (allSortedProducts) {
