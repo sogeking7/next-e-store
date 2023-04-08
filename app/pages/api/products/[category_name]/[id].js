@@ -37,25 +37,25 @@ export default async function handler(req, res) {
           },
         },
       });
-      const productExistsInWishlist = session ? await prisma.user.findUnique({
-        where: {id: session.user.id},
-        select: {wishlist: {select: {id: true}}},
-      }).then((user) => user.wishlist.some((p) => p.id === productId)) : false
-
-      const productExistsInCart = session ? await prisma.user.findUnique({
-        where: {id: session.user.id},
-        select: {cart: {select: {id: true}}},
-      }).then((user) => user.cart.some((p) => p.id === productId)) : false
-
-      get_product_by_id.products[0].inWishlist = productExistsInWishlist;
-      get_product_by_id.products[0].inCart = productExistsInCart;
 
       if (get_product_by_id) {
+        const productExistsInWishlist = session ? await prisma.user.findUnique({
+          where: {id: session.user.id},
+          select: {wishlist: {select: {id: true}}},
+        }).then((user) => user.wishlist.some((p) => p.id === productId)) : false
+
+        const productExistsInCart = session ? await prisma.user.findUnique({
+          where: {id: session.user.id},
+          select: {cart: {select: {id: true}}},
+        }).then((user) => user.cart.some((p) => p.id === productId)) : false
+
+        get_product_by_id.products[0].inWishlist = productExistsInWishlist;
+        get_product_by_id.products[0].inCart = productExistsInCart;
+
         return res.status(200).json(get_product_by_id.products[0]);
       } else {
         return res.status(404).json({error: 'Product Not Found'});
       }
-      break;
     case 'POST':
       res.status(200).json({method, name: "POST request"});
       break;
