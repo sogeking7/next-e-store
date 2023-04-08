@@ -192,16 +192,17 @@ export default async function handler(req, res) {
       }
 
       if (allSortedProducts) {
-        const userCartIDs = session ? await prisma.user.findUnique({
-          where: {id: session.user.id},
-          select: {cart: {select: {id: true}}},
-        }) : null;
+        // const userCartIDs = session ? await prisma.user.findUnique({
+        //   where: {id: session.user.id},
+        //   select: {cart: {select: {id: true}}},
+        // }) : null;
 
         for (let i = 0; i < allSortedProducts.products.length; i++) {
-          const productId = allSortedProducts.products[i].id;
-          if (userCartIDs) {
-            allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
-          }
+          // const productId = allSortedProducts.products[i].id;
+          // if (userCartIDs) {
+          //   allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
+          // }
+          allSortedProducts.products[i].inCart = false;
         }
         return res.status(200).json(allSortedProducts.products)
       } else {
