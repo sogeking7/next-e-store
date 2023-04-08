@@ -13,14 +13,17 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       let allSortedProducts = null;
+
       const category = await prisma.Category.findUnique({
         where: {
           name: categoryName
         }
       })
+
       if (!category) {
         return res.status(404).json({error: 'Page Not Found'});
       }
+
       switch (sort) {
         case 'name':
           allSortedProducts = await prisma.Category.findFirst({
@@ -187,6 +190,7 @@ export default async function handler(req, res) {
           })
           break;
       }
+
       const userCartIDs = await prisma.user.findUnique({
         where: {id: session.user.id},
         select: {cart: {select: {id: true}}},
@@ -196,12 +200,12 @@ export default async function handler(req, res) {
         const productId = allSortedProducts.products[i].id;
         allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
       }
-      if (!allSortedProducts) {
-        res.status(404).json({error: 'Products Not Found'});
+
+      if (allSortedProducts) {
+        return res.status(200).json(allSortedProducts.products)
       } else {
-        res.status(200).json(allSortedProducts.products)
+        return res.status(404).json({error: 'Products Not Found'});
       }
-      break
     case 'POST':
       const data = [
         {
@@ -235,7 +239,6 @@ export default async function handler(req, res) {
         })
       })
       return res.status(200).json("created")
-      break
     case 'PUT':
       res.status(200).json({method, name: "PUT request"});
       break
