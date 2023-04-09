@@ -50,8 +50,8 @@ model Product {
   images      String[]
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  String   @db.ObjectId
-  // userWishlist    User[]   @relation("UserWishlist", fields: [userWishlistIDs], references: [id])
-  // userWishlistIDs String[] @db.ObjectId
+  userWishlist    User[]   @relation("UserWishlist", fields: [userWishlistIDs], references: [id])
+  userWishlistIDs String[] @db.ObjectId
   userCart    User[]   @relation("UserCart", fields: [userCartIDs], references: [id])
   userCartIDs String[] @db.ObjectId
 }
@@ -64,8 +64,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  // wishlistIDs   String[]  @db.ObjectId
-  // wishlist      Product[] @relation("UserWishlist", fields: [wishlistIDs], references: [id])
+  wishlistIDs   String[]  @db.ObjectId
+  wishlist      Product[] @relation("UserWishlist", fields: [wishlistIDs], references: [id])
   cartIDs       String[]  @db.ObjectId
   cart          Product[] @relation("UserCart", fields: [cartIDs], references: [id])
 }
