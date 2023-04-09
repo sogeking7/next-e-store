@@ -18,8 +18,23 @@ export default async function handler(req, res) {
         where: {
           id: userId
         },
-        include: {
-          cart: true
+        select: {
+          cart: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              price: true,
+              rating: true,
+              brand: true,
+              images: true,
+              category: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          }
         }
       })
 
