@@ -1,7 +1,7 @@
 import {IconUser} from '@tabler/icons'
 import {useDisclosure} from '@mantine/hooks';
-import {Modal,Flex, ActionIcon, Loader, Text} from '@mantine/core';
-import {useSession, signIn} from "next-auth/react";
+import {ActionIcon, Flex, Loader, Modal, Text} from '@mantine/core';
+import {signIn, useSession} from "next-auth/react";
 import {AuthenticationForm} from "../AuthentificationForm"
 import Link from "next/link";
 import Image from "next/image";
@@ -14,11 +14,12 @@ const AuthBtn = () => {
 
   if (status === "loading") {
     return (
-      <Flex align="center" onClick={open} className="cursor-pointer flex-col w-[50px]">
-        <Loader size="xs" className="relative top-1"/>
-        <Text size={12} className="relative top-1" weight={600}>Loading</Text>
+      <Flex className="flex-col justify-center items-center  w-[50px] cursor-pointer">
+        <Flex className="h-[28px] w-[28px] justify-center items-center justify-center">
+          <Loader size="xs" className=""/>
+        </Flex>
+        <Text size={12}>Loading</Text>
       </Flex>
-
     );
   }
   if (status === "unauthenticated") {
@@ -35,18 +36,18 @@ const AuthBtn = () => {
             color='dark'
             variant="transparent"
           >
-            <IconUser size={20}/>
+            <IconUser/>
           </ActionIcon>
-          <Text size={12} weight={600}>Sign in</Text>
+          <Text size={12}>Sign in</Text>
         </Flex>
       </>
     );
   }
   return (
     <Link href="/user/profile">
-      <Flex className="flex-col justify-center items-center h-[50px] w-[50px] hover:cursor-pointer">
-        <Image src={session.user.image} alt={session.user.name} width={26} height={26} className="rounded-full"/>
-        <Text weight={600} size={12}>Profile</Text>
+      <Flex className="flex-col justify-center items-center h-[46.59  px] w-[50px] hover:cursor-pointer">
+        <Image src={session.user.image} alt={session.user.name} width={28} height={28} className="rounded-full"/>
+        <Text size={12}>Profile</Text>
       </Flex>
     </Link>
   );
