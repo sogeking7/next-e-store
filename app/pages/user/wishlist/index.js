@@ -1,10 +1,11 @@
-import {Box, createStyles, Text} from "@mantine/core";
+import {Box, createStyles, Flex, Text} from "@mantine/core";
 import SideBar from "../../../components/pages/user/SideBar";
 import Head from "next/head";
 import {useQuery} from "react-query";
 import axios from "axios";
-import ProductCard from "../../../components/pages/catalog/product/ProductCard";
 import {AlertBox} from "../../../components/pages/user/wishlist/AlertBox";
+import Loader from "../../../components/ui/Loader";
+import WishlistProductCard from "../../../components/pages/user/wishlist/WishlistProductCard";
 
 
 const useStyle = createStyles((theme) => ({
@@ -43,13 +44,11 @@ function Main(props) {
       retry: false
     });
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return (
-      <div className="w-full">
-        {/*<ProductCard isLoading={1} product={undefined} layout={1}/>*/}
-        {/*<ProductCard isLoading={1} product={undefined} layout={1}/>*/}
-        {/*<ProductCard isLoading={1} product={undefined} layout={1}/>*/}
-      </div>
+      <Flex className="w-full" justify='center'>
+        <Loader color="indigo.5" variant="oval"/>
+      </Flex>
     )
   }
   if (error) {
@@ -61,10 +60,10 @@ function Main(props) {
 
   return (
     <div className="w-full">
-      {data.map((item) => {
+      {data.items.map((item) => {
         return (
           <Box mb='md'>
-            <ProductCard key={item.id} product={item} layout={1} isLoading={0} url={"user/wishlist"}/>
+            <WishlistProductCard product={item}/>
           </Box>
         )
       })}
@@ -81,7 +80,7 @@ function Wishlist() {
         <title>Wishlist</title>
         <meta property="og:title" content="Wishlist title" key="title"/>
       </Head>
-      <div className="max-w-7xl mx-auto flex p-4">
+      <div className="max-w-5xl mx-auto flex p-4">
         <SideBar/>
         <div className={classes.wrapper}>
           <Text className={classes.title}>Wishlist</Text>

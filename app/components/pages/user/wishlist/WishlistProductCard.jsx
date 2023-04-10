@@ -5,7 +5,6 @@ import {RemoveFromWishlistBtn} from "./RemoveFromWishlistBtn";
 
 const useStyles = createStyles((theme) => ({
   overlay: {
-    borderRadius: theme.radius.md,
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[1],
   }
 }));

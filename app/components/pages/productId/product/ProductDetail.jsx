@@ -122,7 +122,7 @@ function ProductDetail({data}) {
             {price}$
           </Text>
           <div className="flex gap-4 items-center">
-            <Button className="w-[100%]" color="indigo.5" variant="filled" radius='md'>
+            <Button className="w-[100%]" size="md" color="indigo.5" variant="filled" radius='xl'>
               Add to Cart
             </Button>
             <AddToWishlistBtn productId={id} inWishlist={inWishlist}/>

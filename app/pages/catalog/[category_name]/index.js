@@ -24,7 +24,7 @@ const useStyle = createStyles((theme) => ({
   },
   products: {
     width: '100%',
-    padding: '0 2rem',
+    padding: '0 0 0 2rem',
     ['@media (max-width: 768px)']: {
       padding: '0'
     },
@@ -55,7 +55,7 @@ function Store() {
     <>
       <FilterDrawer opened={opened} setOpened={setOpened}/>
 
-      <Box className="max-w-7xl mx-auto p-4">
+      <Box className="max-w-5xl mx-auto p-4">
         <Bread list={breadList}/>
         <div className="flex">
           <div className={classes.filter}>
@@ -66,9 +66,9 @@ function Store() {
             <SortSelect/>
             <ProductGrid/>
           </div>
-          <div className={classes.orders}>
+          {/*<div className={classes.orders}>*/}
 
-          </div>
+          {/*</div>*/}
         </div>
       </Box>
     </>

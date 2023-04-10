@@ -23,7 +23,7 @@ function Wishlist() {
         <title>Orders</title>
         <meta property="og:title" content="Orders title" key="title"/>
       </Head>
-      <div className="max-w-7xl mx-auto flex p-4">
+      <div className="max-w-5xl mx-auto flex p-4">
         <SideBar/>
         <div className="md:px-4">
           <Main/>

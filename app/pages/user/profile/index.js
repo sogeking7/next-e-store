@@ -23,7 +23,7 @@ function Profile() {
         <title>Profile</title>
         <meta property="og:title" content="Profile title" key="title"/>
       </Head>
-      <div className="max-w-7xl mx-auto flex p-4">
+      <div className="max-w-5xl mx-auto flex p-4">
         <SideBar/>
         <div className="md:px-4 pt-4">
           <Main/>
