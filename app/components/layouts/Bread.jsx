@@ -5,7 +5,7 @@ import React from 'react'
 
 function getItems(list) {
 	return list.map((item, index) => (
-		<Anchor href={item.href} key={index} >
+		<Anchor href={item.href} key={index} color='indigo.4' >
 			<Text size="md">{item.title}</Text>
 		</Anchor>
 	));
@@ -14,7 +14,7 @@ function getItems(list) {
 function Bread({list}) {
 	return (
 		<Box className="pb-4">
-			<Breadcrumbs separator="/" color="green">{getItems(list)}</Breadcrumbs>
+			<Breadcrumbs separator="/" >{getItems(list)}</Breadcrumbs>
 		</Box>
 	)
 }
