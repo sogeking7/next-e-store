@@ -41,33 +41,75 @@ model Session {
 }
 
 model Product {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  title           String
-  description     String
-  price           Float
-  rating          Float
-  brand           String
-  images          String[]
-  category        Category @relation(fields: [categoryId], references: [id])
-  categoryId      String   @db.ObjectId
-  userWishlist    User[]   @relation("UserWishlist", fields: [userWishlistIDs], references: [id])
-  userWishlistIDs String[] @db.ObjectId
-  userCart        User[]   @relation("UserCart", fields: [userCartIDs], references: [id])
-  userCartIDs     String[] @db.ObjectId
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  price       Float
+  quantity    Int         @default(1)
+  rating      Float
+  brand       String
+  images      String[]
+  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String      @db.ObjectId
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  wishlist    Wishlist[]  @relation(fields: [wishlistIDs], references: [id])
+  wishlistIDs String[]    @db.ObjectId
+}
+
+model Wishlist {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String    @db.ObjectId
+  items   Product[] @relation(fields: [itemIDs], references: [id])
+  itemIDs String[]  @db.ObjectId
+}
+
+model Cart {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String     @unique @db.ObjectId
+  cartItems   CartItem[] @relation(fields: [cartItemIDs], references: [id])
+  cartItemIDs String[]   @db.ObjectId
+}
+
+model CartItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  quantity  Int
+  product   Product  @relation(fields: [productID], references: [id])
+  productID String   @db.ObjectId
+  carts     Cart[]   @relation(fields: [cartIDs], references: [id])
+  cartIDs   String[] @db.ObjectId
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  wishlistIDs   String[]  @db.ObjectId
-  wishlist      Product[] @relation("UserWishlist", fields: [wishlistIDs], references: [id])
-  cartIDs       String[]  @db.ObjectId
-  cart          Product[] @relation("UserCart", fields: [cartIDs], references: [id])
+  cart          Cart?
+  wishlist      Wishlist[]
+  orders        Order[]
+}
+
+model Order {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String      @db.ObjectId
+  orderItems OrderItem[]
+  totalPrice Float
+}
+
+model OrderItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  quantity  Int
+  order     Order    @relation(fields: [orderID], references: [id])
+  orderID   String   @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
 }
 
 model VerificationToken {
