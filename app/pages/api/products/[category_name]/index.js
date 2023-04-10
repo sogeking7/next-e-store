@@ -43,13 +43,6 @@ export default async function handler(req, res) {
             },
             include: {
               products: {
-                include: {
-                  category: {
-                    select: {
-                      name: true
-                    }
-                  }
-                },
                 where: {
                   price: {
                     gte: +from,
@@ -84,13 +77,6 @@ export default async function handler(req, res) {
             },
             include: {
               products: {
-                include: {
-                  category: {
-                    select: {
-                      name: true
-                    }
-                  }
-                },
                 where: {
                   price: {
                     gte: +from,
@@ -125,13 +111,6 @@ export default async function handler(req, res) {
             },
             include: {
               products: {
-                include: {
-                  category: {
-                    select: {
-                      name: true
-                    }
-                  }
-                },
                 where: {
                   price: {
                     gte: +from,
@@ -166,13 +145,6 @@ export default async function handler(req, res) {
             },
             include: {
               products: {
-                include: {
-                  category: {
-                    select: {
-                      name: true
-                    }
-                  }
-                },
                 where: {
                   price: {
                     gte: +from,
@@ -192,33 +164,21 @@ export default async function handler(req, res) {
       }
 
       if (allSortedProducts) {
-        const userCartIDs = session ? await prisma.user.findUnique({
-          where: {id: session.user.id},
-          select: {cart: {select: {id: true}}},
-        }) : null;
-
-        for (let i = 0; i < allSortedProducts.products.length; i++) {
-          const productId = allSortedProducts.products[i].id;
-          if (userCartIDs) {
-            allSortedProducts.products[i].inCart = userCartIDs.cart.some((p) => p.id === productId);
-          }
-          // allSortedProducts.products[i].inCart = false;
-        }
-        return res.status(200).json(allSortedProducts.products)
+        return res.status(200).json(allSortedProducts)
       } else {
         return res.status(404).json({error: 'Products Not Found'});
       }
     case 'POST':
       const data = [
         {
-          title: 'Monkey D Luffy',
+          title: 'Roronoa Zoro',
           description: 'The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J',
-          price: 134,
+          price: 540,
           rating: 3,
           category: 'tablets',
           brand: 'Qazaq Republic',
           images: [
-            'https://www.slashfilm.com/img/gallery/one-piece-film-red-showcases-luffys-new-transformation-for-the-first-time/intro-1667316814.jpg'
+            'https://rare-gallery.com/mocahbig/1355563-Roronoa-Zoro-Green-HairRoronoa-Zoro.png'
           ]
         },
       ]
