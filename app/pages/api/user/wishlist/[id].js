@@ -7,51 +7,101 @@ export default async function handler(req, res) {
   const {id: productId} = req.query;
 
   const session = await getSession({req});
-  const {user} = session;
-  const userId = user.id;
+  const {user: {id: userId}} = session;
+
+  let user=null, updatedWishlist=null, wishlist=null
 
   switch(method) {
-    case 'POST':
-      let userWishlistIDs =  await prisma.user.findUnique({
+    case 'GET':
+      user = await prisma.user.findUnique({
         where: {
-          id: userId
+          id: userId,
         },
-        select: {
-          wishlistIDs: true
-        }
-      });
+        include: {
+          wishlist: true,
+        },
+      })
+      if (!user) {
+        return res.status(400).json({message: `User with ID ${userId} not found\``})
+      }
 
-      const updatedUserWishlistIDs = userWishlistIDs.wishlistIDs;
-      updatedUserWishlistIDs.push(productId)
+      wishlist = user.wishlist[0] // assuming each user has only one wishlist
+      if (!wishlist) {
+        wishlist = await prisma.wishlist.create({
+          data: {
+            user: { connect: { id: userId } },
+          },
+        });
+        return res.status(400).json({message: `Wishlist not found for user with ID ${userId}`})
+      }
 
-      const updatedUser = await prisma.user.update({
+      if (wishlist.itemIDs.includes(productId)) {
+        return res.status(400).json({message: `Product with ID ${productId} is already in the wishlist`})
+      }
+      updatedWishlist = await prisma.wishlist.update({
         where: {
-          id: userId
+          id: wishlist.id,
         },
         data: {
-          wishlistIDs: updatedUserWishlistIDs
+          items: {
+            connect: {
+              id: productId,
+            },
+          },
+          itemIDs: {
+            push: productId,
+          },
         },
-      });
-
-      return res.status(200).json(updatedUser);
-      // return res.status(200).json('Item added to wishlist');
+        include: {
+          items: true,
+        },
+      })
+      return res.status(200).json(updatedWishlist);
     case 'DELETE':
-      await prisma.user.update({
+      user = await prisma.user.findUnique({
         where: {
-          id: userId
-        },
-        data: {
-          wishlist: {
-            disconnect: {
-              id: productId
-            }
-          }
+          id: userId,
         },
         include: {
           wishlist: true
-        }
-      });
-      return res.status(200).json('Item removed from wishlist');
+        },
+      })
+
+      if (!user) {
+        return res.status(400).json({message: `User with ID ${userId} not found`})
+      }
+
+      wishlist = user.wishlist[0] // assuming each user has only one wishlist
+      if (!wishlist) {
+        return res.status(400).json({message: `Wishlist not found for user with ID ${userId}`})
+      }
+
+      const wishlistItemIndex = wishlist.itemIDs.findIndex(
+        (item) => item === productId
+      )
+
+      if (wishlistItemIndex === -1) {
+        return res.status(400).json({message: `Product not found in wishlist for user with ID ${userId}`})
+      }
+
+      updatedWishlist = wishlist.itemIDs.filter(
+        (item) => item !== productId
+      )
+
+      const updatedUser = await prisma.wishlist.update({
+        where: {
+          id: wishlist.id,
+        },
+        data: {
+          itemIDs: {
+            set: updatedWishlist,
+          },
+        },
+        include: {
+          items: true,
+        },
+      })
+      return res.status(200).json(updatedUser)
     default:
       res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE'])
       res.status(405).end('Method ${method} Not Allowed')
