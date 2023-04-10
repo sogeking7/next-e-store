@@ -1,5 +1,5 @@
 import {ActionIcon} from "@mantine/core";
-import {IconCheck, IconTrash} from "@tabler/icons";
+import {IconTrash} from "@tabler/icons";
 import axios from "axios";
 import {useMutation, useQueryClient} from "react-query";
 import React from "react";
@@ -40,11 +40,12 @@ export const RemoveFromWishlistBtn = ({productId}) => {
     <ActionIcon
       size="lg"
       variant="subtle"
+      radius="md"
       className='hover:text-red-500 text-gray-500'
       onClick={() => handleDeleteClick(productId)}
       loading={isLoading}
     >
-      <IconTrash size={20}/>
+      <IconTrash size={20} stroke-width='1.5'/>
     </ActionIcon>
 
   );
