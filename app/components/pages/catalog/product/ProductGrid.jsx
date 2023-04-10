@@ -29,9 +29,14 @@ function ProductGrid() {
 
   return (
     <div className="grid lgg:grid-cols-3 lg:grid-cols-2 mmd:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 phone:grid-cols-2 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6">
-      {data.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+      {data.products.map((product) => {
+        product = {
+          category: {
+            name: data.name
+          }, ...product
+        }
+        return<ProductCard key = {product.id} product = {product} />
+      })}
     </div>
   );
 }
