@@ -89,7 +89,7 @@ const Filter:FC = () => {
           min={0}
           max={1000}
           label={null}
-          color='blue'
+          color='indigo.5'
           value={priceRange}
           onChange={setPriceRange}
           className="w-full mb-4"
@@ -114,7 +114,7 @@ const Filter:FC = () => {
             return (
               <Flex key={ind} className="gap-1 mb-2" align='center' onClick={() => setCurRating(rating)} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
-                <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? '#C1C2C5' : 'dark'}` : '#4dabf7'} className="cursor-pointer hover:underline">
+                <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? 'dark.0' : '#000'}` : 'indigo.5'} className="cursor-pointer hover:underline">
                   and above
                 </Text>
               </Flex>
