@@ -59,8 +59,8 @@ model Product {
 
 model Wishlist {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String    @db.ObjectId
+  user    User      @relation(fields: [userId], references: [id])
+  userId  String    @unique @db.ObjectId
   items   Product[] @relation(fields: [itemIDs], references: [id])
   itemIDs String[]  @db.ObjectId
 }
@@ -83,15 +83,15 @@ model CartItem {
 }
 
 model User {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?    @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   cart          Cart?
-  wishlist      Wishlist[]
+  wishlist      Wishlist?
   orders        Order[]
 }
 
