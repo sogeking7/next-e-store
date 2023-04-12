@@ -6,9 +6,9 @@ import {
 } from "@tabler/icons";
 import CategoryHoverCard from "./CategoryHoverCard";
 
-export default function Search({setOpened, isFilterOn}) {
+export default function Search({setOpened}) {
   return (
-    <Flex className="justify-center hidden md:flex items-center gap-2 md:w-[500px] w-full md:mr-8">
+    <Flex className="justify-center md:flex items-center gap-2 md:w-[500px] w-full md:mr-8">
       <HoverCard width={600} position="bottom-start" className="hidden md:block" shadow="md">
         <HoverCard.Target>
           <Flex className="items-center">
@@ -32,17 +32,6 @@ export default function Search({setOpened, isFilterOn}) {
         icon={<IconSearch size={16}/>}
         placeholder="Search in Store"
       ></TextInput>
-      {isFilterOn ?
-        <ActionIcon
-          size="md"
-          color='dark'
-          onClick={() => setOpened(true)}
-          variant="transparent"
-          className="md:hidden"
-        >
-          <IconAdjustmentsHorizontal/>
-        </ActionIcon> : <></>
-      }
     </Flex>
   );
 }

@@ -9,7 +9,7 @@ export const FilterDrawer:FC<any> = (props) => {
     <Drawer
       opened={opened}
       onClose={() => setOpened(false)}
-      position="right"
+      position="bottom"
       padding="xl"
       className="md:hidden"
       size="lg"

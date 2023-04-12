@@ -5,7 +5,7 @@ import axios from "axios";
 import {useMutation, useQueryClient} from "react-query";
 import {showNotification} from "@mantine/notifications";
 import {IconHeartFilled} from "@tabler/icons-react";
-import {useDeleteItemFromWishlist} from "../../../catalog/product/buttons/RemoveFromWishlistBtn";
+import {useDeleteItemFromWishlist} from "../../../user/wishlist/RemoveFromWishlistBtn";
 
 export const useAddItemToWishlist = (setDeletionError) => {
   const queryClient = useQueryClient();
@@ -46,17 +46,17 @@ export const AddToWishlistBtn = ({productId, inWishlist}) => {
 
   return (
     <ActionIcon
-      size="lg"
-      radius="md"
+      size="xl"
+      radius="xl"
       variant="subtle"
-      className={active ? 'hover:text-red-500 text-red-500' : 'hover:text-red-500 text-gray-500'}
+      className={active ? 'hover:text-red-500 text-red-500' : 'hover:text-red-500'}
       onClick={() => {
         active ? handleDeleteClick(productId) :handleAddClick(productId)
         setActive(!active);
       }}
       loading={isAdding || isDeleting}
     >
-      {active ? <IconHeartFilled size={20}/> : <IconHeart size={20}/>}
+      {active ? <IconHeartFilled size={30} stroke={1.5}/> : <IconHeart size={30} stroke={1.5}/>}
     </ActionIcon>
   );
 };

@@ -1,15 +1,32 @@
 import React from "react";
-import {ActionIcon, Flex, Footer, Text,} from "@mantine/core";
+import {ActionIcon, Box, Flex, Footer, Text, createStyles} from "@mantine/core";
 import {useRouter} from 'next/router'
 import {IconBuildingStore, IconCategory, IconHeart, IconShoppingCart} from "@tabler/icons";
 import Link from "next/link";
 import AuthBtnMobile from "../../pages/auth/buttons/AuthBtnMobile";
 
+const useStyles = createStyles((theme) => ({
+  footer: {
+    position: 'fixed',
+    bottom: '0',
+    width: '100%',
+    display: 'none',
+    ['@media (max-width: 767px)']: {
+      display: 'block'
+    },
+    zIndex: '50',
+    padding: '.5rem 1rem',
+    overflow: 'hidden',
+    height: '60px',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white
+  }
+}))
+
 export default function MobileNavBar() {
+  const {classes} = useStyles();
   const router = useRouter();
   return (
-    <div className="md:hidden block">
-      <Footer className="fixed z-50 bottom-0 px-4 py-2 overflow-hidden" height={60}>
+      <Box className={classes.footer}>
         <div className="flex justify-between">
           <Link href="/">
             <Flex align="center" className="cursor-pointer flex-col w-[50px]">
@@ -35,18 +52,6 @@ export default function MobileNavBar() {
               <Text size={12}>Catalog</Text>
             </Flex>
           </Link>
-          <Link href="/user/wishlist">
-            <Flex align="center" className="cursor-pointer flex-col w-[50px]">
-              <ActionIcon
-                size="md"
-                color='dark'
-                variant="transparent"
-              >
-                <IconHeart strokeWidth={1.75}/>
-              </ActionIcon>
-              <Text size={12}>Wishlist</Text>
-            </Flex>
-          </Link>
           <Link href="/user/cart">
             <Flex align="center" className="cursor-pointer flex-col w-[50px]">
               <ActionIcon
@@ -61,8 +66,7 @@ export default function MobileNavBar() {
           </Link>
           <AuthBtnMobile/>
         </div>
-      </Footer>
-    </div>
+      </Box>
   );
 }
 

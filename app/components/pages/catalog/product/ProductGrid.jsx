@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import Loader from "../../../ui/Loader";
 
-function ProductGrid() {
+function ProductGrid({layout}) {
   const router = useRouter();
 
   const { isLoading, error, data } = useQuery(['products', router], async () => {
@@ -27,15 +27,18 @@ function ProductGrid() {
     <Text weight={500}>Sorry, no products were found matching your criteria.</Text>
   )
 
+  const gridTail = "grid lgg:grid-cols-4 lg:grid-cols-4 mmd:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6"
+  const flexTail = "grid grid-cols-1 gap-4"
+
   return (
-    <div className="grid lgg:grid-cols-3 lg:grid-cols-2 mmd:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 phone:grid-cols-2 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6">
+    <div className={layout ? flexTail : gridTail}>
       {data.products.map((product) => {
         product = {
           category: {
             name: data.name
           }, ...product
         }
-        return<ProductCard key = {product.id} product = {product} />
+        return<ProductCard layout={layout} key = {product.id} product = {product} />
       })}
     </div>
   );

@@ -14,7 +14,7 @@ export const ProfileUser = () => {
   }
 
   return (
-    <Box mb={2}>
+    <Box>
       <Box mb={8}>
         {
           isLoading ?

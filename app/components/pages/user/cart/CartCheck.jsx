@@ -6,10 +6,10 @@ const useStyles = createStyles((theme) => ({
     ['@media (max-width: 767px)']: {
       width: '100%'
     },
-    borderRadius: '8px',
+    borderRadius: theme.radius.xl,
     padding: '1rem',
     height: 'min-content',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
   },
 }));
 function CartCheck() {
@@ -21,7 +21,7 @@ function CartCheck() {
         <Title order={2}>US $123</Title>
       </Flex>
 
-      <Button className="w-full" size="md" color="indigo.5" radius="xl">Checkout</Button>
+      <Button className="w-full" size="md" color="red.8" radius="xl">Checkout</Button>
     </div>
   );
 }

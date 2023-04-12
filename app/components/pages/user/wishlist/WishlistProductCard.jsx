@@ -5,7 +5,13 @@ import {RemoveFromWishlistBtn} from "./RemoveFromWishlistBtn";
 
 const useStyles = createStyles((theme) => ({
   overlay: {
+    borderRadius: theme.radius.lg, 
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[1],
+  },
+  picture: {
+    objectFit: 'cover',
+    width: '100%',
+    borderRadius: theme.radius.lg, 
   }
 }));
 
@@ -15,10 +21,10 @@ function ProductCard({product}) {
   return (
     <Flex gap="md">
       <Box className={classes.overlay}>
-        <Flex align='center' className="aspect-square h-[140px]">
+        <Flex className="aspect-square h-[140px]">
           <Link href={`/item/${product.id}?category_name=${product.category.name}`}>
             <img
-              className='object-contain w-full'
+              className={classes.picture}
               src={product.images[0]}
               alt={null}
             />

@@ -9,7 +9,7 @@ import Link from "next/link";
 
 function CatalogHeader({setOpened, isFilterOn}) {
   return (
-    <Header className="py-2"  height={64}>
+    <Header className="py-2 hidden md:block"  height={64}>
       <div className="max-w-5xl mx-auto">
         <Flex className="justify-between items-center flex-row md:gap-0 gap-4 px-4">
           <Logo/>

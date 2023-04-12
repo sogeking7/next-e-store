@@ -1,23 +1,19 @@
 import {Box, createStyles, Text, Flex, Stack} from "@mantine/core";
 import {useRouter} from "next/router";
-import {IconBox, IconHeart, IconLogout} from "@tabler/icons";
+import {IconBox, IconChevronRight, IconHeart, IconLogout} from "@tabler/icons";
 import {signOut} from "next-auth/react";
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    paddingRight: '1rem',
-    borderRight: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]}`,
-    height: '100%'
-  },
   link: {
     display: 'flex',
     alignItems: 'center',
-    borderRadius: '8px',
+    justifyContent: 'space-between',
+    borderRadius: theme.radius.xl,
     padding: '.5rem',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
     },
   },
   linkActive: {
@@ -46,8 +42,7 @@ function SideBar() {
 
   console.log(router.pathname.split('/'))
   return (
-    <Box className="md:w-1/3 lg:w-1/4 md:block basic:hidden">
-      <Stack className={classes.wrapper}>
+      <Stack className="w-full">
         <Flex direction="column">
           {links.map((val, ind) => {
             return (
@@ -59,6 +54,8 @@ function SideBar() {
                   {val.icon}
                   <Text>{val.name}</Text>
                 </Flex>
+                  <IconChevronRight className="md:hidden"/>
+              
               </a>
             )
           })}
@@ -76,7 +73,7 @@ function SideBar() {
           </a>
         </Flex>
       </Stack>
-    </Box>
+    
   );
 }
 
