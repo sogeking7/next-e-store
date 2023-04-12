@@ -1,8 +1,5 @@
 import { Breadcrumbs, Anchor, Box, Text } from '@mantine/core';
 
-import React from 'react'
-
-
 function getItems(list) {
 	return list.map((item, index) => (
 		<Anchor href={item.href} key={index} color='indigo.4' >
@@ -13,7 +10,7 @@ function getItems(list) {
 
 function Bread({list}) {
 	return (
-		<Box className="pb-4">
+		<Box pb="md">
 			<Breadcrumbs separator="/" >{getItems(list)}</Breadcrumbs>
 		</Box>
 	)
