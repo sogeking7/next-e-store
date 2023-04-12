@@ -1,33 +1,41 @@
 import prisma from '../../../../lib/prisma'
 import {getSession} from "next-auth/react";
+const ObjectId = require('mongoose').Types.ObjectId;
 
 export default async function handler(req, res) {
   const {method} = req
   const {id: productId, category_name: categoryName} = req.query;
 
+  if (!ObjectId.isValid(productId)) {
+    return res.status(400).json({error: `${productId} is not a valid MongodbID`})
+  }
+
   const session = await getSession({req});
 
   switch (method) {
     case 'GET':
-      const category = await prisma.Category.findUnique({
+      let category = await prisma.Category.findUnique({
         where: {
           name: categoryName
         }
       })
       if (!category) {
-        return res.status(404).json("Page Not Found");
+        return res.status(400).json({error: `Category ${categoryName} does not exist.`});
       }
-      const user = await prisma.user.findUnique({
+      const categoryId = category.id;
+      const userId = session ? session.user.id : null;
+      const userWishlist = userId ? await prisma.user.findUnique({
         where: {
-          id: session.user.id
+          id: userId
         },
         include: {
           wishlist: true
         }
-      })
-      const get_product_by_id = await prisma.Category.findUnique({
+      }) : null
+      const userWishlistId = userWishlist ? userWishlist.wishlistId : null;
+      category = await prisma.Category.findUnique({
         where: {
-          id: category.id
+          id: categoryId
         },
         include: {
           products: {
@@ -35,7 +43,7 @@ export default async function handler(req, res) {
               id: productId
             },
             include: {
-              wishlist: true,
+              wishlist: true, 
               category: {
                 select: {
                   name: true
@@ -45,13 +53,12 @@ export default async function handler(req, res) {
           },
         },
       });
-      if (get_product_by_id) {
-        const product = get_product_by_id.products[0];
-
-        product.inWishlist = !!product.wishlistIDs.includes(user.wishlist.id);
-        return res.status(200).json(get_product_by_id.products[0]);
+      const productByCategory = category ? category.products[0] : null;
+      if (productByCategory) {
+        productByCategory.inWishlist = !!productByCategory.wishlistIDs.includes(userWishlistId);
+        return res.status(200).json(productByCategory);
       } else {
-        return res.status(404).json({error: 'Product Not Found'});
+        return res.status(404).json({error: `Product with id ${productId} not found`})
       }
     case 'POST':
       res.status(200).json({method, name: "POST request"});
