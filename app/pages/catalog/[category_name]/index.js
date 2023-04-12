@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, createStyles, Title} from "@mantine/core";
+import {Box, createStyles, Text, Flex} from "@mantine/core";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
 import {FilterDrawer} from "../../../components/pages/catalog/filter/FilterDrawer";
 import {useRouter} from "next/router";
@@ -7,6 +7,7 @@ import Bread from "../../../components/layouts/Bread";
 import SortSelect from "../../../components/pages/catalog/SortSelect";
 import {unslugify} from "../../../lib/utils/method";
 import Filter from "../../../components/pages/catalog/filter/Filter";
+import Search from '../../../components/layouts/Search.jsx'
 
 const useStyle = createStyles((theme) => ({
   wrapper: {
@@ -16,16 +17,16 @@ const useStyle = createStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
   },
-  filter: {
+  sideBarWrapper: {
     minWidth: '210px',
-    ['@media (max-width: 768px)']: {
+    ['@media (max-width: 767px)']: {
       display: 'none'
     },
   },
-  products: {
+  mainWrapper: {
     width: '100%',
     padding: '0 0 0 2rem',
-    ['@media (max-width: 768px)']: {
+    ['@media (max-width: 767px)']: {
       padding: '0'
     },
   },
@@ -48,28 +49,34 @@ function getList(router) {
 function Store() {
   const router = useRouter();
   const {classes} = useStyle();
+  
+  //Bottom Filter Bar Hook
   const [opened, setOpened] = useState(false);
-  const breadList = getList(router);
+  
+  //Layout Hook
+  const [layout, setLayout] = useState(0);
 
+  const breadList = getList(router);
   return (
     <>
       <FilterDrawer opened={opened} setOpened={setOpened}/>
-
       <Box className="max-w-5xl mx-auto p-4">
-        <Bread list={breadList}/>
-        <div className="flex">
-          <div className={classes.filter}>
+        <div className="md:hidden mb-4">
+          <Search/> 
+        </div>
+        <div className="hidden md:block"> 
+          <Bread list={breadList}/>
+        </div>
+        <Flex>
+          <div className={classes.sideBarWrapper}>
             <Filter/>
           </div>
-          <div className={classes.products}>
-            <Title className="mb-4" order={1}>{breadList[1].title}</Title>
-            <SortSelect/>
-            <ProductGrid/>
+          <div className={classes.mainWrapper}>
+            <Text weight={600} mb="md" size={32}>{breadList[1].title}</Text> 
+            <SortSelect layout={layout} setLayout={setLayout}/>
+            <ProductGrid layout={layout}/>
           </div>
-          {/*<div className={classes.orders}>*/}
-
-          {/*</div>*/}
-        </div>
+        </Flex>
       </Box>
     </>
   );

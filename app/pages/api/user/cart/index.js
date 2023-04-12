@@ -5,35 +5,36 @@ export default async function handler(req, res) {
   const {method} = req;
 
   const session = await getSession({req});
-  const {user: {id: userId}} = session;
 
-  switch(method) {
+  if (!session) {
+    return res.status(401).json({error: 'You must be logged in'})
+  }
+
+  const userId = session.user.id;
+
+  switch (method) {
     case 'GET':
-
-      if (!session) {
-        return res.status(401).json({message: 'You must be logged in'})
-      }
-
       const userCart = await prisma.user.findUnique({
         where: {
           id: userId
         },
         select: {
           cart: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              price: true,
-              rating: true,
-              brand: true,
-              images: true,
-              category: {
-                select: {
-                  name: true,
-                },
-              },
-            },
+            include: {
+              cartItems: {
+                include: {
+                  product: {
+                    include: {
+                      category: {
+                        select: {
+                          name: true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       })

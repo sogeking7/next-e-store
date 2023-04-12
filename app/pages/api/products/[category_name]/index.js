@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       })
 
       if (!category) {
-        return res.status(404).json({error: 'Page Not Found'});
+        return res.status(404).json({message: `${categoryName} category do not exist.`});
       }
 
       switch (sort) {
@@ -162,11 +162,10 @@ export default async function handler(req, res) {
           })
           break;
       }
-
       if (allSortedProducts) {
         return res.status(200).json(allSortedProducts)
       } else {
-        return res.status(404).json({error: 'Products Not Found'});
+        return res.status(404).json({message: 'Products Not Found'});
       }
     case 'POST':
       const data = [
