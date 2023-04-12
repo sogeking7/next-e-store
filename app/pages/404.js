@@ -6,7 +6,6 @@ import {
   Button,
   Group,
 } from "@mantine/core";
-
 const useStyles = createStyles((theme) => ({
   root: {
     paddingTop: 80,
