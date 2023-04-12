@@ -1,4 +1,3 @@
-import React from "react";
 import prisma from "../../../../lib/prisma";
 import {getSession} from "next-auth/react";
 
@@ -7,51 +6,46 @@ export default async function handler(req, res) {
   const {id: productId} = req.query;
 
   const session = await getSession({req});
-  const {user} = session;
-  const userId = user.id;
+  
+  if (!session) {
+    return res.status(401).json({message: 'You must be logged in'})
+  }
+  let user = null, updatedCart = null, cart = null
 
-  switch(method) {
-    case 'POST':
-      let userCartIDs =  await prisma.user.findUnique({
-        where: {
-          id: userId
-        },
-        select: {
-          cartIDs: true
-        }
-      });
+  const userId = session.user.id;
 
-      const updatedUserCartIDs = userCartIDs.cartIDs;
-      updatedUserCartIDs.push(productId)
-
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: userId
-        },
+  switch (method) {
+    case 'GET':
+      const cartItem = await prisma.cartItem.create({
         data: {
-          cartIDs: updatedUserCartIDs
-        },
-      });
-
-      return res.status(200).json(updatedUser);
-    // return res.status(200).json('Item added to wishlist');
-    case 'DELETE':
-      await prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          cart: {
-            disconnect: {
+          quantity: 1,
+          product: {
+            connect: {
               id: productId
+            }
+          },
+          carts: {
+            connect: {
+              userId: userId
             }
           }
         },
-        include: {
-          cart: true
-        }
       });
-      return res.status(200).json('Item removed from cart');
+      const cart = await prisma.cart.upsert({
+        where: {userId: userId},
+        update: {},
+        create: {
+          userId: userId,
+          cartItems: {
+            connect: {
+              id: cartItem.id
+            }
+          }
+        },
+      });
+      return res.status(200).json(cart);
+    case 'DELETE':
+
     default:
       res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE'])
       res.status(405).end('Method ${method} Not Allowed')
