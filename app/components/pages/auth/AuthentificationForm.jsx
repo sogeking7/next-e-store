@@ -1,12 +1,11 @@
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import {signIn} from "next-auth/react";
 import {
   TextInput,
   PasswordInput,
-  Text,
   Paper,
   Group,
-  PaperProps,
   Button,
   Divider,
   Checkbox,
@@ -14,6 +13,7 @@ import {
   Stack,
 } from '@mantine/core';
 import {GoogleButton} from "./buttons/GoogleButton"
+import {GitHubButton} from "./buttons/GitHubButton";
 
 export function AuthenticationForm(props) {
   const [type, toggle] = useToggle(['login', 'register']);
@@ -32,10 +32,11 @@ export function AuthenticationForm(props) {
   });
 
   return (
-    <Paper radius="md" p="xl">
+    <Paper radius="md" p="md">
 
-      <Group grow mb="md" mt="md">
-        <GoogleButton signIn={props.signIn}/>
+      <Group mb="md" mt="md" >
+        <GoogleButton signIn={signIn}/>
+        <GitHubButton/>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
@@ -44,32 +45,32 @@ export function AuthenticationForm(props) {
         <Stack>
           {type === 'register' && (
             <TextInput
-              label="Name"
               placeholder="Your name"
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
               radius="md"
+              size="md"
             />
           )}
 
           <TextInput
             required
-            label="Email"
-            placeholder="hello@mantine.dev"
+            placeholder="Email address"
             value={form.values.email}
             onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
             error={form.errors.email && 'Invalid email'}
             radius="md"
+            size="md"
           />
 
           <PasswordInput
             required
-            label="Password"
-            placeholder="Your password"
+            placeholder="Password"
             value={form.values.password}
             onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
             error={form.errors.password && 'Password should include at least 6 characters'}
             radius="md"
+            size="md"
           />
 
           {type === 'register' && (
@@ -93,7 +94,7 @@ export function AuthenticationForm(props) {
               ? 'Already have an account? Login'
               : "Don't have an account? Register"}
           </Anchor>
-          <Button type="submit" radius="xl">
+          <Button type="submit" size="md" color="indigo.5" radius="xl">
             {upperFirst(type)}
           </Button>
         </Group>

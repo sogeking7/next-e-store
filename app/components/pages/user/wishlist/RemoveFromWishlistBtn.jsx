@@ -13,8 +13,8 @@ export const useDeleteItemFromWishlist = (setDeletionError) => {
     },
     {
       onSuccess: async () => {
-        await queryClient.cancelQueries(["wishlist"]);
-        await queryClient.invalidateQueries(["wishlist"]);
+        await queryClient.cancelQueries(["user/wishlist"]);
+        await queryClient.invalidateQueries(["user/wishlist"]);
         await showNotification({
           id: 'load-data',
           color: 'teal',
@@ -40,7 +40,7 @@ export const RemoveFromWishlistBtn = ({productId}) => {
     <ActionIcon
       size="lg"
       variant="subtle"
-      radius="md"
+      radius="lg"
       className='hover:text-red-500 text-gray-500'
       onClick={() => handleDeleteClick(productId)}
       loading={isLoading}

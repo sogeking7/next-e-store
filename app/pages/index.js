@@ -2,19 +2,19 @@ import React from 'react'
 import HeroTitle from '../components/pages/home/HeroTitle'
 import CategoryCarousel from "../components/pages/home/CategoryCarousel";
 import Layout from '../components/layouts/Layout.jsx'
-import {DarkModeButton} from '../components/ui/DarkModeButton.jsx'
-import {Group, Box} from '@mantine/core'
+import { DarkModeButton } from '../components/ui/DarkModeButton.jsx'
+import { Group, Box } from '@mantine/core'
 function Home() {
   return (
-    <>
+    <Layout>
       <Box p="md" className="md:hidden">
         <Group position="right">
-          <DarkModeButton />  
+          <DarkModeButton />
         </Group>
       </Box>
-      <HeroTitle/>
-      <CategoryCarousel/>
-    </>
+      <HeroTitle />
+      <CategoryCarousel />
+    </Layout>
   )
 }
 

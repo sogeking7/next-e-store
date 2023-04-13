@@ -1,7 +1,7 @@
-import {Box, Checkbox, createStyles, Flex, Rating, Text} from "@mantine/core";
+import { Box, Checkbox, createStyles, Flex, Rating, Text } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
-import {IconMinus, IconPlus, IconTrash} from "@tabler/icons";
+import { IconMinus, IconPlus, IconTrash } from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   priceBox: {
@@ -22,12 +22,12 @@ const useStyles = createStyles((theme) => ({
   picture: {
     objectFit: 'cover',
     width: '100%',
-    borderRadius: theme.radius.lg, 
+    borderRadius: theme.radius.lg,
   }
 }));
 
-function ProductCard({product}) {
-  const {classes} = useStyles();
+function ProductCard({ product }) {
+  const { classes } = useStyles();
 
   const [quantity, setQuantity] = React.useState(1);
 
@@ -50,12 +50,11 @@ function ProductCard({product}) {
             <Box>
               <Link href={`/item/${product.id}?category_name=${product.category.name}`}>
                 <Text lineClamp={2} size='sm' className="cursor-pointer hover:text-[#228be6] mb-1">
-                  Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-                  //{product.title}
+                  {product.title}
                 </Text>
               </Link>
               <Link href="/">
-                <Rating defaultValue={product.rating} size="xs" fractions={2} readOnly className=""/>
+                <Rating defaultValue={product.rating} size="xs" fractions={2} readOnly className="" />
               </Link>
             </Box>
           </Flex>
@@ -66,23 +65,23 @@ function ProductCard({product}) {
                   setQuantity(quantity - 1)
                 }
               }}>
-                {quantity > 1 ? <IconMinus stroke={1.5}/> : <IconTrash stroke={1.5}/>}
+                {quantity > 1 ? <IconMinus stroke={1.5} /> : <IconTrash stroke={1.5} />}
               </Flex>
               <Text className="mx-4" weight="bold">{quantity}</Text>
-              <Flex justify='space-between' align='center' className='hover:text-green-500 cursor-pointer' onClick={()=>{
+              <Flex justify='space-between' align='center' className='hover:text-green-500 cursor-pointer' onClick={() => {
                 setQuantity(quantity + 1)
               }}>
-                <IconPlus stroke={1.5}/>
+                <IconPlus stroke={1.5} />
               </Flex>
             </Flex>
           </Box>
         </Flex>
 
 
-        <Box className="md:pt-4 ">
+        <Box className="md:pt-4">
           <Flex gap={16} align='center'>
             <Text weight="bold" size={18}>${product.price}</Text>
-            <Checkbox color="indigo.7"/>
+            <Checkbox color="indigo.7" />
           </Flex>
         </Box>
       </Flex>

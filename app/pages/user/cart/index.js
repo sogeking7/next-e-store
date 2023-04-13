@@ -1,9 +1,12 @@
-import {Box, createStyles, Flex, Text, Loader} from "@mantine/core";
+import { Box, createStyles, Flex, Loader, Text } from "@mantine/core";
 import Head from "next/head";
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 import CartCheck from "../../../components/pages/user/cart/CartCheck";
 import CartProduct from "../../../components/pages/user/cart/CartProductCard";
+import Layout from "../../../components/layouts/Layout";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const useStyle = createStyles((theme) => ({
   cartListWrapper: {
@@ -11,6 +14,18 @@ const useStyle = createStyles((theme) => ({
     ['@media (max-width: 767px)']: {
       width: '100%'
     },
+  },
+  wrapper: {
+    padding: '1rem 1rem 1rem 1rem',
+    maxWidth: '64rem',
+    gap: '2rem',
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'row',
+    ['@media (max-width: 767px)']: {
+      padding: '1rem',
+      gap: '0'
+    }
   },
   productBox: {
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
@@ -27,9 +42,9 @@ const fetchUserCart = async () => {
 }
 
 function Main() {
-  const {classes} = useStyle();
+  const { classes } = useStyle();
 
-  const {isLoading, isError, error, data } =
+  const { isLoading, isError, error, data } =
     useQuery({
       queryKey: ['user/cart'],
       queryFn: fetchUserCart,
@@ -37,31 +52,27 @@ function Main() {
     });
 
   if (isLoading) {
-    return (     
-      <Flex className="w-full" justify='center'>
-        <Loader size="md" color="indigo.5" variant="oval"/>
+    return (
+      <Flex className={classes.wrapper}>
+        <Flex className="w-full" justify='center'>
+          <Loader size="md" color="indigo.5" variant="oval" />
+        </Flex>
       </Flex>
     )
   }
+
   if (isError) {
-    if (error.response.status === 401) {
-      return (
-        <div>
-          {
-            error.response.data.error
-          }
-        </div>
-      );
-    }
+    return error.response.data.error
   }
+
   return (
-    <Flex gap={32} className="w-full flex-col md:flex-row">
+    <Flex gap={32} className="max-w-5xl mx-auto p-4 flex-col md:flex-row">
       <Box className={classes.cartListWrapper}>
-        <Text weight={600} mb="md" size={32}>Cart</Text>     
+        <Text weight={600} mb="md" size={32}>Cart</Text>
         <Flex direction="column" gap="md">
           {
             data.cart.cartItems.map(item => {
-              return <CartProduct key={item.product.id} product={item.product}/>
+              return <CartProduct key={item.product.id} product={item.product} />
             })
           }
         </Flex>
@@ -72,18 +83,33 @@ function Main() {
 }
 
 function Cart() {
-  const {classes} = useStyle();
+  const { classes } = useStyle();
+  const { status } = useSession();
+  const router = useRouter();
+
+  if (status === 'loading') {
+    return (
+      <Flex className={classes.wrapper}>
+        <Flex className="w-full" justify='center'>
+          <Loader size="md" color="indigo.5" variant="oval" />
+        </Flex>
+      </Flex>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    router.push('/login');
+    return;
+  }
 
   return (
-    <>
+    <Layout>
       <Head>
         <title>Cart</title>
-        <meta property="og:title" content="Profile title" key="title"/>
+        <meta property="og:title" content="Profile title" key="title" />
       </Head>
-      <Flex className="max-w-5xl mx-auto p-4">
-        <Main/>  
-      </Flex>
-    </>
+      <Main />
+    </Layout>
   );
 }
 

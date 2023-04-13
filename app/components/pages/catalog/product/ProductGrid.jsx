@@ -1,11 +1,10 @@
-import { Text } from "@mantine/core";
+import { Box, Flex, Text, Loader} from "@mantine/core";
 import ProductCard from "./ProductCard";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import axios from "axios";
-import Loader from "../../../ui/Loader";
 
-function ProductGrid({layout}) {
+function ProductGrid({ layout }) {
   const router = useRouter();
 
   const { isLoading, error, data } = useQuery(['products', router], async () => {
@@ -18,29 +17,34 @@ function ProductGrid({layout}) {
     return await axios.get(link).then(res => res.data)
   })
 
-  if (isLoading) return (
-    <div className="max-w-7xl mx-auto flex justify-center py-[20vh]">
-      <Loader size="lg" color="blue" variant="oval" />
-    </div>
-  )
-  if (error) return (
-    <Text weight={500}>Sorry, no products were found matching your criteria.</Text>
-  )
+  if (isLoading) {
+    return (
+      <Flex maw={1024} mx="auto" justify='center' align="center" py="20vh">
+        <Loader size="lg" color="blue" variant="oval" />
+      </Flex>
+    )
+  }
+  
+  if (error) {
+    return (
+      <Text weight={500}>Sorry, no products were found matching your criteria.</Text>
+    )
+  }
 
   const gridTail = "grid lgg:grid-cols-4 lg:grid-cols-4 mmd:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 phone:grid-cols-3 mini:grid-cols-2 basic: grid-cols-1 md:gap-x-4 gap-x-2 gap-y-6"
   const flexTail = "grid grid-cols-1 gap-4"
 
   return (
-    <div className={layout ? flexTail : gridTail}>
+    <Box className={layout ? flexTail : gridTail}>
       {data.products.map((product) => {
         product = {
           category: {
             name: data.name
           }, ...product
         }
-        return<ProductCard layout={layout} key = {product.id} product = {product} />
+        return <ProductCard layout={layout} key={product.id} product={product} />
       })}
-    </div>
+    </Box>
   );
 }
 

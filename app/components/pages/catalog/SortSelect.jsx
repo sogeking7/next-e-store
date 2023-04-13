@@ -1,36 +1,36 @@
-import {Group, Select, ActionIcon, createStyles} from "@mantine/core";
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {IconArrowsSort, IconAdjustmentsHorizontal, IconListDetails, IconLayoutGrid} from '@tabler/icons'
+import { Group, Select, ActionIcon, createStyles } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { IconArrowsSort, IconAdjustmentsHorizontal, IconListDetails, IconLayoutGrid } from '@tabler/icons'
 
 const useStyle = createStyles((theme) => ({
-  icon: { 
+  icon: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.colors.dark[9],
-  }  
+  }
 }));
 
-
-export default function SortSelect({layout, setLayout}) {
+export default function SortSelect({ layout, setLayout }) {
   const router = useRouter();
-  const {classes} = useStyle();
+  const { classes } = useStyle();
   const [value, setValue] = useState(router.query.sort ? router.query.sort : "featured");
-  
+
   useEffect(() => {
     const query = router.query;
     query.sort = value;
     router.push({
       pathname: `/catalog/${query.category_name}`,
       query: query,
-    }, undefined,  { shallow: true })
+    }, undefined, { shallow: true })
   }, [value])
 
   return (
     <Group className="md:justify-between justify-end" mb={16}>
       <Select
-        radius="lg"
+        radius="xl"
         color="red"
         value={value}
-        className="w-[165px] hidden md:block"
+        w={165}
+        className="hidden md:block"
         styles={(theme) => ({
           input: {
             border: theme.colorScheme === "dark" ? 'none' : ''
@@ -54,15 +54,15 @@ export default function SortSelect({layout, setLayout}) {
         size="sm"
         onChange={setValue}
         data={[
-          {value: "desc", label: "Price: high to low"},
-          {value: "asc", label: "Price: low to high"},
-          {value: "name", label: "Alphabetically"},
-          {value: "featured", label: "Featured"},
+          { value: "desc", label: "Price: high to low" },
+          { value: "asc", label: "Price: low to high" },
+          { value: "name", label: "Alphabetically" },
+          { value: "featured", label: "Featured" },
         ]}
       />
       <Group spacing="xs">
         <ActionIcon
-          className="md:hidden" 
+          className="md:hidden"
           size="xl"
           color='gray'
           variant="light"
@@ -71,7 +71,7 @@ export default function SortSelect({layout, setLayout}) {
           <IconAdjustmentsHorizontal stroke={1.5} className={classes.icon} />
         </ActionIcon>
         <ActionIcon
-          className="md:hidden" 
+          className="md:hidden"
           size="xl"
           color='gray'
           variant="light"
@@ -89,7 +89,7 @@ export default function SortSelect({layout, setLayout}) {
           }
         >
           {
-            layout ? 
+            layout ?
               <IconLayoutGrid stroke={1.5} className={classes.icon} />
               :
               <IconListDetails stroke={1.5} className={classes.icon} />

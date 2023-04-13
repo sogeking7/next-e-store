@@ -1,26 +1,29 @@
-import React from "react";
-import {ActionIcon, Flex, Header, Text,} from "@mantine/core";
+import {ActionIcon, Box, Flex, Header, Text,} from "@mantine/core";
 import Logo from "../ui/Logo";
 import {IconHeart, IconShoppingCart} from "@tabler/icons";
 import Search from "./Search";
 import AuthBtn from "../pages/auth/buttons/AuthBtn";
 import {DarkModeButton} from "../ui/DarkModeButton";
 import Link from "next/link";
+import {useSession} from "next-auth/react";
 
-function CatalogHeader({setOpened, isFilterOn}) {
+function CatalogHeader() {
+  const {status} = useSession();
   return (
-    <Header className="py-2 hidden md:block"  height={64}>
-      <div className="max-w-5xl mx-auto">
-        <Flex className="justify-between items-center flex-row md:gap-0 gap-4 px-4">
-          <Logo/>
-          <div className="md:hidden">
+    <Header py={8} className="hidden md:block" height={64}>
+      <Box maw={1024} mx="auto">
+        <Flex justify="space-between" align="center" className="md:gap-0 gap-4" px="md">
+          <Box miw="max-content" mr={64}>
+            <Logo/>
+          </Box>
+          <Box className="md:hidden">
             <DarkModeButton/>
-          </div>
-          <Search setOpened={setOpened} isFilterOn={isFilterOn}/>
-          <Flex className="gap-6 items-center hidden md:flex">
+          </Box>
+          <Search/>
+          <Flex items="center" gap="xl" className="hidden md:flex">
             <AuthBtn/>
-            <Link href="/user/wishlist">
-              <Flex align="center" className="cursor-pointer flex-col w-[50px]">
+            <Link href={status === 'unauthenticated' ? '/login' : "/user/wishlist"}>
+              <Flex align="center" direction="column" w={50} className="cursor-pointer">
                 <ActionIcon
                   size="md"
                   color='dark'
@@ -31,8 +34,8 @@ function CatalogHeader({setOpened, isFilterOn}) {
                 <Text size={12}>Wishlist</Text>
               </Flex>
             </Link>
-            <Link href="/user/cart">
-              <Flex align="center" className="cursor-pointer flex-col w-[50px]">
+            <Link href={status === 'unauthenticated' ? '/login' : "/user/cart"}>
+              <Flex align="center" direction="column" w={50} className="cursor-pointer">
                 <ActionIcon
                   size="md"
                   color='dark'
@@ -45,7 +48,7 @@ function CatalogHeader({setOpened, isFilterOn}) {
             </Link>
           </Flex>
         </Flex>
-      </div>
+      </Box>
     </Header>
   )
 }

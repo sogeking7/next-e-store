@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { Box, createStyles } from '@mantine/core';
 import CatalogHeader from './CatalogHeader';
 import MyFooter from './Footer';
 import MobileNavBar from './mobile/MobileNavBar';
@@ -19,12 +19,12 @@ const MobileLayout = ({ children }) => {
 	const { classes } = useStyle();
 
 	return (
-    <div className={classes.wrapper}>
+    <Box className={classes.wrapper}>
 			<CatalogHeader/>
 			<MobileNavBar/>
       {children}
 			<MyFooter/>
-    </div>
+    </Box>
   );
 };
 export default MobileLayout

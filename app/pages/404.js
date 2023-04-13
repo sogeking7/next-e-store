@@ -5,6 +5,7 @@ import {
   Text,
   Button,
   Group,
+  Box,
 } from "@mantine/core";
 const useStyles = createStyles((theme) => ({
   root: {
@@ -59,8 +60,8 @@ export default function NothingFoundBackground() {
 
   return (
     <Container className={classes.root}>
-      <div className={classes.inner}>
-        <div className={classes.content}>
+      <Box className={classes.inner}>
+        <Box className={classes.content}>
           <Title className={classes.title}>404</Title>
           <Text
             color="dimmed"
@@ -77,8 +78,8 @@ export default function NothingFoundBackground() {
               Take me back
             </Button>
           </Group>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </Container>
   );
 }

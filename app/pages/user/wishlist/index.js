@@ -1,10 +1,12 @@
-import {Box, createStyles, Flex, Loader, Text} from "@mantine/core";
+import { Box, createStyles, Flex, Loader, Text } from "@mantine/core";
 import SideBar from "../../../components/pages/user/SideBar";
 import Head from "next/head";
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
-import {AlertBox} from "../../../components/pages/user/wishlist/AlertBox";
 import WishlistProductCard from "../../../components/pages/user/wishlist/WishlistProductCard";
+import Layout from "../../../components/layouts/Layout";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const useStyle = createStyles((theme) => ({
   sideBarWrapper: {
@@ -18,7 +20,7 @@ const useStyle = createStyles((theme) => ({
     }
   },
   wrapper: {
-    padding: '1rem 1rem 1rem .5rem',
+    padding: '1rem 1rem 1rem 1rem',
     maxWidth: '64rem',
     gap: '2rem',
     margin: '0 auto',
@@ -46,9 +48,10 @@ const fetchUserWishlist = async () => {
   )
 }
 
-function Main(props) {
-  
-  const {isLoading, isError, error, data} =
+function Main() {
+  const { classes } = useStyle();
+
+  const { isLoading, isError, error, data } =
     useQuery({
       queryKey: ['user/wishlist'],
       queryFn: fetchUserWishlist,
@@ -57,54 +60,68 @@ function Main(props) {
 
   if (isLoading) {
     return (
-      <Flex className="w-full" justify='center'>
-        <Loader size="md" color="indigo.5" variant="oval"/>
+      <Flex className={classes.wrapper}>
+        <Flex className="w-full" justify='center'>
+          <Loader size="md" color="indigo.5" variant="oval" />
+        </Flex>
       </Flex>
     )
   }
-  
+
   if (isError) {
-    if (error.response.status === 401) {
-      return (
-        <div>
-          {error.response.data.error}
-        </div>
-      )
-    }
+    return error.response.data.error;
   }
 
   return (
-    <div className="w-full">
-      {data.wishlist.items.map((item) => {
-        return (
-          <Box mb='md'>
-            <WishlistProductCard product={item}/>
-          </Box>
-        )
-      })}
-    </div>
+    <Flex className={classes.wrapper}>
+      <Box className={classes.sideBarWrapper}>
+        <SideBar />
+      </Box>
+      <Box className={classes.mainWrapper}>
+        <Text weight={600} mb="md" size={32}>Orders</Text>
+        <Box className="w-full">
+          {data.wishlist.items.map((item) => {
+            return (
+              <Box mb='md'>
+                <WishlistProductCard product={item} />
+              </Box>
+            )
+          })}
+        </Box>
+      </Box>
+    </Flex>
   )
 }
 
 
 function Wishlist() {
-  const {classes} = useStyle();
+  const { classes } = useStyle();
+  const { status } = useSession();
+  const router = useRouter();
+
+  if (status === 'loading') {
+    return (
+      <Flex className={classes.wrapper}>
+        <Flex className="w-full" justify='center'>
+          <Loader size="md" color="indigo.5" variant="oval" />
+        </Flex>
+      </Flex>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    router.push('/login');
+    return;
+  }
+
   return (
-    <>
+    <Layout>
       <Head>
         <title>Wishlist</title>
-        <meta property="og:title" content="Wishlist title" key="title"/>
+        <meta property="og:title" content="Orders title" key="title" />
       </Head>
-      <Flex className={classes.wrapper}>
-        <Box className={classes.sideBarWrapper}>
-          <SideBar/>
-        </Box>
-        <div className={classes.mainWrapper}>
-          <Text weight={600} mb="md" size={32}>Wishlist</Text>     
-          <Main/>
-        </div>
-      </Flex>
-    </>
+      <Main />
+    </Layout>
   );
 }
 

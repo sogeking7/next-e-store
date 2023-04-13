@@ -1,8 +1,10 @@
-import {createStyles, Flex} from "@mantine/core";
+import { Box, createStyles, Flex, Loader } from "@mantine/core";
 import SideBar from "../../../components/pages/user/SideBar";
 import Head from "next/head";
-import {ProfileUser} from "../../../components/pages/user/profile/ProfileUser";
-
+import { ProfileUser } from "../../../components/pages/user/profile/ProfileUser";
+import Layout from "../../../components/layouts/Layout";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const useStyle = createStyles((theme) => ({
   sideBarWrapper: {
@@ -16,7 +18,7 @@ const useStyle = createStyles((theme) => ({
     }
   },
   wrapper: {
-    padding: '1rem 1rem 1rem .5rem',
+    padding: '1rem 1rem 1rem 1rem',
     maxWidth: '64rem',
     gap: '2rem',
     margin: '0 auto',
@@ -41,31 +43,48 @@ const useStyle = createStyles((theme) => ({
 }));
 
 
-function Main() {
+function Main({ user }) {
+  const { classes } = useStyle();
   return (
-    <>
-      <ProfileUser/>
-    </>
-  );
+    <Flex className={classes.wrapper}>
+      <Box className={classes.sideBarWrapper}>
+        <SideBar />
+      </Box>
+      <Box className={classes.mainWrapper}>
+        <ProfileUser user={user} status={0} />
+      </Box>
+    </Flex>
+  )
 }
 
 function Profile() {
-  const {classes} = useStyle()
+  const { classes } = useStyle();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === 'loading') {
+    return (
+      <Flex className={classes.wrapper}>
+        <Flex className="w-full" justify='center'>
+          <Loader size="md" color="indigo.5" variant="oval" />
+        </Flex>
+      </Flex>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    router.push('/login');
+    return;
+  }
+
   return (
-    <>
+    <Layout>
       <Head>
         <title>Profile</title>
-        <meta property="og:title" content="Profile title" key="title"/>
+        <meta property="og:title" content="Profile title" key="title" />
       </Head>
-      <Flex className={classes.wrapper}>
-        <div className={classes.sideBarWrapper}>
-          <SideBar/>
-        </div>
-        <div className={classes.mainWrapper}>
-          <Main/>
-        </div>
-      </Flex>
-    </>
+      <Main user={session.user} />
+    </Layout>
   );
 }
 

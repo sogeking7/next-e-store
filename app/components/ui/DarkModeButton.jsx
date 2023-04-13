@@ -1,5 +1,5 @@
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
-import {IconSun, IconMoon} from '@tabler/icons';
+import { IconSun, IconMoon } from '@tabler/icons';
 
 export const DarkModeButton = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -13,7 +13,7 @@ export const DarkModeButton = () => {
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
-      {dark ? <IconSun size={20}  stroke={1.5} /> : <IconMoon size={20}  stroke={1.5}/>}
+      {dark ? <IconSun size={20} stroke={1.5} /> : <IconMoon size={20} stroke={1.5} />}
     </ActionIcon>
   );
 }

@@ -1,13 +1,14 @@
-import React, {useState} from "react";
-import {Box, createStyles, Text, Flex} from "@mantine/core";
+import React, { useState } from "react";
+import { Box, createStyles, Text, Flex } from "@mantine/core";
 import ProductGrid from "../../../components/pages/catalog/product/ProductGrid";
-import {FilterDrawer} from "../../../components/pages/catalog/filter/FilterDrawer";
-import {useRouter} from "next/router";
+import { FilterDrawer } from "../../../components/pages/catalog/filter/FilterDrawer";
+import { useRouter } from "next/router";
 import Bread from "../../../components/layouts/Bread";
 import SortSelect from "../../../components/pages/catalog/SortSelect";
-import {unslugify} from "../../../lib/utils/method";
-import Filter from "../../../components/pages/catalog/filter/Filter";
+import { unslugify } from "../../../lib/utils/method";
+import { Filter } from "../../../components/pages/catalog/filter/Filter";
 import Search from '../../../components/layouts/Search.jsx'
+import Layout from "../../../components/layouts/Layout";
 
 const useStyle = createStyles((theme) => ({
   wrapper: {
@@ -41,44 +42,44 @@ const useStyle = createStyles((theme) => ({
 
 function getList(router) {
   return [
-    {title: 'Home', href: '/'},
-    {title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}`},
+    { title: 'Home', href: '/' },
+    { title: unslugify(router.query.category_name), href: `/catalog/${router.query.category_name}` },
   ]
 }
 
 function Store() {
   const router = useRouter();
-  const {classes} = useStyle();
-  
+  const { classes } = useStyle();
+
   //Bottom Filter Bar Hook
   const [opened, setOpened] = useState(false);
-  
+
   //Layout Hook
   const [layout, setLayout] = useState(0);
 
   const breadList = getList(router);
   return (
-    <>
-      <FilterDrawer opened={opened} setOpened={setOpened}/>
-      <Box className="max-w-5xl mx-auto p-4">
-        <div className="md:hidden mb-4">
-          <Search/> 
-        </div>
-        <div className="hidden md:block"> 
-          <Bread list={breadList}/>
-        </div>
+    <Layout>
+      <FilterDrawer opened={opened} setOpened={setOpened} />
+      <Box maw={1024} mx="auto" p={16}>
+        <Box className="md:hidden" mb={16}>
+          <Search />
+        </Box>
+        <Box className="hidden md:block">
+          <Bread list={breadList} />
+        </Box>
         <Flex>
-          <div className={classes.sideBarWrapper}>
-            <Filter/>
-          </div>
-          <div className={classes.mainWrapper}>
-            <Text weight={600} mb="md" size={32}>{breadList[1].title}</Text> 
-            <SortSelect layout={layout} setLayout={setLayout}/>
-            <ProductGrid layout={layout}/>
-          </div>
+          <Box className={classes.sideBarWrapper}>
+            <Filter />
+          </Box>
+          <Box className={classes.mainWrapper}>
+            <Text weight={600} mb="md" size={32}>{breadList[1].title}</Text>
+            <SortSelect layout={layout} setLayout={setLayout} />
+            <ProductGrid layout={layout} />
+          </Box>
         </Flex>
       </Box>
-    </>
+    </Layout>
   );
 }
 

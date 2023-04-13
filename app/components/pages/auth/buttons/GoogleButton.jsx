@@ -2,10 +2,11 @@ import React from "react";
 import {Button, Box} from "@mantine/core";
 import icon  from '../../../../public/GoogleIcon.ico'
 import Image from "next/image";
+import {signIn} from "next-auth/react";
 
-export function GoogleButton(props) {
+export function GoogleButton() {
   return (
-    <Button leftIcon={<GoogleIcon />} onClick={props.signIn} variant="default" radius="lg">
+    <Button leftIcon={<GoogleIcon />} onClick={signIn} w="100%" variant="default" size="md" radius="xl">
       Sign in with Google
     </Button>
   )
@@ -13,7 +14,7 @@ export function GoogleButton(props) {
 
 export function GoogleIcon() {
   return (
-    <Box className="w-5 h-5">
+    <Box w={20} h={20}>
       <Image src={icon}/>
     </Box>
   )

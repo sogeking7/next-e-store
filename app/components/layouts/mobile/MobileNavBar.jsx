@@ -1,9 +1,9 @@
 import React from "react";
-import {ActionIcon, Box, Flex, Footer, Text, createStyles} from "@mantine/core";
+import {ActionIcon, Box, Flex, Text, createStyles} from "@mantine/core";
 import {useRouter} from 'next/router'
-import {IconBuildingStore, IconCategory, IconHeart, IconShoppingCart} from "@tabler/icons";
+import {IconBuildingStore, IconCategory, IconShoppingCart} from "@tabler/icons";
 import Link from "next/link";
-import AuthBtnMobile from "../../pages/auth/buttons/AuthBtnMobile";
+import AuthBtn from "../../pages/auth/buttons/AuthBtn";
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -27,7 +27,8 @@ export default function MobileNavBar() {
   const router = useRouter();
   return (
       <Box className={classes.footer}>
-        <div className="flex justify-between">
+        <Box
+         className="flex justify-between">
           <Link href="/">
             <Flex align="center" className="cursor-pointer flex-col w-[50px]">
               <ActionIcon
@@ -64,8 +65,8 @@ export default function MobileNavBar() {
               <Text size={12}>Cart</Text>
             </Flex>
           </Link>
-          <AuthBtnMobile/>
-        </div>
+          <AuthBtn/>
+        </Box>
       </Box>
   );
 }

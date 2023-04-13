@@ -1,4 +1,3 @@
-import React, {FC} from "react";
 import {
   Flex,
   NumberInput,
@@ -6,17 +5,27 @@ import {
   RangeSlider,
   useMantineColorScheme,
   Text,
-  Rating, MantineTheme,
+  createStyles,
+  Rating, Box,
 } from "@mantine/core";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-const Filter:FC = () => {
+const useStyles = createStyles((theme) => ({
+  title: {
+    fontSize: '1rem',
+    [`@media (max-width: 767px)`]: {
+      fontSize: '1.5rem'
+    }
+  }
+}))
+
+export const Filter = () => {
   const router = useRouter()
-  const { colorScheme }: { colorScheme: 'light' | 'dark' } = useMantineColorScheme();
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
-  const [curRating, setCurRating] = useState<number>(0)
+  const { classes } = useStyles();
+  const { colorScheme } = useMantineColorScheme();
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [curRating, setCurRating] = useState(0)
 
   useEffect(() => {
     const query = router.query;
@@ -28,7 +37,7 @@ const Filter:FC = () => {
     })
   }, [priceRange[0], priceRange[1]]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (curRating) {
       const query = router.query;
       query.rating = `${curRating}`;
@@ -40,25 +49,26 @@ const Filter:FC = () => {
   }, [curRating]);
 
   return (
-    <div className="h-full w-full">
-      <div>
-        <Text weight="bold" className="mb-4">Price</Text>
-        <div className="flex mb-4">
+    <Box w="100%" h="100%">
+      <Box>
+        <Text weight="bold" mb={16} className={classes.title}>Price</Text>
+        <Flex mb={16}>
           <NumberInput
             max={priceRange[1]}
             min={0}
             value={priceRange[0]}
-            onChange={(val:number) => setPriceRange([val, priceRange[1]])}
+            onChange={(val) => setPriceRange([val, priceRange[1]])}
             styles={(theme) => ({
               input: {
                 border: theme.colorScheme === "dark" ? 'none' : ''
               }
             })}
-            className="w-[100px] mr-4"
+            w={100}
+            mr={16}
             size="xs"
             radius="sm"
-            parser={(value:any) => value.replace(/\$\s?|(,*)/g, "")}
-            formatter={(value:any) =>
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            formatter={(value) =>
               !Number.isNaN(parseFloat(value))
                 ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 : "$ "
@@ -68,23 +78,23 @@ const Filter:FC = () => {
             max={1000}
             min={priceRange[0]}
             value={priceRange[1]}
-            onChange={(val:any) => setPriceRange([priceRange[0], val])}
+            onChange={(val) => setPriceRange([priceRange[0], val])}
             styles={(theme) => ({
               input: {
                 border: theme.colorScheme === "dark" ? 'none' : ''
               }
             })}
-            className="w-[100px] font-bold"
+            w={100}
             size="xs"
             radius="sm"
-            parser={(value:any) => value.replace(/\$\s?|(,*)/g, "")}
-            formatter={(value:any) =>
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            formatter={(value) =>
               !Number.isNaN(parseFloat(value))
                 ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 : "$ "
             }
           />
-        </div>
+        </Flex>
         <RangeSlider
           min={0}
           max={1000}
@@ -92,9 +102,10 @@ const Filter:FC = () => {
           color='indigo.5'
           value={priceRange}
           onChange={setPriceRange}
-          className="w-full mb-4"
+          w="100$"
+          mb={16}
           defaultValue={[priceRange[0], priceRange[1]]}
-          styles={(theme:MantineTheme) => ({
+          styles={(theme) => ({
             thumb: {
               height: 16,
               backgroundColor: 'white',
@@ -104,15 +115,15 @@ const Filter:FC = () => {
             },
           })}
         />
-      </div>
+      </Box>
       <Divider my="xs" />
-      <div>
-        <Text weight="bold" className="mb-4">Rating</Text>
+      <Box>
+        <Text weight="bold" mb={16} className={classes.title} >Rating</Text>
         {
-          Array(4).fill(0).map((_val:number, ind:number) => {
+          Array(4).fill(0).map((_val, ind) => {
             const rating = 4 - ind;
             return (
-              <Flex key={ind} className="gap-1 mb-2" align='center' onClick={() => setCurRating(rating)} >
+              <Flex key={ind} mb={8} gap={2} align='center' onClick={() => setCurRating(rating)} >
                 <Rating readOnly defaultValue={rating} size="xs" />{" "}
                 <Text size="sm" weight="bold" color={curRating === rating ? `${colorScheme === 'dark' ? 'dark.0' : '#000'}` : 'indigo.5'} className="cursor-pointer hover:underline">
                   and above
@@ -121,9 +132,7 @@ const Filter:FC = () => {
             )
           })
         }
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
-
-export default Filter;

@@ -1,13 +1,13 @@
 import prisma from "../../../../lib/prisma";
-import {getSession} from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
-  const {method} = req;
+  const { method } = req;
 
-  const session = await getSession({req});
+  const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({error: 'You must be logged in'})
+    return res.status(401).json({ error: 'You must be logged in' })
   }
 
   const userId = session.user.id;
@@ -38,7 +38,9 @@ export default async function handler(req, res) {
           }
         }
       })
-
+      if (!userCart.cart) {
+        return res.status(400).json({ error: `Cart not created` })
+      }
       res.status(200).json(userCart)
 
       break

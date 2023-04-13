@@ -7,12 +7,11 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { RouterTransition } from "../components/layouts/RouterTransition";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import {Session} from "next-auth";
+import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import Layout from '../components/layouts/Layout'
 import "../styles/index.css";
 
-export default function App(props: AppProps<{session: Session}> & { colorScheme: ColorScheme }) {
+export default function App(props: AppProps<{ session: Session }> & { colorScheme: ColorScheme }) {
   const { Component, pageProps: { session, ...pageProps } } = props
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
   const [queryClient] = useState(() => new QueryClient());
@@ -47,9 +46,7 @@ export default function App(props: AppProps<{session: Session}> & { colorScheme:
             <RouterTransition />
             <NotificationsProvider>
               <QueryClientProvider client={queryClient}>
-                <Layout>
                 <Component {...pageProps} />
-                </Layout>
                 <ReactQueryDevtools initialIsOpen={false} />
               </QueryClientProvider>
             </NotificationsProvider>
