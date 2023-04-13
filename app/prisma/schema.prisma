@@ -57,7 +57,7 @@ model Product {
   wishlistIDs String[]    @db.ObjectId
 }
 
-model Orders {
+model Wishlist {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId
   user    User      @relation(fields: [userId], references: [id])
   userId  String    @unique @db.ObjectId
