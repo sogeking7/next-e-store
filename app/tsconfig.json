@@ -37,7 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/_app.tsx"
-, "utils/dbConnect.js", "components/pages/catalog/filter/Filter.jsx", "components/pages/catalog/filter/FilterDrawer.jsx"  ],
+, "utils/dbConnect.js", "components/pages/catalog/filter/Filter.jsx", "components/pages/catalog/filter/FilterDrawer.jsx", "lib/prisma/index.js"  ],
   "exclude": [
     "node_modules"
   ]
